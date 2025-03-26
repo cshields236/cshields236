@@ -16,3 +16,4 @@ jobs:
           # Replace this with your goodreads user id (go to "My Books" on goodreads to see it in the URL)
           goodreads_user_id: "106016596"
           shelf: "read"
+          template: "[$title]($url) by $author ($published_year) ⭐️$my_rating_stars"
