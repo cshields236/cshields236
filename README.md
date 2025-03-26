@@ -11,3 +11,7 @@
 <br/>
 <br/>
 ![](https://github-profile-trophy.vercel.app/?username=cshields236&theme=dracula&no-frame=false&no-bg=true&margin-w=4)
+
+# 📚 Last 5 Books I've Read 
+<!-- GOODREADS-LIST:START -->
+<!-- GOODREADS-LIST:END -->
