@@ -12,7 +12,7 @@
 <br/>
 ![](https://github-profile-trophy.vercel.app/?username=cshields236&theme=dracula&no-frame=false&no-bg=true&margin-w=4)
 
-# 📚 Last 5 Books I've Read 
+# 📚 Last 10 Books I've Read 
 <!-- GOODREADS-LIST:START -->
 - [Amongst Women](https://www.goodreads.com/review/show/6977075883?utm_medium=api&utm_source=rss) by John McGahern (⭐️3.96)
 - [Lolita](https://www.goodreads.com/review/show/7263361950?utm_medium=api&utm_source=rss) by Vladimir Nabokov (⭐️3.86)
