@@ -14,14 +14,14 @@
 
 # 📚 Last 10 Books I've Read 
 <!-- GOODREADS-LIST:START -->
-- [Amongst Women](https://www.goodreads.com/review/show/6977075883?utm_medium=api&utm_source=rss) by John McGahern (1990) ⭐⭐⭐⭐ <br /> <br />
-- [Lolita](https://www.goodreads.com/review/show/7263361950?utm_medium=api&utm_source=rss) by Vladimir Nabokov (1955) ⭐⭐⭐⭐⭐ <br /> <br />
-- [Close to Home](https://www.goodreads.com/review/show/7187404351?utm_medium=api&utm_source=rss) by Michael  Magee (2023) ⭐⭐⭐⭐ <br /> <br />
-- [Soldiers of Salamis](https://www.goodreads.com/review/show/7144173521?utm_medium=api&utm_source=rss) by Javier Cercas (2001) ⭐⭐⭐⭐ <br /> <br />
-- [Kala](https://www.goodreads.com/review/show/7054554760?utm_medium=api&utm_source=rss) by Colin Walsh (2023) ⭐⭐⭐ <br /> <br />
-- [The Sun Also Rises](https://www.goodreads.com/review/show/6967902994?utm_medium=api&utm_source=rss) by Ernest Hemingway (1926) ⭐⭐⭐ <br /> <br />
-- [What Does Israel Fear From Palestine?](https://www.goodreads.com/review/show/6946903478?utm_medium=api&utm_source=rss) by Raja Shehadeh (2024) ⭐⭐⭐⭐ <br /> <br />
-- [White Nights](https://www.goodreads.com/review/show/6923983788?utm_medium=api&utm_source=rss) by Fyodor Dostoevsky (1848) ⭐⭐⭐ <br /> <br />
-- [Intermezzo](https://www.goodreads.com/review/show/6884864200?utm_medium=api&utm_source=rss) by Sally Rooney (2024) ⭐⭐⭐⭐ <br /> <br />
-- [Neglect in the North of Ireland](https://www.goodreads.com/review/show/6813163810?utm_medium=api&utm_source=rss) by Odrán de Bhaldraithe () ⭐⭐⭐⭐ <br /> <br />
+- [Amongst Women](https://www.goodreads.com/review/show/6977075883?utm_medium=api&utm_source=rss) by John McGahern (1990) ⭐⭐⭐⭐ <br />
+- [Lolita](https://www.goodreads.com/review/show/7263361950?utm_medium=api&utm_source=rss) by Vladimir Nabokov (1955) ⭐⭐⭐⭐⭐ <br />
+- [Close to Home](https://www.goodreads.com/review/show/7187404351?utm_medium=api&utm_source=rss) by Michael  Magee (2023) ⭐⭐⭐⭐ <br />
+- [Soldiers of Salamis](https://www.goodreads.com/review/show/7144173521?utm_medium=api&utm_source=rss) by Javier Cercas (2001) ⭐⭐⭐⭐ <br />
+- [Kala](https://www.goodreads.com/review/show/7054554760?utm_medium=api&utm_source=rss) by Colin Walsh (2023) ⭐⭐⭐ <br />
+- [The Sun Also Rises](https://www.goodreads.com/review/show/6967902994?utm_medium=api&utm_source=rss) by Ernest Hemingway (1926) ⭐⭐⭐ <br />
+- [What Does Israel Fear From Palestine?](https://www.goodreads.com/review/show/6946903478?utm_medium=api&utm_source=rss) by Raja Shehadeh (2024) ⭐⭐⭐⭐ <br />
+- [White Nights](https://www.goodreads.com/review/show/6923983788?utm_medium=api&utm_source=rss) by Fyodor Dostoevsky (1848) ⭐⭐⭐ <br />
+- [Intermezzo](https://www.goodreads.com/review/show/6884864200?utm_medium=api&utm_source=rss) by Sally Rooney (2024) ⭐⭐⭐⭐ <br />
+- [Neglect in the North of Ireland](https://www.goodreads.com/review/show/6813163810?utm_medium=api&utm_source=rss) by Odrán de Bhaldraithe () ⭐⭐⭐⭐ <br />
 <!-- GOODREADS-LIST:END -->
