@@ -1,5 +1,5 @@
 <h1 align="center">Hello 👋, I'm Conor Shields</h1>  
-<h3 align="center">I'm A Software Engineer from beautiful Cavan, Ireland currently living in London! <br /> I'm passionate about backend development (mainly using NodeJS and Typescript), Cloud Technologies (mainly AWS) and developing event driven solutions.</h3>  
+<h3 align="center">I'm a Software Engineer from beautiful Cavan, Ireland currently living in London! <br /> I'm passionate about backend development (mainly using NodeJS and Typescript), Cloud Technologies (mainly AWS) and developing event driven solutions.</h3>  
   
 <p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=cshields236" alt="cshields236" /></a> </p>  
 
