@@ -14,6 +14,7 @@
 
 # 📚 Last 10 Books I've Read 
 <!-- GOODREADS-LIST:START -->
+- [Code Dependent: Living in the Shadow of AI](https://www.goodreads.com/review/show/7508663050?utm_medium=api&utm_source=rss) by Madhumita Murgia (2024) ⭐⭐⭐ <br />
 - [Notes from the Underground](https://www.goodreads.com/review/show/7448036730?utm_medium=api&utm_source=rss) by Fyodor Dostoevsky (1864) ⭐⭐⭐⭐ <br />
 - [The Myth of Sisyphus and Other Essays](https://www.goodreads.com/review/show/6417727098?utm_medium=api&utm_source=rss) by Albert Camus (1942) ⭐⭐⭐ <br />
 - [Amongst Women](https://www.goodreads.com/review/show/6977075883?utm_medium=api&utm_source=rss) by John McGahern (1990) ⭐⭐⭐⭐ <br />
@@ -23,5 +24,4 @@
 - [Kala](https://www.goodreads.com/review/show/7054554760?utm_medium=api&utm_source=rss) by Colin Walsh (2023) ⭐⭐⭐ <br />
 - [The Sun Also Rises](https://www.goodreads.com/review/show/6967902994?utm_medium=api&utm_source=rss) by Ernest Hemingway (1926) ⭐⭐⭐ <br />
 - [What Does Israel Fear From Palestine?](https://www.goodreads.com/review/show/6946903478?utm_medium=api&utm_source=rss) by Raja Shehadeh (2024) ⭐⭐⭐⭐ <br />
-- [White Nights](https://www.goodreads.com/review/show/6923983788?utm_medium=api&utm_source=rss) by Fyodor Dostoevsky (1848) ⭐⭐⭐ <br />
 <!-- GOODREADS-LIST:END -->
