@@ -14,6 +14,7 @@
 
 # 📚 Last 10 Books I've Read 
 <!-- GOODREADS-LIST:START -->
+- [Leaving the Atocha Station](https://www.goodreads.com/review/show/7641307020?utm_medium=api&utm_source=rss) by Ben Lerner (2011) ⭐⭐⭐⭐ <br />
 - [Nine Tomorrows](https://www.goodreads.com/review/show/7627511892?utm_medium=api&utm_source=rss) by Isaac Asimov (1959) ⭐⭐⭐ <br />
 - [Code Dependent: Living in the Shadow of AI](https://www.goodreads.com/review/show/7508663050?utm_medium=api&utm_source=rss) by Madhumita Murgia (2024) ⭐⭐⭐ <br />
 - [Notes from the Underground](https://www.goodreads.com/review/show/7448036730?utm_medium=api&utm_source=rss) by Fyodor Dostoevsky (1864) ⭐⭐⭐⭐ <br />
@@ -23,5 +24,4 @@
 - [Close to Home](https://www.goodreads.com/review/show/7187404351?utm_medium=api&utm_source=rss) by Michael  Magee (2023) ⭐⭐⭐⭐ <br />
 - [Soldiers of Salamis](https://www.goodreads.com/review/show/7144173521?utm_medium=api&utm_source=rss) by Javier Cercas (2001) ⭐⭐⭐⭐ <br />
 - [Kala](https://www.goodreads.com/review/show/7054554760?utm_medium=api&utm_source=rss) by Colin Walsh (2023) ⭐⭐⭐ <br />
-- [The Sun Also Rises](https://www.goodreads.com/review/show/6967902994?utm_medium=api&utm_source=rss) by Ernest Hemingway (1926) ⭐⭐⭐ <br />
 <!-- GOODREADS-LIST:END -->
