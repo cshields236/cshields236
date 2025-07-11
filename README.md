@@ -14,6 +14,7 @@
 
 # 📚 Last 10 Books I've Read 
 <!-- GOODREADS-LIST:START -->
+- [The Trial](https://www.goodreads.com/review/show/7678841270?utm_medium=api&utm_source=rss) by Franz Kafka (1925) ⭐⭐⭐⭐⭐ <br />
 - [Leaving the Atocha Station](https://www.goodreads.com/review/show/7641307020?utm_medium=api&utm_source=rss) by Ben Lerner (2011) ⭐⭐⭐⭐ <br />
 - [Nine Tomorrows](https://www.goodreads.com/review/show/7627511892?utm_medium=api&utm_source=rss) by Isaac Asimov (1959) ⭐⭐⭐ <br />
 - [Code Dependent: Living in the Shadow of AI](https://www.goodreads.com/review/show/7508663050?utm_medium=api&utm_source=rss) by Madhumita Murgia (2024) ⭐⭐⭐ <br />
@@ -23,5 +24,4 @@
 - [Lolita](https://www.goodreads.com/review/show/7263361950?utm_medium=api&utm_source=rss) by Vladimir Nabokov (1955) ⭐⭐⭐⭐⭐ <br />
 - [Close to Home](https://www.goodreads.com/review/show/7187404351?utm_medium=api&utm_source=rss) by Michael  Magee (2023) ⭐⭐⭐⭐ <br />
 - [Soldiers of Salamis](https://www.goodreads.com/review/show/7144173521?utm_medium=api&utm_source=rss) by Javier Cercas (2001) ⭐⭐⭐⭐ <br />
-- [Kala](https://www.goodreads.com/review/show/7054554760?utm_medium=api&utm_source=rss) by Colin Walsh (2023) ⭐⭐⭐ <br />
 <!-- GOODREADS-LIST:END -->
