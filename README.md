@@ -14,6 +14,7 @@
 
 # 📚 Last 10 Books I've Read 
 <!-- GOODREADS-LIST:START -->
+- [Intermezzo](https://www.goodreads.com/review/show/6884864200?utm_medium=api&utm_source=rss) by Sally Rooney (2024) ⭐⭐⭐⭐⭐ <br />
 - [Into the War](https://www.goodreads.com/review/show/7736762315?utm_medium=api&utm_source=rss) by Italo Calvino (1954) ⭐⭐⭐ <br />
 - [The Trial](https://www.goodreads.com/review/show/7678841270?utm_medium=api&utm_source=rss) by Franz Kafka (1925) ⭐⭐⭐⭐⭐ <br />
 - [Leaving the Atocha Station](https://www.goodreads.com/review/show/7641307020?utm_medium=api&utm_source=rss) by Ben Lerner (2011) ⭐⭐⭐⭐ <br />
@@ -23,5 +24,4 @@
 - [The Myth of Sisyphus and Other Essays](https://www.goodreads.com/review/show/6417727098?utm_medium=api&utm_source=rss) by Albert Camus (1942) ⭐⭐⭐ <br />
 - [Amongst Women](https://www.goodreads.com/review/show/6977075883?utm_medium=api&utm_source=rss) by John McGahern (1990) ⭐⭐⭐⭐ <br />
 - [Lolita](https://www.goodreads.com/review/show/7263361950?utm_medium=api&utm_source=rss) by Vladimir Nabokov (1955) ⭐⭐⭐⭐⭐ <br />
-- [Close to Home](https://www.goodreads.com/review/show/7187404351?utm_medium=api&utm_source=rss) by Michael  Magee (2023) ⭐⭐⭐⭐ <br />
 <!-- GOODREADS-LIST:END -->
