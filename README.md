@@ -50,14 +50,14 @@
 
 # 📚 Last 10 Books I've Read 
 <!-- GOODREADS-LIST:START -->
+- [Capitalist Realism: Is There No Alternative?](https://www.goodreads.com/review/show/8667506565?utm_medium=api&utm_source=rss) by Mark Fisher (2009) ⭐⭐⭐⭐ <br />
+- [Post-Capitalist Desire](https://www.goodreads.com/review/show/8608336341?utm_medium=api&utm_source=rss) by Mark Fisher (2020) ⭐⭐⭐⭐ <br />
+- [Heart of Darkness](https://www.goodreads.com/review/show/8506204846?utm_medium=api&utm_source=rss) by Joseph Conrad (1899) ⭐⭐⭐ <br />
+- [Elevator in Sài Gòn](https://www.goodreads.com/review/show/8450360087?utm_medium=api&utm_source=rss) by Thuận (2013) ⭐⭐⭐ <br />
+- [The First Man](https://www.goodreads.com/review/show/8258964825?utm_medium=api&utm_source=rss) by Albert Camus (1994) ⭐⭐⭐ <br />
 - [Intermezzo](https://www.goodreads.com/review/show/6884864200?utm_medium=api&utm_source=rss) by Sally Rooney (2024) ⭐⭐⭐⭐⭐ <br />
 - [Into the War](https://www.goodreads.com/review/show/7736762315?utm_medium=api&utm_source=rss) by Italo Calvino (1954) ⭐⭐⭐ <br />
 - [The Trial](https://www.goodreads.com/review/show/7678841270?utm_medium=api&utm_source=rss) by Franz Kafka (1925) ⭐⭐⭐⭐⭐ <br />
 - [Leaving the Atocha Station](https://www.goodreads.com/review/show/7641307020?utm_medium=api&utm_source=rss) by Ben Lerner (2011) ⭐⭐⭐⭐ <br />
 - [Nine Tomorrows](https://www.goodreads.com/review/show/7627511892?utm_medium=api&utm_source=rss) by Isaac Asimov (1959) ⭐⭐⭐ <br />
-- [Code Dependent: Living in the Shadow of AI](https://www.goodreads.com/review/show/7508663050?utm_medium=api&utm_source=rss) by Madhumita Murgia (2024) ⭐⭐⭐ <br />
-- [Notes from the Underground](https://www.goodreads.com/review/show/7448036730?utm_medium=api&utm_source=rss) by Fyodor Dostoevsky (1864) ⭐⭐⭐⭐ <br />
-- [The Myth of Sisyphus and Other Essays](https://www.goodreads.com/review/show/6417727098?utm_medium=api&utm_source=rss) by Albert Camus (1942) ⭐⭐⭐ <br />
-- [Amongst Women](https://www.goodreads.com/review/show/6977075883?utm_medium=api&utm_source=rss) by John McGahern (1990) ⭐⭐⭐⭐ <br />
-- [Lolita](https://www.goodreads.com/review/show/7263361950?utm_medium=api&utm_source=rss) by Vladimir Nabokov (1955) ⭐⭐⭐⭐⭐ <br />
 <!-- GOODREADS-LIST:END -->
