@@ -1,0 +1,21 @@
+name: Update Letterboxd films in README
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+jobs:
+  update-readme-with-letterboxd:
+    name: Update README with Letterboxd data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Update Letterboxd section
+        run: python .github/scripts/update_letterboxd.py
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git diff --quiet || (git add README.md && git commit -m "Synced and updated with user's Letterboxd films" && git push)
