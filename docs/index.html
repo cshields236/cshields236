@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conor Shields — Software Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">CS</a>
+            <div class="nav-links">
+                <a href="#experience">Experience</a>
+                <a href="#films">Films</a>
+                <a href="#books">Books</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button class="nav-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#experience">Experience</a>
+        <a href="#films">Films</a>
+        <a href="#books">Books</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-label reveal">Software Engineer</div>
+            <h1 class="hero-title reveal">
+                <span class="hero-name">Conor Shields</span>
+            </h1>
+            <p class="hero-subtitle reveal">
+                Building event-driven systems and scalable cloud infrastructure.<br>
+                <span class="hero-location">Cavan, Ireland &rarr; London, UK</span>
+            </p>
+            <div class="hero-stack reveal">
+                <span>TypeScript</span>
+                <span>Node.js</span>
+                <span>AWS</span>
+                <span>Event-Driven Architecture</span>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <section class="section tech" id="tech">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Toolkit</span>
+                <h2 class="section-title">Tech Stack</h2>
+            </div>
+            <div class="tech-grid reveal">
+                <div class="tech-category">
+                    <h3>Languages & Frameworks</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Java</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>AWS & Infrastructure</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag">AWS CDK</span>
+                        <span class="tech-tag">Lambda</span>
+                        <span class="tech-tag">API Gateway</span>
+                        <span class="tech-tag">DynamoDB</span>
+                        <span class="tech-tag">Aurora</span>
+                        <span class="tech-tag">EventBridge</span>
+                        <span class="tech-tag">Step Functions</span>
+                        <span class="tech-tag">SQS</span>
+                        <span class="tech-tag">Route53</span>
+                        <span class="tech-tag">IAM</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>Observability & DevOps</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Datadog</span>
+                        <span class="tech-tag">GitHub Actions</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">CI/CD Pipelines</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>Architecture</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Event-Driven Architecture</span>
+                        <span class="tech-tag">Serverless</span>
+                        <span class="tech-tag">RESTful APIs</span>
+                        <span class="tech-tag">Microservices</span>
+                        <span class="tech-tag">TDD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section experience" id="experience">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Career</span>
+                <h2 class="section-title">Experience</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-meta">
+                            <span class="timeline-date">June 2023 &mdash; Present</span>
+                            <span class="timeline-company">EF Education First, London</span>
+                        </div>
+                        <h3 class="timeline-role">Software Engineer</h3>
+                        <ul class="timeline-details">
+                            <li>Designed high-throughput event-driven microservices processing 20,000+ events/hour via AWS EventBridge, SQS, and Step Functions</li>
+                            <li>Engineered complex state machines and workflow orchestrators for long-running async processes</li>
+                            <li>Led observability migration from Elasticsearch to Datadog with custom log forwarders and real-time alerting</li>
+                            <li>Architected CI/CD pipelines with GitHub Actions for a team of 10 engineers</li>
+                            <li>Built backend infrastructure for an enterprise agentic AI platform using Amazon Bedrock and Claude</li>
+                            <li>Cross-timezone collaboration across London, Zurich, and Boston</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-meta">
+                            <span class="timeline-date">May 2021 &mdash; June 2023</span>
+                            <span class="timeline-company">EF Education First, London</span>
+                        </div>
+                        <h3 class="timeline-role">Junior Cloud Engineer</h3>
+                        <ul class="timeline-details">
+                            <li>Developed an isolated cloud account identity utility with React frontend and serverless backend (Lambda, API Gateway, DynamoDB)</li>
+                            <li>Built Python automation scripts for virtual resource patching and DNS migration into AWS Route53</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-meta">
+                            <span class="timeline-date">Jan 2019 &mdash; Aug 2019</span>
+                            <span class="timeline-company">Workday, Dublin</span>
+                        </div>
+                        <h3 class="timeline-role">Software Application Developer Intern</h3>
+                        <ul class="timeline-details">
+                            <li>Built backend services in an agile, test-driven environment contributing to continuous delivery pipelines</li>
+                            <li>Paired and mob programming to optimise delivery and isolate performance bottlenecks</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section films" id="films">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Cinema</span>
+                <h2 class="section-title">Films</h2>
+                <a href="https://letterboxd.com/cshields_" class="section-link" target="_blank" rel="noopener">letterboxd.com/cshields_</a>
+            </div>
+
+            <div class="films-block reveal">
+                <h3 class="films-subtitle">Favourite Films</h3>
+                <div class="films-grid">
+                    <a href="https://letterboxd.com/film/la-haine/" class="film-card" target="_blank" rel="noopener">
+                        <div class="film-poster">
+                            <img src="https://a.ltrbxd.com/resized/film-poster/5/1/6/8/4/51684-la-haine-0-150-0-225-crop.jpg?v=b6677cc136" alt="La Haine" loading="lazy">
+                        </div>
+                        <span class="film-title">La Haine</span>
+                        <span class="film-year">1995</span>
+                    </a>
+                    <a href="https://letterboxd.com/film/the-battle-of-algiers/" class="film-card" target="_blank" rel="noopener">
+                        <div class="film-poster">
+                            <img src="https://a.ltrbxd.com/resized/film-poster/4/1/0/8/1/41081-the-battle-of-algiers-0-150-0-225-crop.jpg?v=69c38fa93c" alt="The Battle of Algiers" loading="lazy">
+                        </div>
+                        <span class="film-title">The Battle of Algiers</span>
+                        <span class="film-year">1966</span>
+                    </a>
+                    <a href="https://letterboxd.com/film/autumn-sonata/" class="film-card" target="_blank" rel="noopener">
+                        <div class="film-poster">
+                            <img src="https://a.ltrbxd.com/resized/sm/upload/dr/d3/nw/gv/m4I32itPMlRWqWJamFAwFDbrBXp-0-150-0-225-crop.jpg?v=45433653ca" alt="Autumn Sonata" loading="lazy">
+                        </div>
+                        <span class="film-title">Autumn Sonata</span>
+                        <span class="film-year">1978</span>
+                    </a>
+                    <a href="https://letterboxd.com/film/the-handmaiden/" class="film-card" target="_blank" rel="noopener">
+                        <div class="film-poster">
+                            <img src="https://a.ltrbxd.com/resized/sm/upload/pc/n6/pz/mi/wvzfK5QR6dGLwND8MCzWjsQWG4Q-0-150-0-225-crop.jpg?v=bcfcc8f8f6" alt="The Handmaiden" loading="lazy">
+                        </div>
+                        <span class="film-title">The Handmaiden</span>
+                        <span class="film-year">2016</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="films-block reveal">
+                <h3 class="films-subtitle">Recently Watched</h3>
+                <div class="films-grid">
+                    <a href="https://letterboxd.com/cshields_/film/barry-lyndon/" class="film-card" target="_blank" rel="noopener">
+                        <div class="film-poster">
+                            <img src="https://a.ltrbxd.com/resized/sm/upload/0f/r6/bn/w7/x2JQCgLjieWOwvImeGtLmuNgsrq-0-600-0-900-crop.jpg?v=9c250ee969" alt="Barry Lyndon" loading="lazy">
+                        </div>
+                        <span class="film-title">Barry Lyndon</span>
+                        <span class="film-rating">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    </a>
+                    <a href="https://letterboxd.com/cshields_/film/lady-bird/" class="film-card" target="_blank" rel="noopener">
+                        <div class="film-poster">
+                            <img src="https://a.ltrbxd.com/resized/film-poster/3/2/6/2/7/9/326279-lady-bird-0-600-0-900-crop.jpg?v=754ff28eb4" alt="Lady Bird" loading="lazy">
+                        </div>
+                        <span class="film-title">Lady Bird</span>
+                        <span class="film-rating">&#9733;&#9733;&#9733;&#9733;</span>
+                    </a>
+                    <a href="https://letterboxd.com/cshields_/film/12-angry-men/" class="film-card" target="_blank" rel="noopener">
+                        <div class="film-poster">
+                            <img src="https://a.ltrbxd.com/resized/film-poster/5/1/7/0/0/51700-12-angry-men-0-600-0-900-crop.jpg?v=b8aaf291a9" alt="12 Angry Men" loading="lazy">
+                        </div>
+                        <span class="film-title">12 Angry Men</span>
+                        <span class="film-rating">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    </a>
+                    <a href="https://letterboxd.com/cshields_/film/chocolat-1988/" class="film-card" target="_blank" rel="noopener">
+                        <div class="film-poster">
+                            <img src="https://a.ltrbxd.com/resized/sm/upload/lw/p2/fi/xa/chocolat-0-600-0-900-crop.jpg?v=628022078d" alt="Chocolat" loading="lazy">
+                        </div>
+                        <span class="film-title">Chocolat</span>
+                        <span class="film-rating">&#9733;&#9733;&#9733;&#9733;&#189;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section books" id="books">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Reading</span>
+                <h2 class="section-title">Recently Read</h2>
+                <a href="https://www.goodreads.com/user/show/106016596" class="section-link" target="_blank" rel="noopener">Goodreads Profile</a>
+            </div>
+            <div class="books-list reveal">
+                <div class="book-item">
+                    <div class="book-info">
+                        <span class="book-title">Amongst Women</span>
+                        <span class="book-author">John McGahern, 1990</span>
+                    </div>
+                    <span class="book-rating">&#9733;&#9733;&#9733;&#9733;</span>
+                </div>
+                <div class="book-item">
+                    <div class="book-info">
+                        <span class="book-title">Lolita</span>
+                        <span class="book-author">Vladimir Nabokov, 1955</span>
+                    </div>
+                    <span class="book-rating">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                </div>
+                <div class="book-item">
+                    <div class="book-info">
+                        <span class="book-title">Close to Home</span>
+                        <span class="book-author">Michael Magee, 2023</span>
+                    </div>
+                    <span class="book-rating">&#9733;&#9733;&#9733;&#9733;</span>
+                </div>
+                <div class="book-item">
+                    <div class="book-info">
+                        <span class="book-title">Soldiers of Salamis</span>
+                        <span class="book-author">Javier Cercas, 2001</span>
+                    </div>
+                    <span class="book-rating">&#9733;&#9733;&#9733;&#9733;</span>
+                </div>
+                <div class="book-item">
+                    <div class="book-info">
+                        <span class="book-title">Kala</span>
+                        <span class="book-author">Colin Walsh, 2023</span>
+                    </div>
+                    <span class="book-rating">&#9733;&#9733;&#9733;</span>
+                </div>
+                <div class="book-item">
+                    <div class="book-info">
+                        <span class="book-title">Intermezzo</span>
+                        <span class="book-author">Sally Rooney, 2024</span>
+                    </div>
+                    <span class="book-rating">&#9733;&#9733;&#9733;&#9733;</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Say Hello</span>
+                <h2 class="section-title">Get in Touch</h2>
+            </div>
+            <div class="contact-grid reveal">
+                <div class="contact-info">
+                    <p class="contact-text">Interested in working together or just want to chat? Drop me a message.</p>
+                    <div class="contact-links">
+                        <a href="mailto:con.shields1@gmail.com" class="contact-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            con.shields1@gmail.com
+                        </a>
+                        <a href="https://linkedin.com/in/conor-shields-369aa7166" class="contact-link" target="_blank" rel="noopener">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                            LinkedIn
+                        </a>
+                        <a href="https://github.com/cshields236" class="contact-link" target="_blank" rel="noopener">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Your message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Conor Shields &copy; 2024</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
