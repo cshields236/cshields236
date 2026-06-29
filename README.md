@@ -34,16 +34,16 @@
 <!-- LETTERBOXD-WATCHED:START -->
 <table>
   <tr>
+    <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/when-harry-met-sally/"><img src="https://a.ltrbxd.com/resized/film-poster/5/1/4/8/5/51485-when-harry-met-sally--0-600-0-900-crop.jpg?v=2f277e2fe7" width="150" alt="When Harry Met Sally..."/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/barry-lyndon/"><img src="https://a.ltrbxd.com/resized/sm/upload/0f/r6/bn/w7/x2JQCgLjieWOwvImeGtLmuNgsrq-0-600-0-900-crop.jpg?v=9c250ee969" width="150" alt="Barry Lyndon"/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/lady-bird/"><img src="https://a.ltrbxd.com/resized/film-poster/3/2/6/2/7/9/326279-lady-bird-0-600-0-900-crop.jpg?v=754ff28eb4" width="150" alt="Lady Bird"/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/12-angry-men/"><img src="https://a.ltrbxd.com/resized/film-poster/5/1/7/0/0/51700-12-angry-men-0-600-0-900-crop.jpg?v=b8aaf291a9" width="150" alt="12 Angry Men"/></a></td>
-    <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/chocolat-1988/"><img src="https://a.ltrbxd.com/resized/sm/upload/lw/p2/fi/xa/chocolat-0-600-0-900-crop.jpg?v=628022078d" width="150" alt="Chocolat"/></a></td>
   </tr>
   <tr>
+    <td align="center"><b>When Harry Met Sally...</b><br/>★★★★½</td>
     <td align="center"><b>Barry Lyndon</b><br/>★★★★★</td>
     <td align="center"><b>Lady Bird</b><br/>★★★★</td>
     <td align="center"><b>12 Angry Men</b><br/>★★★★★</td>
-    <td align="center"><b>Chocolat</b><br/>★★★★½</td>
   </tr>
 </table>
 <!-- LETTERBOXD-WATCHED:END -->
