@@ -64,12 +64,12 @@ def get_favourites():
         name, slug, link = match.groups()
         film_html = fetch_url(f"https://letterboxd.com/film/{slug}/")
         poster_match = re.search(
-            r'https://a\.ltrbxd\.com/resized/(?:film-poster|sm/upload)/[^"]*0-230-0-345-crop[^"]*',
+            r'https://a\.ltrbxd\.com/resized/(?:film-poster|sm/upload)/[^"]*?(0-\d+-0-\d+-crop)[^"]*',
             film_html,
         )
         poster = None
         if poster_match:
-            poster = poster_match.group(0).replace("0-230-0-345", "0-150-0-225")
+            poster = poster_match.group(0).replace(poster_match.group(1), "0-150-0-225-crop")
         films.append({"name": name, "slug": slug, "link": link, "poster": poster})
         if len(films) == 4:
             break
