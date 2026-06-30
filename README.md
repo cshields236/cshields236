@@ -17,13 +17,13 @@
 <table>
   <tr>
     <td align="center" width="150"><a href="https://letterboxd.com/film/la-haine/"><img src="" width="150" alt="La Haine (1995)"/></a></td>
-    <td align="center" width="150"><a href="https://letterboxd.com/film/the-battle-of-algiers/"><img src="" width="150" alt="The Battle of Algiers (1966)"/></a></td>
+    <td align="center" width="150"><a href="https://letterboxd.com/film/barry-lyndon/"><img src="" width="150" alt="Barry Lyndon (1975)"/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/film/autumn-sonata/"><img src="" width="150" alt="Autumn Sonata (1978)"/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/film/the-handmaiden/"><img src="" width="150" alt="The Handmaiden (2016)"/></a></td>
   </tr>
   <tr>
     <td align="center"><b>La Haine (1995)</b></td>
-    <td align="center"><b>The Battle of Algiers (1966)</b></td>
+    <td align="center"><b>Barry Lyndon (1975)</b></td>
     <td align="center"><b>Autumn Sonata (1978)</b></td>
     <td align="center"><b>The Handmaiden (2016)</b></td>
   </tr>
