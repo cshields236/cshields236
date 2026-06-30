@@ -16,10 +16,10 @@
 <!-- LETTERBOXD-FAVOURITES:START -->
 <table>
   <tr>
-    <td align="center" width="150"><a href="https://letterboxd.com/film/la-haine/"><img src="" width="150" alt="La Haine (1995)"/></a></td>
-    <td align="center" width="150"><a href="https://letterboxd.com/film/barry-lyndon/"><img src="" width="150" alt="Barry Lyndon (1975)"/></a></td>
-    <td align="center" width="150"><a href="https://letterboxd.com/film/autumn-sonata/"><img src="" width="150" alt="Autumn Sonata (1978)"/></a></td>
-    <td align="center" width="150"><a href="https://letterboxd.com/film/the-handmaiden/"><img src="" width="150" alt="The Handmaiden (2016)"/></a></td>
+    <td align="center" width="150"><a href="https://letterboxd.com/film/la-haine/"><img src="https://a.ltrbxd.com/resized/film-poster/5/1/6/8/4/51684-la-haine-0-150-0-225-crop.jpg?v=b6677cc136" width="150" alt="La Haine (1995)"/></a></td>
+    <td align="center" width="150"><a href="https://letterboxd.com/film/barry-lyndon/"><img src="https://a.ltrbxd.com/resized/sm/upload/0f/r6/bn/w7/x2JQCgLjieWOwvImeGtLmuNgsrq-0-150-0-225-crop.jpg?v=9c250ee969" width="150" alt="Barry Lyndon (1975)"/></a></td>
+    <td align="center" width="150"><a href="https://letterboxd.com/film/autumn-sonata/"><img src="https://a.ltrbxd.com/resized/sm/upload/dr/d3/nw/gv/m4I32itPMlRWqWJamFAwFDbrBXp-0-150-0-225-crop.jpg?v=45433653ca" width="150" alt="Autumn Sonata (1978)"/></a></td>
+    <td align="center" width="150"><a href="https://letterboxd.com/film/the-handmaiden/"><img src="https://a.ltrbxd.com/resized/sm/upload/pc/n6/pz/mi/wvzfK5QR6dGLwND8MCzWjsQWG4Q-0-150-0-225-crop.jpg?v=bcfcc8f8f6" width="150" alt="The Handmaiden (2016)"/></a></td>
   </tr>
   <tr>
     <td align="center"><b>La Haine (1995)</b></td>
