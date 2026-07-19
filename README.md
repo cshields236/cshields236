@@ -50,6 +50,7 @@
 
 # 📚 Last 10 Books I've Read 
 <!-- GOODREADS-LIST:START -->
+- [The Metamorphosis](https://www.goodreads.com/review/show/8698908509?utm_medium=api&utm_source=rss) by Franz Kafka (1915) ⭐⭐⭐⭐ <br />
 - [Transcription](https://www.goodreads.com/review/show/8667508335?utm_medium=api&utm_source=rss) by Ben Lerner (2026) ⭐⭐⭐⭐ <br />
 - [Capitalist Realism: Is There No Alternative?](https://www.goodreads.com/review/show/8667506565?utm_medium=api&utm_source=rss) by Mark Fisher (2009) ⭐⭐⭐⭐ <br />
 - [Post-Capitalist Desire](https://www.goodreads.com/review/show/8608336341?utm_medium=api&utm_source=rss) by Mark Fisher (2020) ⭐⭐⭐⭐ <br />
@@ -59,5 +60,4 @@
 - [Intermezzo](https://www.goodreads.com/review/show/6884864200?utm_medium=api&utm_source=rss) by Sally Rooney (2024) ⭐⭐⭐⭐⭐ <br />
 - [Into the War](https://www.goodreads.com/review/show/7736762315?utm_medium=api&utm_source=rss) by Italo Calvino (1954) ⭐⭐⭐ <br />
 - [The Trial](https://www.goodreads.com/review/show/7678841270?utm_medium=api&utm_source=rss) by Franz Kafka (1925) ⭐⭐⭐⭐⭐ <br />
-- [Leaving the Atocha Station](https://www.goodreads.com/review/show/7641307020?utm_medium=api&utm_source=rss) by Ben Lerner (2011) ⭐⭐⭐⭐ <br />
 <!-- GOODREADS-LIST:END -->
