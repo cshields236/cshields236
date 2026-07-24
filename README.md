@@ -34,16 +34,16 @@
 <!-- LETTERBOXD-WATCHED:START -->
 <table>
   <tr>
+    <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/nirvanna-the-band-the-show-the-movie/"><img src="https://a.ltrbxd.com/resized/film-poster/1/0/4/1/0/1/2/1041012-nirvanna-the-band-the-show-the-movie-0-600-0-900-crop.jpg?v=4d80f82f8a" width="150" alt="Nirvanna the Band the Show the Movie"/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/blue-velvet/"><img src="https://a.ltrbxd.com/resized/film-poster/5/1/3/5/9/51359-blue-velvet-0-600-0-900-crop.jpg?v=b0ee3c20f6" width="150" alt="Blue Velvet"/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/when-harry-met-sally/"><img src="https://a.ltrbxd.com/resized/film-poster/5/1/4/8/5/51485-when-harry-met-sally--0-600-0-900-crop.jpg?v=2f277e2fe7" width="150" alt="When Harry Met Sally..."/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/barry-lyndon/"><img src="https://a.ltrbxd.com/resized/sm/upload/0f/r6/bn/w7/x2JQCgLjieWOwvImeGtLmuNgsrq-0-600-0-900-crop.jpg?v=9c250ee969" width="150" alt="Barry Lyndon"/></a></td>
-    <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/lady-bird/"><img src="https://a.ltrbxd.com/resized/film-poster/3/2/6/2/7/9/326279-lady-bird-0-600-0-900-crop.jpg?v=754ff28eb4" width="150" alt="Lady Bird"/></a></td>
   </tr>
   <tr>
+    <td align="center"><b>Nirvanna the Band the Show the Movie</b><br/>★★★½</td>
     <td align="center"><b>Blue Velvet</b><br/>★★★★½</td>
     <td align="center"><b>When Harry Met Sally...</b><br/>★★★★½</td>
     <td align="center"><b>Barry Lyndon</b><br/>★★★★★</td>
-    <td align="center"><b>Lady Bird</b><br/>★★★★</td>
   </tr>
 </table>
 <!-- LETTERBOXD-WATCHED:END -->
