@@ -59,7 +59,12 @@ def get_last_4_watched():
 
 
 def get_favourites():
-    html = fetch_url(LETTERBOXD_PROFILE)
+    try:
+        html = fetch_url(LETTERBOXD_PROFILE)
+    except urllib.error.HTTPError as e:
+        print(f"Skipping favourites update: {e}")
+        return None
+
     fav_section = re.search(r'id="favourites".*?</section>', html, re.DOTALL)
     if not fav_section:
         return []
@@ -71,7 +76,11 @@ def get_favourites():
         section,
     ):
         name, slug, link = match.groups()
-        film_html = fetch_url(f"https://letterboxd.com/film/{slug}/")
+        try:
+            film_html = fetch_url(f"https://letterboxd.com/film/{slug}/")
+        except urllib.error.HTTPError as e:
+            print(f"Skipping favourites update: {e}")
+            return None
         poster_match = re.search(
             r'https://a\.ltrbxd\.com/resized/(?:film-poster|sm/upload)/[^"]*?(0-\d+-0-\d+-crop)[^"]*',
             film_html,
@@ -193,7 +202,8 @@ def main():
     with open(SITE_PATH, "w") as f:
         f.write(html)
 
-    print(f"Updated site: {len(favourites)} favourites, {len(watched)} watched, {len(books)} books.")
+    fav_count = len(favourites) if favourites is not None else "unchanged"
+    print(f"Updated site: {fav_count} favourites, {len(watched)} watched, {len(books)} books.")
 
 
 if __name__ == "__main__":
