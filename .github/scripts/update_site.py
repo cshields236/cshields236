@@ -29,7 +29,7 @@ def fetch_url(url):
         return resp.read().decode("utf-8")
 
 
-def get_last_4_watched():
+def get_recent_watched(limit=15):
     data = fetch_url(LETTERBOXD_RSS)
     root = ET.fromstring(data)
     ns = {"letterboxd": "https://letterboxd.com", "tmdb": "https://themoviedb.org"}
@@ -53,7 +53,7 @@ def get_last_4_watched():
             "link": link,
             "poster": poster,
         })
-        if len(films) == 4:
+        if len(films) == limit:
             break
     return films
 
@@ -169,7 +169,7 @@ def render_books(books):
 
 def main():
     favourites = get_favourites()
-    watched = get_last_4_watched()
+    watched = get_recent_watched()
     books = get_books()
 
     for site_path in SITE_PATHS:
