@@ -50,7 +50,12 @@ def get_last_4_watched():
 
 
 def get_favourites():
-    html = fetch_url(PROFILE_URL)
+    try:
+        html = fetch_url(PROFILE_URL)
+    except urllib.error.HTTPError as e:
+        print(f"Skipping favourites update: {e}")
+        return None
+
     fav_section = re.search(r'id="favourites".*?</section>', html, re.DOTALL)
     if not fav_section:
         return []
@@ -62,7 +67,11 @@ def get_favourites():
         section,
     ):
         name, slug, link = match.groups()
-        film_html = fetch_url(f"https://letterboxd.com/film/{slug}/")
+        try:
+            film_html = fetch_url(f"https://letterboxd.com/film/{slug}/")
+        except urllib.error.HTTPError as e:
+            print(f"Skipping favourites update: {e}")
+            return None
         poster_match = re.search(
             r'https://a\.ltrbxd\.com/resized/(?:film-poster|sm/upload)/[^"]*?(0-\d+-0-\d+-crop)[^"]*',
             film_html,
@@ -118,17 +127,18 @@ def main():
     favourites = get_favourites()
 
     watched_md = render_film_table(watched, is_favourites=False)
-    favourites_md = render_film_table(favourites, is_favourites=True)
 
     with open(README_PATH, "r") as f:
         readme = f.read()
 
-    readme = re.sub(
-        r"<!-- LETTERBOXD-FAVOURITES:START -->.*?<!-- LETTERBOXD-FAVOURITES:END -->",
-        f"<!-- LETTERBOXD-FAVOURITES:START -->\n{favourites_md}\n<!-- LETTERBOXD-FAVOURITES:END -->",
-        readme,
-        flags=re.DOTALL,
-    )
+    if favourites is not None:
+        favourites_md = render_film_table(favourites, is_favourites=True)
+        readme = re.sub(
+            r"<!-- LETTERBOXD-FAVOURITES:START -->.*?<!-- LETTERBOXD-FAVOURITES:END -->",
+            f"<!-- LETTERBOXD-FAVOURITES:START -->\n{favourites_md}\n<!-- LETTERBOXD-FAVOURITES:END -->",
+            readme,
+            flags=re.DOTALL,
+        )
     readme = re.sub(
         r"<!-- LETTERBOXD-WATCHED:START -->.*?<!-- LETTERBOXD-WATCHED:END -->",
         f"<!-- LETTERBOXD-WATCHED:START -->\n{watched_md}\n<!-- LETTERBOXD-WATCHED:END -->",
@@ -139,7 +149,8 @@ def main():
     with open(README_PATH, "w") as f:
         f.write(readme)
 
-    print(f"Updated README with {len(favourites)} favourites and {len(watched)} recently watched films.")
+    fav_count = len(favourites) if favourites is not None else "unchanged"
+    print(f"Updated README with {fav_count} favourites and {len(watched)} recently watched films.")
 
 
 if __name__ == "__main__":
