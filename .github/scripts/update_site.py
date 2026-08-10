@@ -7,7 +7,7 @@ GOODREADS_USER_ID = "106016596"
 LETTERBOXD_RSS = f"https://letterboxd.com/{LETTERBOXD_USERNAME}/rss/"
 LETTERBOXD_PROFILE = f"https://letterboxd.com/{LETTERBOXD_USERNAME}/"
 GOODREADS_RSS = f"https://www.goodreads.com/review/list_rss/{GOODREADS_USER_ID}?shelf=read"
-SITE_PATH = "docs/index.html"
+SITE_PATHS = ["docs/index.html", "docs/es/index.html"]
 
 STAR_MAP = {
     "0.5": "&#9733;&#189;", "1.0": "&#9733;", "1.5": "&#9733;&#189;",
@@ -172,38 +172,39 @@ def main():
     watched = get_last_4_watched()
     books = get_books()
 
-    with open(SITE_PATH, "r") as f:
-        html = f.read()
+    for site_path in SITE_PATHS:
+        with open(site_path, "r") as f:
+            html = f.read()
 
-    if favourites:
-        favourites_html = render_favourites(favourites)
-        html = re.sub(
-            r"<!-- SITE-FAVOURITES:START -->.*?<!-- SITE-FAVOURITES:END -->",
-            f"<!-- SITE-FAVOURITES:START -->\n{favourites_html}\n                    <!-- SITE-FAVOURITES:END -->",
-            html, flags=re.DOTALL,
-        )
+        if favourites:
+            favourites_html = render_favourites(favourites)
+            html = re.sub(
+                r"<!-- SITE-FAVOURITES:START -->.*?<!-- SITE-FAVOURITES:END -->",
+                f"<!-- SITE-FAVOURITES:START -->\n{favourites_html}\n                    <!-- SITE-FAVOURITES:END -->",
+                html, flags=re.DOTALL,
+            )
 
-    if watched:
-        watched_html = render_watched(watched)
-        html = re.sub(
-            r"<!-- SITE-WATCHED:START -->.*?<!-- SITE-WATCHED:END -->",
-            f"<!-- SITE-WATCHED:START -->\n{watched_html}\n                    <!-- SITE-WATCHED:END -->",
-            html, flags=re.DOTALL,
-        )
+        if watched:
+            watched_html = render_watched(watched)
+            html = re.sub(
+                r"<!-- SITE-WATCHED:START -->.*?<!-- SITE-WATCHED:END -->",
+                f"<!-- SITE-WATCHED:START -->\n{watched_html}\n                    <!-- SITE-WATCHED:END -->",
+                html, flags=re.DOTALL,
+            )
 
-    if books:
-        books_html = render_books(books)
-        html = re.sub(
-            r"<!-- SITE-BOOKS:START -->.*?<!-- SITE-BOOKS:END -->",
-            f"<!-- SITE-BOOKS:START -->\n{books_html}\n                <!-- SITE-BOOKS:END -->",
-            html, flags=re.DOTALL,
-        )
+        if books:
+            books_html = render_books(books)
+            html = re.sub(
+                r"<!-- SITE-BOOKS:START -->.*?<!-- SITE-BOOKS:END -->",
+                f"<!-- SITE-BOOKS:START -->\n{books_html}\n                <!-- SITE-BOOKS:END -->",
+                html, flags=re.DOTALL,
+            )
 
-    with open(SITE_PATH, "w") as f:
-        f.write(html)
+        with open(site_path, "w") as f:
+            f.write(html)
 
     fav_count = len(favourites) if favourites is not None else "unchanged"
-    print(f"Updated site: {fav_count} favourites, {len(watched)} watched, {len(books)} books.")
+    print(f"Updated {len(SITE_PATHS)} site file(s): {fav_count} favourites, {len(watched)} watched, {len(books)} books.")
 
 
 if __name__ == "__main__":
