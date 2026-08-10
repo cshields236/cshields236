@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initQuiz();
     initTicket();
     initCreditsRoll();
+    initFilmsCarousel();
 });
 
 function shuffle(arr) {
@@ -401,4 +402,41 @@ function initCreditsRoll() {
         requestAnimationFrame(() => { checkBottom(); ticking = false; });
     }
     window.addEventListener('scroll', onScroll, { passive: true });
+}
+
+/* ─── Films Carousel ───
+   Lets visitors browse the full "Recently Screened" selection rather
+   than only the first few titles that fit on screen. */
+function initFilmsCarousel() {
+    const track = document.getElementById('watched-track');
+    const prevBtn = document.getElementById('watched-prev');
+    const nextBtn = document.getElementById('watched-next');
+    if (!track || !prevBtn || !nextBtn) return;
+
+    function scrollByCards(dir) {
+        const card = track.querySelector('.film-card');
+        if (!card) return;
+        const trackStyle = getComputedStyle(track);
+        const gap = parseFloat(trackStyle.columnGap || trackStyle.gap || '0');
+        const amount = (card.getBoundingClientRect().width + gap) * 3;
+        track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+    }
+
+    prevBtn.addEventListener('click', () => scrollByCards(-1));
+    nextBtn.addEventListener('click', () => scrollByCards(1));
+
+    function updateButtons() {
+        const maxScroll = track.scrollWidth - track.clientWidth - 1;
+        prevBtn.disabled = track.scrollLeft <= 4;
+        nextBtn.disabled = maxScroll <= 0 || track.scrollLeft >= maxScroll - 4;
+    }
+
+    let ticking = false;
+    track.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { updateButtons(); ticking = false; });
+    }, { passive: true });
+    window.addEventListener('resize', updateButtons);
+    updateButtons();
 }

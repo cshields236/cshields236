@@ -543,6 +543,77 @@ textarea:focus-visible {
     gap: 1.1rem;
 }
 
+.films-carousel {
+    position: relative;
+    margin: 0 -0.1rem;
+}
+
+.films-track {
+    display: flex;
+    gap: 1.1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 0.15rem 0.15rem 0.75rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+}
+
+.films-track::-webkit-scrollbar {
+    display: none;
+}
+
+.films-track .film-card {
+    flex: 0 0 150px;
+    scroll-snap-align: start;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    background: var(--bg-alt);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    line-height: 1;
+    transition: border-color 0.2s, color 0.2s, opacity 0.2s;
+}
+
+.carousel-btn:hover {
+    border-color: var(--crimson);
+    color: var(--crimson);
+}
+
+.carousel-btn:disabled {
+    opacity: 0.2;
+    cursor: default;
+}
+
+.carousel-prev {
+    left: -14px;
+}
+
+.carousel-next {
+    right: -14px;
+}
+
+@media (max-width: 640px) {
+    .carousel-btn {
+        display: none;
+    }
+}
+
 .film-card {
     text-decoration: none;
     color: var(--text);
