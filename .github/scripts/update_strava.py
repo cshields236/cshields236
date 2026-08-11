@@ -108,15 +108,33 @@ def reverse_geocode(lat, lng):
         return None
 
 
+def is_generated_photo(photo):
+    """Whoop (and similar device integrations) auto-attach a generated
+    summary-card graphic as the activity's "photo". It has no camera EXIF
+    location and is uploaded at the exact same instant it's "created" —
+    a real photo almost always has a gap between being taken and uploaded,
+    plus GPS location data. Neither signal alone is fully reliable, so
+    require both before treating a photo as generated rather than real."""
+    has_location = bool(photo.get("location"))
+    created = photo.get("created_at")
+    uploaded = photo.get("uploaded_at")
+    same_instant = created is not None and created == uploaded
+    return not has_location and same_instant
+
+
 def get_photo_urls(activity_id, access_token, limit=2):
     try:
         url = f"https://www.strava.com/api/v3/activities/{activity_id}/photos?size=600"
         photos = fetch_json(url, headers={"Authorization": f"Bearer {access_token}"})
         urls = []
-        for p in photos[:limit]:
+        for p in photos:
+            if is_generated_photo(p):
+                continue
             u = p.get("urls", {}).get("600")
             if u:
                 urls.append(u)
+            if len(urls) == limit:
+                break
         return urls
     except Exception:
         return []
@@ -187,13 +205,12 @@ def get_activities(access_token):
             location = reverse_geocode(*start_latlng)
             time.sleep(1)  # respect Nominatim's usage policy
 
-        # Skip photos for Whoop-synced activities: Whoop auto-attaches a
-        # generated strain-summary graphic as the activity's "photo", not
-        # an actual picture, and it isn't distinguishable from a real
-        # photo via any other field in the API response.
+        # Device integrations like Whoop can auto-attach a generated
+        # summary-card graphic as the activity's "photo" — filtered out
+        # per-photo in get_photo_urls (see is_generated_photo), since a
+        # Whoop-tracked activity can still have a real photo attached too.
         photos = []
-        is_whoop = (act.get("device_name") or "").strip().upper() == "WHOOP"
-        if not is_whoop and act.get("total_photo_count", 0) > 0:
+        if act.get("total_photo_count", 0) > 0:
             photos = get_photo_urls(act["id"], access_token)
 
         from datetime import datetime
