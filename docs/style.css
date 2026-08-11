@@ -1705,7 +1705,7 @@ textarea:focus-visible {
     }
 
     .nav, .mobile-menu, .resume-btn, .hero-avatar, .hero-scroll,
-    .section.films, .section.books,
+    .section.films, .section.routes, .section.books,
     .contact-form, .footer,
     .credits-roll, .quiz-backdrop, .ticket-backdrop {
         display: none !important;
