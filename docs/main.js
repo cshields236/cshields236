@@ -61,6 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initCreditsRoll();
     initFilmsCarousel();
     initRoutes();
+
+    const resumeBtn = document.getElementById('resume-btn');
+    if (resumeBtn) resumeBtn.addEventListener('click', () => window.print());
 });
 
 function shuffle(arr) {
