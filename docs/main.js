@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTicket();
     initCreditsRoll();
     initFilmsCarousel();
+    initRoutes();
 });
 
 function shuffle(arr) {
@@ -439,4 +440,40 @@ function initFilmsCarousel() {
     }, { passive: true });
     window.addEventListener('resize', updateButtons);
     updateButtons();
+}
+
+/* ─── On Location (Strava Routes) ───
+   Routes/locations/photos are synced in by update_strava.py. Clicking
+   a route highlights its sketch, updates the location tag and stats,
+   and swaps the on-location photo strip in or out. */
+function initRoutes() {
+    const list = document.getElementById('routes-list');
+    if (!list) return;
+
+    const items = list.querySelectorAll('.route-item');
+    const paths = document.querySelectorAll('.route-path');
+    const markers = document.querySelectorAll('.route-marker');
+    const readoutDist = document.getElementById('routes-readout-dist');
+    const readoutMeta = document.getElementById('routes-readout-meta');
+    const locTag = document.getElementById('routes-loc-tag');
+    const photosWrap = document.getElementById('route-photos');
+    const photoStrips = photosWrap ? photosWrap.querySelectorAll('.photos-strip') : [];
+
+    items.forEach(item => {
+        item.addEventListener('click', () => {
+            const idx = item.dataset.route;
+            items.forEach(i => i.classList.toggle('active', i === item));
+            paths.forEach(p => p.classList.toggle('active', p.dataset.route === idx));
+            markers.forEach(m => m.classList.toggle('active', m.dataset.route === idx));
+            readoutDist.textContent = item.dataset.dist;
+            readoutMeta.textContent = item.dataset.meta;
+            locTag.innerHTML = 'Loc. <b>' + item.dataset.loc + '</b>';
+
+            const hasPhotos = parseInt(item.dataset.photos, 10) > 0;
+            photosWrap.classList.toggle('show', hasPhotos);
+            photoStrips.forEach(strip => {
+                strip.hidden = strip.dataset.route !== idx;
+            });
+        });
+    });
 }

@@ -18,4 +18,4 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git diff --quiet || (git add docs/index.html && git commit -m "Update site with latest films and books" && git push)
+          git diff --quiet || (git add docs/index.html docs/es/index.html && git commit -m "Update site with latest films and books" && git push)
