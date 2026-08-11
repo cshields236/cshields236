@@ -322,6 +322,27 @@ textarea:focus-visible {
     color: var(--crimson);
 }
 
+.resume-btn {
+    display: block;
+    margin: 2rem auto 0;
+    padding: 0.7rem 1.5rem;
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.3s, color 0.3s;
+}
+
+.resume-btn:hover {
+    border-color: var(--crimson);
+    color: var(--crimson);
+}
+
 .hero-scroll {
     position: absolute;
     bottom: 3rem;
@@ -1653,5 +1674,83 @@ textarea:focus-visible {
     .timeline-item {
         grid-template-columns: 1fr;
         gap: 0.5rem;
+    }
+}
+
+/* ─── Print (Résumé Export) ───
+   Reuses the site's own components, just repoints the CSS custom
+   properties at a light, ink-conscious palette and hides everything
+   that isn't part of a CV (films, books, quiz, contact form, etc). */
+@media print {
+    :root {
+        --bg: #ffffff;
+        --bg-alt: #f5f3ee;
+        --paper: #ffffff;
+        --paper-dim: #eee8d9;
+        --text: #1a1a1a;
+        --text-muted: #3a3a3a;
+        --text-dim: #5c5c5c;
+        --line: rgba(0, 0, 0, 0.15);
+        --line-strong: rgba(0, 0, 0, 0.3);
+        --crimson: #8a2f24;
+        --crimson-soft: rgba(138, 47, 36, 0.08);
+    }
+
+    @page {
+        margin: 1.6cm;
+    }
+
+    body {
+        background: #fff;
+    }
+
+    .nav, .mobile-menu, .resume-btn, .hero-avatar, .hero-scroll,
+    .section.films, .section.books,
+    .contact-form, .footer,
+    .credits-roll, .quiz-backdrop, .ticket-backdrop {
+        display: none !important;
+    }
+
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 0 0 1.5rem;
+        background-image: none;
+    }
+
+    .hero-title {
+        font-size: 2.4rem;
+    }
+
+    .section {
+        padding: 1.25rem 0;
+        border-top-color: var(--line);
+    }
+
+    .section.tech, .section.books {
+        background: var(--bg-alt);
+    }
+
+    .tech-category, .timeline-item {
+        break-inside: avoid;
+    }
+
+    .contact-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .contact-link {
+        border: none !important;
+        padding: 0;
+    }
+
+    a {
+        text-decoration: underline;
     }
 }
