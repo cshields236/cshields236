@@ -86,6 +86,9 @@ def polyline_to_svg_path(points):
     return d, coords[0]
 
 
+COUNTRY_ABBR = {"United Kingdom": "UK", "United States": "USA"}
+
+
 def reverse_geocode(lat, lng):
     try:
         url = f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lng}&zoom=15&format=json"
@@ -95,10 +98,28 @@ def reverse_geocode(lat, lng):
         city = addr.get("city") or addr.get("town") or addr.get("village")
         if city == "Greater London":
             city = "London"
-        parts = [p for p in (area, city) if p]
+        country = addr.get("country")
+        if country and " / " in country:
+            country = country.split(" / ")[-1]
+        country = COUNTRY_ABBR.get(country, country)
+        parts = [p for p in (area, city, country) if p]
         return ", ".join(parts) if parts else None
     except Exception:
         return None
+
+
+def is_generated_photo(photo):
+    """Whoop (and similar device integrations) auto-attach a generated
+    summary-card graphic as the activity's "photo". It has no camera EXIF
+    location and is uploaded at the exact same instant it's "created" —
+    a real photo almost always has a gap between being taken and uploaded,
+    plus GPS location data. Neither signal alone is fully reliable, so
+    require both before treating a photo as generated rather than real."""
+    has_location = bool(photo.get("location"))
+    created = photo.get("created_at")
+    uploaded = photo.get("uploaded_at")
+    same_instant = created is not None and created == uploaded
+    return not has_location and same_instant
 
 
 def get_photo_urls(activity_id, access_token, limit=2):
@@ -106,10 +127,14 @@ def get_photo_urls(activity_id, access_token, limit=2):
         url = f"https://www.strava.com/api/v3/activities/{activity_id}/photos?size=600"
         photos = fetch_json(url, headers={"Authorization": f"Bearer {access_token}"})
         urls = []
-        for p in photos[:limit]:
+        for p in photos:
+            if is_generated_photo(p):
+                continue
             u = p.get("urls", {}).get("600")
             if u:
                 urls.append(u)
+            if len(urls) == limit:
+                break
         return urls
     except Exception:
         return []
@@ -180,6 +205,10 @@ def get_activities(access_token):
             location = reverse_geocode(*start_latlng)
             time.sleep(1)  # respect Nominatim's usage policy
 
+        # Device integrations like Whoop can auto-attach a generated
+        # summary-card graphic as the activity's "photo" — filtered out
+        # per-photo in get_photo_urls (see is_generated_photo), since a
+        # Whoop-tracked activity can still have a real photo attached too.
         photos = []
         if act.get("total_photo_count", 0) > 0:
             photos = get_photo_urls(act["id"], access_token)
