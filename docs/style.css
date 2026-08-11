@@ -931,6 +931,10 @@ textarea:focus-visible {
     flex-wrap: wrap;
 }
 
+.photos-strip[hidden] {
+    display: none;
+}
+
 .photo-frame {
     width: 140px;
     flex-shrink: 0;

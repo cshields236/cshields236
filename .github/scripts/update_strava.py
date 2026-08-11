@@ -86,6 +86,9 @@ def polyline_to_svg_path(points):
     return d, coords[0]
 
 
+COUNTRY_ABBR = {"United Kingdom": "UK", "United States": "USA"}
+
+
 def reverse_geocode(lat, lng):
     try:
         url = f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lng}&zoom=15&format=json"
@@ -95,7 +98,11 @@ def reverse_geocode(lat, lng):
         city = addr.get("city") or addr.get("town") or addr.get("village")
         if city == "Greater London":
             city = "London"
-        parts = [p for p in (area, city) if p]
+        country = addr.get("country")
+        if country and " / " in country:
+            country = country.split(" / ")[-1]
+        country = COUNTRY_ABBR.get(country, country)
+        parts = [p for p in (area, city, country) if p]
         return ", ".join(parts) if parts else None
     except Exception:
         return None
@@ -180,8 +187,13 @@ def get_activities(access_token):
             location = reverse_geocode(*start_latlng)
             time.sleep(1)  # respect Nominatim's usage policy
 
+        # Skip photos for Whoop-synced activities: Whoop auto-attaches a
+        # generated strain-summary graphic as the activity's "photo", not
+        # an actual picture, and it isn't distinguishable from a real
+        # photo via any other field in the API response.
         photos = []
-        if act.get("total_photo_count", 0) > 0:
+        is_whoop = (act.get("device_name") or "").strip().upper() == "WHOOP"
+        if not is_whoop and act.get("total_photo_count", 0) > 0:
             photos = get_photo_urls(act["id"], access_token)
 
         from datetime import datetime
