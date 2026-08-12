@@ -355,7 +355,7 @@ function initCasting() {
         const message = form.querySelector('#message').value;
         const subject = encodeURIComponent(`Message from ${name}`);
         const body = encodeURIComponent(`From: ${name} (${email})\n\n${message}`);
-        continueLink.href = `mailto:con.shields1@gmail.com?subject=${subject}&body=${body}`;
+        continueLink.href = `mailto:me@conorshields.ie?subject=${subject}&body=${body}`;
 
         const now = new Date();
         dateEl.textContent = now.toLocaleDateString(dateLocale, { day: '2-digit', month: 'short', year: 'numeric' });
