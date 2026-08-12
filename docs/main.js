@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCasting();
     initCreditsRoll();
     initFilmsCarousel();
+    initFilmFlip();
     initRoutes();
 
     const resumeBtn = document.getElementById('resume-btn');
@@ -472,6 +473,21 @@ function initFilmsCarousel() {
     }, { passive: true });
     window.addEventListener('resize', updateButtons);
     updateButtons();
+}
+
+/* ─── Film Review Flip ───
+   Reviewed films in "Recently Screened" flip in place to reveal the
+   review text left on Letterboxd, via the small toggle badge in the
+   poster's corner. Plain (non-reviewed) cards are untouched. */
+function initFilmFlip() {
+    document.querySelectorAll('#watched-track .film-review-toggle').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const card = btn.closest('.film-card-flippable');
+            if (card) card.classList.toggle('flipped');
+        });
+    });
 }
 
 /* ─── On Location (Strava Routes) ───
