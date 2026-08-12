@@ -764,6 +764,7 @@ textarea:focus-visible {
     flex-direction: column;
     justify-content: space-between;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
 }
 
 .film-review {
@@ -772,6 +773,8 @@ textarea:focus-visible {
     font-size: 0.7rem;
     line-height: 1.45;
     overflow-y: auto;
+    flex: 1 1 auto;
+    min-height: 0;
 }
 
 .film-review-link {

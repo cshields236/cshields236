@@ -488,6 +488,14 @@ function initFilmFlip() {
             if (card) card.classList.toggle('flipped');
         });
     });
+
+    document.querySelectorAll('#watched-track .film-flip-back').forEach(back => {
+        back.addEventListener('click', (e) => {
+            if (e.target.closest('.film-review-link')) return;
+            const card = back.closest('.film-card-flippable');
+            if (card) card.classList.remove('flipped');
+        });
+    });
 }
 
 /* ─── On Location (Strava Routes) ───
