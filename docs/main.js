@@ -1,4 +1,5 @@
 const LANG = document.documentElement.lang === 'es' ? 'es' : 'en';
+const dateLocale = LANG === 'es' ? 'es-ES' : 'en-GB';
 
 let scrollLockCount = 0;
 function lockScroll() {
@@ -44,20 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     reveals.forEach(el => observer.observe(el));
 
-    const form = document.getElementById('contact-form');
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = form.querySelector('#name').value;
-        const email = form.querySelector('#email').value;
-        const message = form.querySelector('#message').value;
-        const subject = encodeURIComponent(`Message from ${name}`);
-        const body = encodeURIComponent(`From: ${name} (${email})\n\n${message}`);
-        window.location.href = `mailto:con.shields1@gmail.com?subject=${subject}&body=${body}`;
-        form.reset();
-    });
-
     initQuiz();
     initTicket();
+    initCasting();
     initCreditsRoll();
     initFilmsCarousel();
     initRoutes();
@@ -324,8 +314,6 @@ function initTicket() {
     const emailLink = document.querySelector('.contact-link[href^="mailto:"]');
     if (!backdrop || !emailLink) return;
 
-    const dateLocale = LANG === 'es' ? 'es-ES' : 'en-GB';
-
     emailLink.addEventListener('click', (e) => {
         e.preventDefault();
         const now = new Date();
@@ -346,6 +334,47 @@ function initTicket() {
     backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeTicket(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && backdrop.classList.contains('show')) closeTicket(); });
     continueLink.addEventListener('click', () => { setTimeout(closeTicket, 300); });
+}
+
+/* ─── Casting Notice ───
+   Intercepts the contact form's submit with a themed confirmation before
+   handing off to the visitor's email client, mirroring initTicket(). */
+function initCasting() {
+    const backdrop = document.getElementById('casting-backdrop');
+    const closeBtn = document.getElementById('casting-close');
+    const continueLink = document.getElementById('casting-continue');
+    const dateEl = document.getElementById('casting-date');
+    const serialEl = document.getElementById('casting-serial');
+    const form = document.getElementById('contact-form');
+    if (!backdrop || !form) return;
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = form.querySelector('#name').value;
+        const email = form.querySelector('#email').value;
+        const message = form.querySelector('#message').value;
+        const subject = encodeURIComponent(`Message from ${name}`);
+        const body = encodeURIComponent(`From: ${name} (${email})\n\n${message}`);
+        continueLink.href = `mailto:con.shields1@gmail.com?subject=${subject}&body=${body}`;
+
+        const now = new Date();
+        dateEl.textContent = now.toLocaleDateString(dateLocale, { day: '2-digit', month: 'short', year: 'numeric' });
+        serialEl.textContent = '#' + now.getTime().toString().slice(-6);
+        backdrop.classList.add('show');
+        lockScroll();
+        form.reset();
+    });
+
+    function closeCasting() {
+        if (!backdrop.classList.contains('show')) return;
+        backdrop.classList.remove('show');
+        unlockScroll();
+    }
+
+    closeBtn.addEventListener('click', closeCasting);
+    backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeCasting(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && backdrop.classList.contains('show')) closeCasting(); });
+    continueLink.addEventListener('click', () => { setTimeout(closeCasting, 300); });
 }
 
 /* ─── Closing Credits ───

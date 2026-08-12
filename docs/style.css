@@ -458,6 +458,30 @@ textarea:focus-visible {
     color: var(--crimson);
 }
 
+/* ─── Box Office ─── */
+.box-office-stat {
+    text-align: center;
+}
+
+.box-office-number {
+    display: block;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(3.5rem, 12vw, 6rem);
+    line-height: 1;
+    color: var(--crimson);
+}
+
+.box-office-caption {
+    display: block;
+    margin-top: 1rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+
 /* ─── Timeline (Engagements) ─── */
 .timeline {
     display: flex;
@@ -540,15 +564,18 @@ textarea:focus-visible {
 }
 
 /* ─── Films ─── */
-.films-block {
+.films-block,
+.books-block {
     margin-bottom: 3.5rem;
 }
 
-.films-block:last-child {
+.films-block:last-child,
+.books-block:last-child {
     margin-bottom: 0;
 }
 
-.films-subtitle {
+.films-subtitle,
+.books-subtitle {
     font-family: var(--mono);
     font-size: 0.68rem;
     letter-spacing: 0.16em;
@@ -1375,8 +1402,9 @@ textarea:focus-visible {
     }
 }
 
-/* ─── Ticket Stub ─── */
-.ticket-backdrop {
+/* ─── Ticket Stub & Casting Notice ─── */
+.ticket-backdrop,
+.casting-backdrop {
     position: fixed;
     inset: 0;
     z-index: 200;
@@ -1390,12 +1418,14 @@ textarea:focus-visible {
     transition: opacity 0.3s var(--ease-smooth);
 }
 
-.ticket-backdrop.show {
+.ticket-backdrop.show,
+.casting-backdrop.show {
     opacity: 1;
     pointer-events: all;
 }
 
-.ticket {
+.ticket,
+.casting-notice {
     width: 100%;
     max-width: 420px;
     background: var(--paper);
@@ -1409,12 +1439,14 @@ textarea:focus-visible {
     overflow: hidden;
 }
 
-.ticket-backdrop.show .ticket {
+.ticket-backdrop.show .ticket,
+.casting-backdrop.show .casting-notice {
     transform: scale(1);
     opacity: 1;
 }
 
-.ticket-close {
+.ticket-close,
+.casting-close {
     position: absolute;
     top: 0.85rem;
     right: 1rem;
@@ -1430,11 +1462,13 @@ textarea:focus-visible {
     z-index: 1;
 }
 
-.ticket-close:hover {
+.ticket-close:hover,
+.casting-close:hover {
     opacity: 1;
 }
 
-.ticket-stub {
+.ticket-stub,
+.casting-stub {
     padding: 1.1rem 1.5rem;
     display: flex;
     justify-content: space-between;
@@ -1442,7 +1476,8 @@ textarea:focus-visible {
     background: var(--paper-dim);
 }
 
-.ticket-eyebrow {
+.ticket-eyebrow,
+.casting-eyebrow {
     font-family: var(--mono);
     font-size: 0.7rem;
     letter-spacing: 0.14em;
@@ -1450,21 +1485,25 @@ textarea:focus-visible {
     color: var(--crimson);
 }
 
-.ticket-serial {
+.ticket-serial,
+.casting-serial {
     font-family: var(--mono);
     font-size: 0.7rem;
     color: var(--ink);
     opacity: 0.55;
 }
 
-.ticket-perf {
+.ticket-perf,
+.casting-perf {
     position: relative;
     height: 0;
     border-top: 2px dashed rgba(34, 31, 24, 0.35);
 }
 
 .ticket-perf::before,
-.ticket-perf::after {
+.ticket-perf::after,
+.casting-perf::before,
+.casting-perf::after {
     content: '';
     position: absolute;
     top: -9px;
@@ -1474,19 +1513,23 @@ textarea:focus-visible {
     background: rgba(6, 12, 10, 0.72);
 }
 
-.ticket-perf::before {
+.ticket-perf::before,
+.casting-perf::before {
     left: -9px;
 }
 
-.ticket-perf::after {
+.ticket-perf::after,
+.casting-perf::after {
     right: -9px;
 }
 
-.ticket-main {
+.ticket-main,
+.casting-main {
     padding: 1.6rem 1.75rem 1.9rem;
 }
 
-.ticket-title {
+.ticket-title,
+.casting-title {
     font-family: var(--display);
     font-weight: 800;
     font-size: 1.3rem;
@@ -1495,7 +1538,8 @@ textarea:focus-visible {
     color: var(--ink);
 }
 
-.ticket-detail {
+.ticket-detail,
+.casting-detail {
     font-family: var(--serif);
     font-size: 0.92rem;
     line-height: 1.55;
@@ -1504,7 +1548,8 @@ textarea:focus-visible {
     margin-top: 0.75rem;
 }
 
-.ticket-meta {
+.ticket-meta,
+.casting-meta {
     display: flex;
     justify-content: space-between;
     margin-top: 1.1rem;
@@ -1516,7 +1561,8 @@ textarea:focus-visible {
     opacity: 0.6;
 }
 
-.ticket-continue {
+.ticket-continue,
+.casting-continue {
     display: inline-block;
     margin-top: 1.4rem;
     padding: 0.75rem 1.5rem;
@@ -1531,13 +1577,16 @@ textarea:focus-visible {
     transition: opacity 0.2s;
 }
 
-.ticket-continue:hover {
+.ticket-continue:hover,
+.casting-continue:hover {
     opacity: 0.85;
 }
 
 @media (prefers-reduced-motion: reduce) {
     .ticket-backdrop,
-    .ticket {
+    .ticket,
+    .casting-backdrop,
+    .casting-notice {
         transition: none;
     }
 }
@@ -1709,9 +1758,9 @@ textarea:focus-visible {
     }
 
     .nav, .mobile-menu, .resume-btn, .hero-avatar, .hero-scroll,
-    .section.films, .section.routes, .section.books,
+    .section.films, .section.routes, .section.books, .section.box-office,
     .contact-form, .footer,
-    .credits-roll, .quiz-backdrop, .ticket-backdrop {
+    .credits-roll, .quiz-backdrop, .ticket-backdrop, .casting-backdrop {
         display: none !important;
     }
 

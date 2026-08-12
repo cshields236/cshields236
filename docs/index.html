@@ -16,6 +16,7 @@
 <div class="nav-inner">
 <a class="nav-logo" href="#">CS</a>
 <div class="nav-links">
+<a href="#box-office">Box Office</a>
 <a href="#experience">Engagements</a>
 <a href="#films">Now Showing</a>
 <a href="#routes">On Location</a>
@@ -30,6 +31,7 @@
 </div>
 </nav>
 <div class="mobile-menu" id="mobile-menu">
+<a href="#box-office">Box Office</a>
 <a href="#experience">Engagements</a>
 <a href="#films">Now Showing</a>
 <a href="#routes">On Location</a>
@@ -111,6 +113,18 @@
 <span class="tech-tag">TDD</span>
 </div>
 </div>
+</div>
+</div>
+</section>
+<section class="section box-office" id="box-office">
+<div class="container">
+<div class="section-header reveal">
+<span class="section-label">Opening Weekend</span>
+<h2 class="section-title">Box Office</h2>
+</div>
+<div class="box-office-stat reveal">
+<span class="box-office-number"><!-- SITE-BOX-OFFICE:START -->0<!-- SITE-BOX-OFFICE:END --></span>
+<span class="box-office-caption">Tickets Sold — Commits, All-Time</span>
 </div>
 </div>
 </section>
@@ -366,6 +380,27 @@
 <h2 class="section-title">Reading List</h2>
 <a class="section-link" href="https://www.goodreads.com/user/show/106016596" rel="noopener" target="_blank">Goodreads Profile</a>
 </div>
+<!-- SITE-CURRENTLY-READING:START --><div class="books-block reveal">
+                <h3 class="books-subtitle">Currently Reading</h3>
+                <div class="books-list">
+                <div class="book-item">
+                    <img class="book-cover" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1463157317l/168668.jpg" alt="Catch-22" loading="lazy">
+                    <div class="book-info">
+                        <span class="book-title">Catch-22</span>
+                        <span class="book-author">Joseph Heller</span>
+                    </div>
+                    <span class="book-rating"></span>
+                </div>
+                <div class="book-item">
+                    <img class="book-cover" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1427728126l/4934.jpg" alt="The Brothers Karamazov" loading="lazy">
+                    <div class="book-info">
+                        <span class="book-title">The Brothers Karamazov</span>
+                        <span class="book-author">Fyodor Dostoevsky</span>
+                    </div>
+                    <span class="book-rating"></span>
+                </div>
+                </div>
+            </div><!-- SITE-CURRENTLY-READING:END -->
 <div class="books-list reveal">
 <!-- SITE-BOOKS:START -->
                 <div class="book-item">
@@ -423,12 +458,12 @@
 <section class="section contact" id="contact">
 <div class="container">
 <div class="section-header reveal">
-<span class="section-label">Box Office</span>
+<span class="section-label">Now Casting</span>
 <h2 class="section-title">Get in Touch</h2>
 </div>
 <div class="contact-grid reveal">
 <div class="contact-info">
-<p class="contact-text">Interested in working together or just want to chat? Drop me a message.</p>
+<p class="contact-text">Casting for new collaborations and conversations — submit your details below.</p>
 <div class="contact-links">
 <a class="contact-link" href="mailto:con.shields1@gmail.com">
 <svg fill="none" height="20" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" width="20"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
@@ -454,7 +489,7 @@
 <div class="form-group">
 <textarea id="message" name="message" placeholder="Your message" required="" rows="5"></textarea>
 </div>
-<button class="form-submit" type="submit">Send Message</button>
+<button class="form-submit" type="submit">Submit for Consideration</button>
 </form>
 </div>
 </div>
@@ -494,6 +529,25 @@
 <span>SEAT: INBOX-01</span>
 </div>
 <a class="ticket-continue" href="#" id="ticket-continue">Continue to Email →</a>
+</div>
+</div>
+</div>
+<div class="casting-backdrop" id="casting-backdrop">
+<div aria-labelledby="casting-heading" aria-modal="true" class="casting-notice" role="dialog">
+<button aria-label="Close" class="casting-close" id="casting-close">×</button>
+<div class="casting-stub">
+<span class="casting-eyebrow">Casting Notice</span>
+<span class="casting-serial" id="casting-serial"></span>
+</div>
+<div class="casting-perf"></div>
+<div class="casting-main">
+<h2 class="casting-title" id="casting-heading">Submission Received</h2>
+<p class="casting-detail">Your details have been logged for consideration. Expect a callback within 1–2 business days.</p>
+<div class="casting-meta">
+<span><span>DATE:</span> <span id="casting-date"></span></span>
+<span>ROLE: COLLABORATOR</span>
+</div>
+<a class="casting-continue" href="#" id="casting-continue">Continue to Email →</a>
 </div>
 </div>
 </div>

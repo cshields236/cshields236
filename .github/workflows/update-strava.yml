@@ -1,7 +1,7 @@
 name: Update site with latest Strava routes
 on:
   schedule:
-    - cron: "45 8 * * *"
+    - cron: "45 5 * * *"
   workflow_dispatch:
 jobs:
   update-strava:

@@ -7,7 +7,13 @@ GOODREADS_USER_ID = "106016596"
 LETTERBOXD_RSS = f"https://letterboxd.com/{LETTERBOXD_USERNAME}/rss/"
 LETTERBOXD_PROFILE = f"https://letterboxd.com/{LETTERBOXD_USERNAME}/"
 GOODREADS_RSS = f"https://www.goodreads.com/review/list_rss/{GOODREADS_USER_ID}?shelf=read"
-SITE_PATHS = ["docs/index.html", "docs/es/index.html"]
+GOODREADS_CURRENTLY_READING_RSS = f"https://www.goodreads.com/review/list_rss/{GOODREADS_USER_ID}?shelf=currently-reading"
+SITE_PATHS = {"en": "docs/index.html", "es": "docs/es/index.html"}
+
+STRINGS = {
+    "en": {"currently_reading": "Currently Reading"},
+    "es": {"currently_reading": "Actualmente Leyendo"},
+}
 
 STAR_MAP = {
     "0.5": "&#9733;&#189;", "1.0": "&#9733;", "1.5": "&#9733;&#189;",
@@ -119,6 +125,29 @@ def get_books():
     return books
 
 
+def get_currently_reading(limit=3):
+    data = fetch_url(GOODREADS_CURRENTLY_READING_RSS)
+    root = ET.fromstring(data)
+    books = []
+    for item in root.findall(".//item"):
+        title = item.find("title").text.strip() if item.find("title") is not None else ""
+        author = item.find("author_name").text.strip() if item.find("author_name") is not None else ""
+        cover_el = item.find("book_large_image_url")
+        cover = cover_el.text.strip() if cover_el is not None and cover_el.text else ""
+        if "nophoto" in cover:
+            cover = ""
+        books.append({
+            "title": title,
+            "author": author,
+            "rating": 0,
+            "stars_html": "",
+            "cover": cover,
+        })
+        if len(books) == limit:
+            break
+    return books
+
+
 def render_favourites(films):
     cards = []
     for f in films:
@@ -167,12 +196,27 @@ def render_books(books):
     return "\n".join(items)
 
 
+def render_currently_reading_block(books, heading):
+    if not books:
+        return ""
+    items_html = render_books(books)
+    return (
+        '<div class="books-block reveal">\n'
+        f'                <h3 class="books-subtitle">{heading}</h3>\n'
+        '                <div class="books-list">\n'
+        f'{items_html}\n'
+        '                </div>\n'
+        '            </div>'
+    )
+
+
 def main():
     favourites = get_favourites()
     watched = get_recent_watched()
     books = get_books()
+    currently_reading = get_currently_reading()
 
-    for site_path in SITE_PATHS:
+    for lang, site_path in SITE_PATHS.items():
         with open(site_path, "r") as f:
             html = f.read()
 
@@ -200,11 +244,20 @@ def main():
                 html, flags=re.DOTALL,
             )
 
+        currently_reading_html = render_currently_reading_block(currently_reading, STRINGS[lang]["currently_reading"])
+        html, n = re.subn(
+            r"<!-- SITE-CURRENTLY-READING:START -->.*?<!-- SITE-CURRENTLY-READING:END -->",
+            f"<!-- SITE-CURRENTLY-READING:START -->{currently_reading_html}<!-- SITE-CURRENTLY-READING:END -->",
+            html, flags=re.DOTALL,
+        )
+        if n == 0:
+            raise SystemExit(f"SITE-CURRENTLY-READING marker not found in {site_path}")
+
         with open(site_path, "w") as f:
             f.write(html)
 
     fav_count = len(favourites) if favourites is not None else "unchanged"
-    print(f"Updated {len(SITE_PATHS)} site file(s): {fav_count} favourites, {len(watched)} watched, {len(books)} books.")
+    print(f"Updated {len(SITE_PATHS)} site file(s): {fav_count} favourites, {len(watched)} watched, {len(books)} books, {len(currently_reading)} currently reading.")
 
 
 if __name__ == "__main__":
