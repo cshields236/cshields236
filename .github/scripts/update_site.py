@@ -63,7 +63,8 @@ def get_recent_watched(limit=15):
         if guid.startswith("letterboxd-review-"):
             paragraphs = re.findall(r'<p>(.*?)</p>', desc, re.DOTALL)
             if len(paragraphs) > 1:
-                review = paragraphs[1].strip()
+                joined = "<br />".join(p.strip() for p in paragraphs[1:])
+                review = re.sub(r'</?(?!br\s*/?>)[a-zA-Z][^>]*>', '', joined).strip()
 
         films.append({
             "title": title_el.text,

@@ -491,7 +491,7 @@ function initFilmFlip() {
 
     document.querySelectorAll('#watched-track .film-flip-back').forEach(back => {
         back.addEventListener('click', (e) => {
-            if (e.target.closest('.film-review-link')) return;
+            if (e.target.closest('a')) return;
             const card = back.closest('.film-card-flippable');
             if (card) card.classList.remove('flipped');
         });
