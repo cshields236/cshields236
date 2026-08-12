@@ -1824,7 +1824,7 @@ textarea:focus-visible {
         background: #fff;
     }
 
-    .nav, .mobile-menu, .resume-btn, .hero-avatar, .hero-scroll,
+    .nav, .mobile-menu, .resume-btn, .hero-avatar, .hero-scroll, .hero-welcome,
     .section.films, .section.routes, .section.books,
     .contact-form, .footer,
     .credits-roll, .quiz-backdrop, .ticket-backdrop, .casting-backdrop {
