@@ -458,30 +458,6 @@ textarea:focus-visible {
     color: var(--crimson);
 }
 
-/* ─── Box Office ─── */
-.box-office-stat {
-    text-align: center;
-}
-
-.box-office-number {
-    display: block;
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: clamp(3.5rem, 12vw, 6rem);
-    line-height: 1;
-    color: var(--crimson);
-}
-
-.box-office-caption {
-    display: block;
-    margin-top: 1rem;
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-}
-
 /* ─── Timeline (Engagements) ─── */
 .timeline {
     display: flex;
@@ -747,6 +723,97 @@ textarea:focus-visible {
     color: var(--crimson);
     letter-spacing: 0.02em;
     padding: 0 0.1rem;
+}
+
+/* ─── Film Review Flip ─── */
+.film-card-flippable {
+    perspective: 1000px;
+}
+
+.film-flip {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    transform-style: preserve-3d;
+    transition: transform 0.6s var(--ease-smooth);
+}
+
+.film-card-flippable.flipped .film-flip {
+    transform: rotateY(180deg);
+}
+
+.film-flip-front,
+.film-flip-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.film-flip-front .film-poster {
+    height: 100%;
+}
+
+.film-flip-back {
+    transform: rotateY(180deg);
+    background: var(--paper);
+    color: var(--ink);
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+}
+
+.film-review {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.7rem;
+    line-height: 1.45;
+    overflow-y: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.film-review-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.03em;
+    color: var(--crimson);
+    text-decoration: none;
+}
+
+.film-review-toggle {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(6, 12, 10, 0.72);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    padding: 0;
+}
+
+.review-icon {
+    width: 12px;
+    height: 12px;
+    stroke: var(--paper);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .film-flip {
+        transition: none;
+    }
 }
 
 /* ─── On Location (Routes) ─── */
@@ -1757,8 +1824,8 @@ textarea:focus-visible {
         background: #fff;
     }
 
-    .nav, .mobile-menu, .resume-btn, .hero-avatar, .hero-scroll,
-    .section.films, .section.routes, .section.books, .section.box-office,
+    .nav, .mobile-menu, .resume-btn, .hero-avatar, .hero-scroll, .hero-welcome,
+    .section.films, .section.routes, .section.books,
     .contact-form, .footer,
     .credits-roll, .quiz-backdrop, .ticket-backdrop, .casting-backdrop {
         display: none !important;

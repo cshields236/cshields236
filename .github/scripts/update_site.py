@@ -11,8 +11,8 @@ GOODREADS_CURRENTLY_READING_RSS = f"https://www.goodreads.com/review/list_rss/{G
 SITE_PATHS = {"en": "docs/index.html", "es": "docs/es/index.html"}
 
 STRINGS = {
-    "en": {"currently_reading": "Currently Reading"},
-    "es": {"currently_reading": "Actualmente Leyendo"},
+    "en": {"currently_reading": "Currently Reading", "view_on_letterboxd": "View on Letterboxd →"},
+    "es": {"currently_reading": "Actualmente Leyendo", "view_on_letterboxd": "Ver en Letterboxd →"},
 }
 
 STAR_MAP = {
@@ -51,6 +51,21 @@ def get_recent_watched(limit=15):
         desc = item.find("description").text or ""
         poster_match = re.search(r'<img src="([^"]+)"', desc)
         poster = poster_match.group(1) if poster_match else ""
+
+        # A plain watch-log entry's guid starts with "letterboxd-watch-" and
+        # its description is always the auto-generated "Watched on <date>."
+        # An entry with an actual written review has a guid starting with
+        # "letterboxd-review-", and the paragraph after the poster image is
+        # the real review text — verified against the live feed.
+        guid_el = item.find("guid")
+        guid = guid_el.text if guid_el is not None and guid_el.text else ""
+        review = ""
+        if guid.startswith("letterboxd-review-"):
+            paragraphs = re.findall(r'<p>(.*?)</p>', desc, re.DOTALL)
+            if len(paragraphs) > 1:
+                joined = "<br />".join(p.strip() for p in paragraphs[1:])
+                review = re.sub(r'</?(?!br\s*/?>)[a-zA-Z][^>]*>', '', joined).strip()
+
         films.append({
             "title": title_el.text,
             "year": year,
@@ -58,6 +73,7 @@ def get_recent_watched(limit=15):
             "stars_html": STAR_MAP.get(rating, ""),
             "link": link,
             "poster": poster,
+            "review": review,
         })
         if len(films) == limit:
             break
@@ -162,18 +178,45 @@ def render_favourites(films):
     return "\n".join(cards)
 
 
-def render_watched(films):
+REVIEW_ICON = (
+    '<svg class="review-icon" viewBox="0 0 24 24" fill="none" stroke-width="2">'
+    '<path d="M7 7h4v6H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z"/>'
+    '<path d="M15 7h4v6h-4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z"/></svg>'
+)
+
+
+def render_watched(films, view_on_letterboxd_text):
     cards = []
     for f in films:
-        cards.append(
-            f'                    <a href="{f["link"]}" class="film-card" target="_blank" rel="noopener">\n'
-            f'                        <div class="film-poster">\n'
-            f'                            <img src="{f["poster"]}" alt="{f["title"]}" loading="lazy">\n'
-            f'                        </div>\n'
-            f'                        <span class="film-title">{f["title"]}</span>\n'
-            f'                        <span class="film-rating">{f["stars_html"]}</span>\n'
-            f'                    </a>'
-        )
+        if f["review"]:
+            cards.append(
+                f'                    <div class="film-card film-card-flippable">\n'
+                f'                        <div class="film-flip">\n'
+                f'                            <div class="film-flip-front">\n'
+                f'                                <div class="film-poster">\n'
+                f'                                    <img src="{f["poster"]}" alt="{f["title"]}" loading="lazy">\n'
+                f'                                </div>\n'
+                f'                                <button type="button" class="film-review-toggle" aria-label="Toggle review">{REVIEW_ICON}</button>\n'
+                f'                            </div>\n'
+                f'                            <div class="film-flip-back">\n'
+                f'                                <p class="film-review">{f["review"]}</p>\n'
+                f'                                <a href="{f["link"]}" class="film-review-link" target="_blank" rel="noopener">{view_on_letterboxd_text}</a>\n'
+                f'                            </div>\n'
+                f'                        </div>\n'
+                f'                        <span class="film-title">{f["title"]}</span>\n'
+                f'                        <span class="film-rating">{f["stars_html"]}</span>\n'
+                f'                    </div>'
+            )
+        else:
+            cards.append(
+                f'                    <a href="{f["link"]}" class="film-card" target="_blank" rel="noopener">\n'
+                f'                        <div class="film-poster">\n'
+                f'                            <img src="{f["poster"]}" alt="{f["title"]}" loading="lazy">\n'
+                f'                        </div>\n'
+                f'                        <span class="film-title">{f["title"]}</span>\n'
+                f'                        <span class="film-rating">{f["stars_html"]}</span>\n'
+                f'                    </a>'
+            )
     return "\n".join(cards)
 
 
@@ -229,7 +272,7 @@ def main():
             )
 
         if watched:
-            watched_html = render_watched(watched)
+            watched_html = render_watched(watched, STRINGS[lang]["view_on_letterboxd"])
             html = re.sub(
                 r"<!-- SITE-WATCHED:START -->.*?<!-- SITE-WATCHED:END -->",
                 f"<!-- SITE-WATCHED:START -->\n{watched_html}\n                    <!-- SITE-WATCHED:END -->",

@@ -13,7 +13,7 @@ ACTIVITY_LIMIT = 6
 VIEWBOX_W, VIEWBOX_H = 400, 300
 PATH_MARGIN = 24
 
-NOMINATIM_USER_AGENT = "conorshields.ie site sync (contact: con.shields1@gmail.com)"
+NOMINATIM_USER_AGENT = "conorshields.ie site sync (contact: me@conorshields.ie)"
 
 
 def fetch_json(url, headers=None):
