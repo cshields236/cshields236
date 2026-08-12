@@ -32,16 +32,20 @@ def format_count(count):
 
 def main():
     count = get_commit_count()
+    if count <= 0:
+        raise SystemExit(f"refusing to write a non-positive commit count: {count}")
     formatted = format_count(count)
 
     for site_path in SITE_PATHS:
         with open(site_path, "r") as f:
             html = f.read()
-        html = re.sub(
+        html, n = re.subn(
             r"<!-- SITE-BOX-OFFICE:START -->.*?<!-- SITE-BOX-OFFICE:END -->",
             f"<!-- SITE-BOX-OFFICE:START -->{formatted}<!-- SITE-BOX-OFFICE:END -->",
             html, flags=re.DOTALL,
         )
+        if n == 0:
+            raise SystemExit(f"SITE-BOX-OFFICE marker not found in {site_path}")
         with open(site_path, "w") as f:
             f.write(html)
 
