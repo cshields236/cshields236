@@ -1,7 +1,7 @@
 name: Update Letterboxd films in README
 on:
   schedule:
-    - cron: "0 8 * * *"
+    - cron: "0 5 * * *"
   workflow_dispatch:
 jobs:
   update-readme-with-letterboxd:
