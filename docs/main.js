@@ -1,4 +1,5 @@
 const LANG = document.documentElement.lang === 'es' ? 'es' : 'en';
+const dateLocale = LANG === 'es' ? 'es-ES' : 'en-GB';
 
 let scrollLockCount = 0;
 function lockScroll() {
@@ -313,8 +314,6 @@ function initTicket() {
     const emailLink = document.querySelector('.contact-link[href^="mailto:"]');
     if (!backdrop || !emailLink) return;
 
-    const dateLocale = LANG === 'es' ? 'es-ES' : 'en-GB';
-
     emailLink.addEventListener('click', (e) => {
         e.preventDefault();
         const now = new Date();
@@ -348,8 +347,6 @@ function initCasting() {
     const serialEl = document.getElementById('casting-serial');
     const form = document.getElementById('contact-form');
     if (!backdrop || !form) return;
-
-    const dateLocale = LANG === 'es' ? 'es-ES' : 'en-GB';
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
