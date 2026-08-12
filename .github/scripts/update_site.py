@@ -245,11 +245,13 @@ def main():
             )
 
         currently_reading_html = render_currently_reading_block(currently_reading, STRINGS[lang]["currently_reading"])
-        html = re.sub(
+        html, n = re.subn(
             r"<!-- SITE-CURRENTLY-READING:START -->.*?<!-- SITE-CURRENTLY-READING:END -->",
             f"<!-- SITE-CURRENTLY-READING:START -->{currently_reading_html}<!-- SITE-CURRENTLY-READING:END -->",
             html, flags=re.DOTALL,
         )
+        if n == 0:
+            raise SystemExit(f"SITE-CURRENTLY-READING marker not found in {site_path}")
 
         with open(site_path, "w") as f:
             f.write(html)
