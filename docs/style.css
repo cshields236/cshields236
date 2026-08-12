@@ -458,30 +458,6 @@ textarea:focus-visible {
     color: var(--crimson);
 }
 
-/* ─── Box Office ─── */
-.box-office-stat {
-    text-align: center;
-}
-
-.box-office-number {
-    display: block;
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: clamp(3.5rem, 12vw, 6rem);
-    line-height: 1;
-    color: var(--crimson);
-}
-
-.box-office-caption {
-    display: block;
-    margin-top: 1rem;
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-}
-
 /* ─── Timeline (Engagements) ─── */
 .timeline {
     display: flex;
@@ -1758,7 +1734,7 @@ textarea:focus-visible {
     }
 
     .nav, .mobile-menu, .resume-btn, .hero-avatar, .hero-scroll,
-    .section.films, .section.routes, .section.books, .section.box-office,
+    .section.films, .section.routes, .section.books,
     .contact-form, .footer,
     .credits-roll, .quiz-backdrop, .ticket-backdrop, .casting-backdrop {
         display: none !important;
