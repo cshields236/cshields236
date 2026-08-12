@@ -17,3 +17,14 @@ jobs:
           goodreads_user_id: "106016596"
           shelf: "read"
           template: "- [$title]($url) by $author ($published_year) $my_rating_stars <br />"
+      - uses: zwacky/goodreads-profile-workflow@main
+        with:
+          goodreads_user_id: "106016596"
+          shelf: "currently-reading"
+          comment_tag_name: "GOODREADS-CURRENTLY-READING"
+          template: "- [$title]($url) by $author <br />"
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git diff --quiet || (git add README.md && git commit -m "Synced and updated with user's Goodreads data" && git push)

@@ -48,6 +48,10 @@
 </table>
 <!-- LETTERBOXD-WATCHED:END -->
 
+# 📖 Currently Reading
+<!-- GOODREADS-CURRENTLY-READING:START -->
+<!-- GOODREADS-CURRENTLY-READING:END -->
+
 # 📚 Last 10 Books I've Read 
 <!-- GOODREADS-LIST:START -->
 - [Fundamentally](https://www.goodreads.com/review/show/8780284559?utm_medium=api&utm_source=rss) by Nussaibah Younis (2025) ⭐⭐ <br />
