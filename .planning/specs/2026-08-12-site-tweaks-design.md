@@ -40,6 +40,10 @@ Fully reverts the feature added in the prior spec, since a GitHub public commit 
 - New `initFilmFlip()` scoped to `#watched-track .film-card-flippable`: click toggles `.flipped` on that card only. Cards are independent — flipping one does not affect any other card's state, and a flipped card flips back only when clicked again. No modal, no scroll lock — this is a lightweight per-card interaction.
 - Only the "Recently Screened" track is touched; "All-Time Favourites" markup/JS is untouched.
 
+## 2a. "Read" subheading above the main book list
+
+The Reading List section currently shows the "Currently Reading" subsection (heading + list) followed immediately by the full read-books list with no heading of its own, which reads as visually unbalanced now that "Currently Reading" has one. Add a static `<h3 class="books-subtitle">Read</h3>` (EN) / `<h3 class="books-subtitle">Leídos</h3>` (ES) directly above the existing `<div class="books-list reveal">` wrapping the `SITE-BOOKS` marker, in both `docs/index.html` and `docs/es/index.html`. This is static markup, not build-script output — no changes to `update_site.py` needed.
+
 ## 3. Email change
 
 Replace `con.shields1@gmail.com` with `me@conorshields.ie` in:
@@ -53,7 +57,7 @@ Replace `con.shields1@gmail.com` with `me@conorshields.ie` in:
 Add a new paragraph directly under the existing italic hero quote, reusing the existing `hero-subtitle reveal` class (no new CSS needed), in both languages:
 
 - EN: "Hey welcome to my site, I'm interested in films, books, very slow running so I thought I'd document that here!"
-- ES: "¡Hola, bienvenido a mi sitio! Me interesan las películas, los libros y correr muy lento, así que pensé en documentarlo aquí."
+- ES: "¡Hola, bienvenido a mi sitio! Me interesan las películas, los libros, correr muy lento, y estoy intentando aprender español, así que pensé en documentarlo aquí." (adds "and I'm trying to learn Spanish" per request, with the ñ)
 
 ## Out of scope
 
