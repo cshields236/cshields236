@@ -564,11 +564,13 @@ textarea:focus-visible {
 }
 
 /* ─── Films ─── */
-.films-block {
+.films-block,
+.books-block {
     margin-bottom: 3.5rem;
 }
 
-.films-block:last-child {
+.films-block:last-child,
+.books-block:last-child {
     margin-bottom: 0;
 }
 
