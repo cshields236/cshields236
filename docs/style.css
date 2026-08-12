@@ -572,7 +572,8 @@ textarea:focus-visible {
     margin-bottom: 0;
 }
 
-.films-subtitle {
+.films-subtitle,
+.books-subtitle {
     font-family: var(--mono);
     font-size: 0.68rem;
     letter-spacing: 0.16em;
