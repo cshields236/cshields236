@@ -50,6 +50,7 @@
 
 # 📖 Currently Reading
 <!-- GOODREADS-CURRENTLY-READING:START -->
+- [The Brothers Karamazov](https://www.goodreads.com/review/show/7182763640?utm_medium=api&utm_source=rss) by Fyodor Dostoevsky <br />
 <!-- GOODREADS-CURRENTLY-READING:END -->
 
 # 📚 Last 10 Books I've Read 
