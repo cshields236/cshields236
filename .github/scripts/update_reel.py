@@ -133,3 +133,136 @@ def commit_items(counts, buckets):
             "viewbox": "",
         })
     return items
+
+
+KIND_LABELS = {
+    "en": {"film": "Now Showing", "book": "Intermission",
+           "route": "On Location", "code": "Box Office"},
+    "es": {"film": "En Cartelera", "book": "Intermedio",
+           "route": "Exteriores", "code": "Taquilla"},
+}
+
+MONTH_ABBR = {
+    "en": ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+           "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
+    "es": ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN",
+           "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"],
+}
+
+COMMITS_LABEL = {"en": "commits", "es": "commits"}
+GITHUB_PROFILE = f"https://github.com/{GITHUB_USER}"
+COMMIT_BAR_COUNT = 14
+
+
+def _date_label(day, lang):
+    return f"{day.day:02d} {MONTH_ABBR[lang][day.month - 1].capitalize()}"
+
+
+def _commit_bars(total):
+    """Deterministic heights so a rebuild with the same count produces an
+    identical diff."""
+    bars = []
+    for i in range(COMMIT_BAR_COUNT):
+        height = 18 + ((total * (i + 3)) % 82)
+        bars.append(f'<span class="reel-bar" style="height:{height}%"></span>')
+    return "".join(bars)
+
+
+def render_frame(item, lang):
+    kind = item["kind"]
+    label = KIND_LABELS[lang][kind]
+    date_label = _date_label(item["_d"], lang)
+    month = MONTH_ABBR[lang][item["_d"].month - 1]
+    href = GITHUB_PROFILE if kind == "code" else f'#{item["target"]}'
+    external = ' target="_blank" rel="noopener"' if kind == "code" else ""
+
+    if kind == "code":
+        title, sub, detail = item["detail"], COMMITS_LABEL[lang], item["detail"]
+        body = (
+            f'<span class="reel-bars" aria-hidden="true">{_commit_bars(int(item["detail"]))}</span>'
+            f'<span class="reel-body"><span class="reel-num">{item["detail"]}'
+            f'<small>{COMMITS_LABEL[lang]}</small></span></span>'
+        )
+    elif kind == "route":
+        title, sub, detail = item["title"], item["sub"], item["detail"]
+        body = (
+            f'<svg class="reel-route" viewBox="{item["viewbox"]}" preserveAspectRatio="xMidYMid meet"'
+            f' aria-hidden="true"><path d="{item["path_d"]}" /></svg>'
+            f'<span class="reel-body"><span class="reel-num">{item["detail"]}'
+            f'<small>{item["title"]}</small></span></span>'
+        )
+    elif kind == "book":
+        title, sub, detail = item["title"], item["sub"], item["detail"]
+        body = (
+            f'<span class="reel-inset"><span class="reel-title">{item["title"]}</span>'
+            f'<span class="reel-sub">{item["sub"]}</span>'
+            f'<span class="reel-stars">{item["detail"]}</span></span>'
+        )
+    else:
+        title, sub, detail = item["title"], item["sub"], item["detail"]
+        body = (
+            f'<span class="reel-body"><span class="reel-title">{item["title"]}</span>'
+            f'<span class="reel-sub">{item["sub"]}</span>'
+            f'<span class="reel-stars">{item["detail"]}</span></span>'
+        )
+
+    return (
+        f'<a class="reel-frame k-{kind}" href="{href}"{external}'
+        f' data-month="{month}" data-r-date="{date_label}" data-r-kind="{label}"'
+        f' data-r-title="{title}" data-r-sub="{sub}" data-r-detail="{detail}">'
+        f'<span class="reel-kind"><i></i>{label}<em>{date_label}</em></span>'
+        f'{body}</a>'
+    )
+
+
+def render_reel(items, lang):
+    if len(items) < MIN_FRAMES:
+        return ""
+    return "\n".join(render_frame(i, lang) for i in items)
+
+
+def inject(html, block, path):
+    html, count = re.subn(
+        r"<!-- SITE-REEL:START -->.*?<!-- SITE-REEL:END -->",
+        f"<!-- SITE-REEL:START -->\n{block}\n<!-- SITE-REEL:END -->",
+        html,
+        flags=re.DOTALL,
+    )
+    if count == 0:
+        raise SystemExit(f"SITE-REEL marker not found in {path}")
+    return html
+
+
+def main():
+    token = os.environ.get("GITHUB_TOKEN")
+    if not token:
+        raise SystemExit("GITHUB_TOKEN is required to fetch commit counts")
+
+    today = date.today()
+    with open(SOURCE_PATH, "r") as f:
+        source = f.read()
+
+    content = within_window(parse_items(source), today)
+    if not content:
+        raise SystemExit(
+            f"No reel items found in {SOURCE_PATH} — the source sections may not "
+            "yet carry data-reel-date attributes"
+        )
+
+    buckets = month_buckets(content[0]["_d"], today)
+    counts = fetch_commit_counts(buckets, token)
+    items = within_window(content + commit_items(counts, buckets), today)
+
+    for lang, path in SITE_PATHS.items():
+        with open(path, "r") as f:
+            html = f.read()
+        html = inject(html, render_reel(items, lang), path)
+        with open(path, "w") as f:
+            f.write(html)
+
+    kinds = {k: sum(1 for i in items if i["kind"] == k) for k in KIND_ORDER}
+    print(f"Updated {len(SITE_PATHS)} site file(s) with {len(items)} reel frames: {kinds}")
+
+
+if __name__ == "__main__":
+    main()
