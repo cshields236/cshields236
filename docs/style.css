@@ -1811,6 +1811,7 @@ textarea:focus-visible {
     background: var(--emulsion);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
+    overflow: hidden;
     /* full-bleed escape from the centred .container */
     width: 100vw;
     margin-left: calc(50% - 50vw);
