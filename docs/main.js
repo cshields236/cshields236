@@ -600,13 +600,27 @@ function initReel() {
         frames.forEach((el, i) => el.classList.toggle('in-gate', i === best));
 
         const f = frames[best];
-        readout.innerHTML =
-            '<span>' + f.dataset.rDate + '</span>' +
-            '<span class="r-title">' + (f.dataset.rTitle || f.dataset.rKind) + '</span>' +
-            '<span class="r-meta">' + (f.dataset.rSub || '') + '</span>' +
-            '<span class="r-meta">' + (f.dataset.rDetail || '') + '</span>' +
-            '<span class="r-count">' + frameLabel + ' ' +
-            String(best + 1).padStart(2, '0') + ' / ' + frames.length + '</span>';
+        const dateSpan = document.createElement('span');
+        dateSpan.textContent = f.dataset.rDate;
+
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'r-title';
+        titleSpan.textContent = f.dataset.rTitle || f.dataset.rKind;
+
+        const subSpan = document.createElement('span');
+        subSpan.className = 'r-meta';
+        subSpan.textContent = f.dataset.rSub || '';
+
+        const detailSpan = document.createElement('span');
+        detailSpan.className = 'r-meta';
+        detailSpan.textContent = f.dataset.rDetail || '';
+
+        const countSpan = document.createElement('span');
+        countSpan.className = 'r-count';
+        countSpan.textContent = frameLabel + ' ' +
+            String(best + 1).padStart(2, '0') + ' / ' + frames.length;
+
+        readout.replaceChildren(dateSpan, titleSpan, subSpan, detailSpan, countSpan);
 
         Array.from(ruler.children).forEach(btn => {
             btn.classList.toggle('active', btn.dataset.month === f.dataset.month);
@@ -634,7 +648,11 @@ function initReel() {
         startX = e.clientX;
         startScroll = track.scrollLeft;
         track.classList.add('dragging');
-        track.setPointerCapture(e.pointerId);
+        try {
+            track.setPointerCapture(e.pointerId);
+        } catch (err) {
+            /* capture is an optimisation; drag still works without it */
+        }
     });
 
     track.addEventListener('pointermove', e => {
@@ -651,8 +669,8 @@ function initReel() {
         scrollToFrame(current);
     }
 
-    track.addEventListener('pointerup', endDrag);
-    track.addEventListener('pointercancel', endDrag);
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
 
     /* A drag that ends on a frame must not also navigate. */
     track.addEventListener('click', e => {
