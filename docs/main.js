@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFilmsCarousel();
     initFilmFlip();
     initRoutes();
+    initReel();
 
     const resumeBtn = document.getElementById('resume-btn');
     if (resumeBtn) resumeBtn.addEventListener('click', () => window.print());
@@ -534,4 +535,156 @@ function initRoutes() {
             });
         });
     });
+}
+
+/* The Reel: a native horizontal scroll container whose "current" frame is
+   derived from proximity to the centre gate rather than tracked as state. */
+function initReel() {
+    const section = document.getElementById('reel');
+    const track = document.getElementById('reel-track');
+    if (!section || !track) return;
+
+    const frames = Array.from(track.querySelectorAll('.reel-frame'));
+    if (frames.length < 2) {
+        section.hidden = true;
+        return;
+    }
+
+    const readout = document.getElementById('reel-readout');
+    const ruler = document.getElementById('reel-ruler');
+    const frameLabel = readout ? readout.dataset.frameLabel : 'Frame';
+    let current = -1;
+
+    const centreOf = el => el.offsetLeft + el.offsetWidth / 2;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function scrollToFrame(i) {
+        const clamped = Math.max(0, Math.min(frames.length - 1, i));
+        track.scrollTo({
+            left: centreOf(frames[clamped]) - track.clientWidth / 2,
+            behavior: reducedMotion.matches ? 'auto' : 'smooth'
+        });
+    }
+
+    const months = [];
+    frames.forEach(f => {
+        const m = f.dataset.month;
+        if (m && !months.includes(m)) months.push(m);
+    });
+
+    months.forEach(month => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = month;
+        btn.dataset.month = month;
+        btn.addEventListener('click', () => {
+            scrollToFrame(frames.findIndex(f => f.dataset.month === month));
+        });
+        ruler.appendChild(btn);
+    });
+
+    function updateGate() {
+        const mid = track.scrollLeft + track.clientWidth / 2;
+        let best = 0;
+        let bestDist = Infinity;
+        frames.forEach((el, i) => {
+            const dist = Math.abs(centreOf(el) - mid);
+            if (dist < bestDist) {
+                bestDist = dist;
+                best = i;
+            }
+        });
+        if (best === current) return;
+        current = best;
+
+        frames.forEach((el, i) => el.classList.toggle('in-gate', i === best));
+
+        const f = frames[best];
+        readout.innerHTML =
+            '<span>' + f.dataset.rDate + '</span>' +
+            '<span class="r-title">' + (f.dataset.rTitle || f.dataset.rKind) + '</span>' +
+            '<span class="r-meta">' + (f.dataset.rSub || '') + '</span>' +
+            '<span class="r-meta">' + (f.dataset.rDetail || '') + '</span>' +
+            '<span class="r-count">' + frameLabel + ' ' +
+            String(best + 1).padStart(2, '0') + ' / ' + frames.length + '</span>';
+
+        Array.from(ruler.children).forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.month === f.dataset.month);
+        });
+    }
+
+    let ticking = false;
+    track.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(() => {
+            ticking = false;
+            updateGate();
+        });
+    });
+
+    let down = false;
+    let startX = 0;
+    let startScroll = 0;
+    let moved = 0;
+
+    track.addEventListener('pointerdown', e => {
+        down = true;
+        moved = 0;
+        startX = e.clientX;
+        startScroll = track.scrollLeft;
+        track.classList.add('dragging');
+        track.setPointerCapture(e.pointerId);
+    });
+
+    track.addEventListener('pointermove', e => {
+        if (!down) return;
+        const dx = e.clientX - startX;
+        moved = Math.max(moved, Math.abs(dx));
+        track.scrollLeft = startScroll - dx;
+    });
+
+    function endDrag() {
+        if (!down) return;
+        down = false;
+        track.classList.remove('dragging');
+        scrollToFrame(current);
+    }
+
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+
+    /* A drag that ends on a frame must not also navigate. */
+    track.addEventListener('click', e => {
+        if (moved > 6) e.preventDefault();
+    });
+
+    track.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            scrollToFrame(current + 1);
+        }
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            scrollToFrame(current - 1);
+        }
+    });
+
+    document.getElementById('reel-prev').addEventListener('click', () => scrollToFrame(current - 1));
+    document.getElementById('reel-next').addEventListener('click', () => scrollToFrame(current + 1));
+
+    /* .route-item is a button that switches the routes sketch, so :target
+       alone would highlight it while the sketch showed a different trace. */
+    function activateRouteFromHash() {
+        const id = window.location.hash.slice(1);
+        if (!id.startsWith('route-')) return;
+        const item = document.getElementById(id);
+        if (item && item.classList.contains('route-item')) item.click();
+    }
+
+    window.addEventListener('hashchange', activateRouteFromHash);
+    activateRouteFromHash();
+
+    scrollToFrame(0);
+    updateGate();
 }
