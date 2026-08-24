@@ -1,6 +1,8 @@
+import html
 import xml.etree.ElementTree as ET
 import re
 import urllib.request
+from email.utils import parsedate_to_datetime
 
 LETTERBOXD_USERNAME = "cshields_"
 GOODREADS_USER_ID = "106016596"
@@ -29,6 +31,52 @@ BOOK_STARS = {
 }
 
 
+def rfc822_to_iso(value):
+    """Goodreads dates arrive RFC-822 ('Tue, 28 Jul 2026 00:00:00 +0000')."""
+    if not value or not value.strip():
+        return None
+    try:
+        return parsedate_to_datetime(value.strip()).date().isoformat()
+    except (TypeError, ValueError):
+        return None
+
+
+def slugify(text):
+    slug = re.sub(r"[^a-z0-9]+", "-", (text or "").lower()).strip("-")
+    return slug or "item"
+
+
+def unique_id(prefix, slug, seen):
+    """Two books can share a title; ids must stay unique within a page."""
+    candidate = f"{prefix}-{slug}"
+    n = 1
+    while candidate in seen:
+        n += 1
+        candidate = f"{prefix}-{slug}-{n}"
+    seen.add(candidate)
+    return candidate
+
+
+def reel_attrs(item_id, kind, date, title, sub, detail):
+    """The contract update_reel.py reads. Without a date the item is not
+    Reel-eligible, so only the id is emitted.
+
+    title/sub are escaped since they interpolate directly into HTML
+    attributes; detail is pre-rendered star entities (e.g. &#9733;) and
+    must not be double-escaped.
+    """
+    attrs = f' id="{item_id}"'
+    if not date:
+        return attrs
+    safe_title = html.escape(str(title), quote=True)
+    safe_sub = html.escape(str(sub), quote=True)
+    return (
+        f'{attrs} data-reel-date="{date}" data-reel-kind="{kind}"'
+        f' data-reel-title="{safe_title}" data-reel-sub="{safe_sub}"'
+        f' data-reel-detail="{detail}"'
+    )
+
+
 def fetch_url(url):
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     with urllib.request.urlopen(req) as resp:
@@ -52,6 +100,11 @@ def get_recent_watched(limit=15):
         poster_match = re.search(r'<img src="([^"]+)"', desc)
         poster = poster_match.group(1) if poster_match else ""
 
+        watched_el = item.find("letterboxd:watchedDate", ns)
+        watched_date = watched_el.text.strip() if watched_el is not None and watched_el.text else None
+        slug_match = re.search(r"/film/([^/]+)/", link)
+        film_slug = slug_match.group(1) if slug_match else slugify(title_el.text)
+
         # A plain watch-log entry's guid starts with "letterboxd-watch-" and
         # its description is always the auto-generated "Watched on <date>."
         # An entry with an actual written review has a guid starting with
@@ -74,6 +127,8 @@ def get_recent_watched(limit=15):
             "link": link,
             "poster": poster,
             "review": review,
+            "date": watched_date,
+            "slug": film_slug,
         })
         if len(films) == limit:
             break
@@ -129,12 +184,18 @@ def get_books():
         cover = cover_el.text.strip() if cover_el is not None and cover_el.text else ""
         if "nophoto" in cover:
             cover = ""
+        read_at = item.findtext("user_read_at")
+        added_at = item.findtext("user_date_added")
+        # user_read_at is empty on ~5% of shelf entries; user_date_added is
+        # always present and matches it wherever both exist.
+        book_date = rfc822_to_iso(read_at) or rfc822_to_iso(added_at)
         books.append({
             "title": title,
             "author": author,
             "rating": rating,
             "stars_html": BOOK_STARS.get(rating, ""),
             "cover": cover,
+            "date": book_date,
         })
         if len(books) == 6:
             break
@@ -158,6 +219,7 @@ def get_currently_reading(limit=3):
             "rating": 0,
             "stars_html": "",
             "cover": cover,
+            "date": None,
         })
         if len(books) == limit:
             break
@@ -187,10 +249,19 @@ REVIEW_ICON = (
 
 def render_watched(films, view_on_letterboxd_text):
     cards = []
+    seen = set()
     for f in films:
+        slug = f.get("slug")
+        if not slug:
+            slug_match = re.search(r"/film/([^/]+)/", f["link"])
+            slug = slug_match.group(1) if slug_match else slugify(f["title"])
+        attrs = reel_attrs(
+            unique_id("film", slug, seen), "film", f.get("date"),
+            f["title"], f["year"], f["stars_html"],
+        )
         if f["review"]:
             cards.append(
-                f'                    <div class="film-card film-card-flippable">\n'
+                f'                    <div class="film-card film-card-flippable"{attrs}>\n'
                 f'                        <div class="film-flip">\n'
                 f'                            <div class="film-flip-front">\n'
                 f'                                <div class="film-poster">\n'
@@ -209,7 +280,7 @@ def render_watched(films, view_on_letterboxd_text):
             )
         else:
             cards.append(
-                f'                    <a href="{f["link"]}" class="film-card" target="_blank" rel="noopener">\n'
+                f'                    <a href="{f["link"]}" class="film-card"{attrs} target="_blank" rel="noopener">\n'
                 f'                        <div class="film-poster">\n'
                 f'                            <img src="{f["poster"]}" alt="{f["title"]}" loading="lazy">\n'
                 f'                        </div>\n'
@@ -220,14 +291,21 @@ def render_watched(films, view_on_letterboxd_text):
     return "\n".join(cards)
 
 
-def render_books(books):
+def render_books(books, reel=False):
     items = []
+    seen = set()
     for b in books:
         cover_html = ""
         if b["cover"]:
             cover_html = f'<img class="book-cover" src="{b["cover"]}" alt="{b["title"]}" loading="lazy">'
+        attrs = ""
+        if reel:
+            attrs = reel_attrs(
+                unique_id("book", slugify(b["title"]), seen), "book", b.get("date"),
+                b["title"], b["author"], b["stars_html"],
+            )
         items.append(
-            f'                <div class="book-item">\n'
+            f'                <div class="book-item"{attrs}>\n'
             f'                    {cover_html}\n'
             f'                    <div class="book-info">\n'
             f'                        <span class="book-title">{b["title"]}</span>\n'
@@ -242,7 +320,7 @@ def render_books(books):
 def render_currently_reading_block(books, heading):
     if not books:
         return ""
-    items_html = render_books(books)
+    items_html = render_books(books, reel=False)
     return (
         '<div class="books-block reveal">\n'
         f'                <h3 class="books-subtitle">{heading}</h3>\n'
@@ -280,7 +358,7 @@ def main():
             )
 
         if books:
-            books_html = render_books(books)
+            books_html = render_books(books, reel=True)
             html = re.sub(
                 r"<!-- SITE-BOOKS:START -->.*?<!-- SITE-BOOKS:END -->",
                 f"<!-- SITE-BOOKS:START -->\n{books_html}\n                <!-- SITE-BOOKS:END -->",
