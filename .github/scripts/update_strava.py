@@ -241,7 +241,11 @@ def esc(s):
 
 
 def reel_attrs(item_id, kind, date, title, sub, detail, extra=""):
-    """Mirrors the contract in update_site.py; update_reel.py reads these."""
+    """Mirrors the contract in update_site.py; update_reel.py reads these.
+
+    Unlike update_site.py's reel_attrs, this does not escape title/sub
+    itself; the caller pre-escapes them via esc() before calling this.
+    """
     attrs = f' id="{item_id}"'
     if not date:
         return attrs

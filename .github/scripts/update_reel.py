@@ -85,8 +85,8 @@ query($login: String!, $from: DateTime!, $to: DateTime!) {
 
 
 def fetch_commit_counts(buckets, token):
-    """contributionsCollection is used rather than /search/commits because
-    search covers public repositories only and undercounts."""
+    """Uses contributionsCollection. Depending on the token's scope, the
+    count may be public-repository-only; that's accepted."""
     counts = {}
     for first, last in buckets:
         payload = json.dumps({
