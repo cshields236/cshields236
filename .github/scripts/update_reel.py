@@ -71,3 +71,65 @@ def month_buckets(start, end):
         buckets.append((max(first, start), min(next_first - timedelta(days=1), end)))
         year, month = next_first.year, next_first.month
     return buckets
+
+
+COMMITS_QUERY = """
+query($login: String!, $from: DateTime!, $to: DateTime!) {
+  user(login: $login) {
+    contributionsCollection(from: $from, to: $to) {
+      totalCommitContributions
+    }
+  }
+}
+"""
+
+
+def fetch_commit_counts(buckets, token):
+    """contributionsCollection is used rather than /search/commits because
+    search covers public repositories only and undercounts."""
+    counts = {}
+    for first, last in buckets:
+        payload = json.dumps({
+            "query": COMMITS_QUERY,
+            "variables": {
+                "login": GITHUB_USER,
+                "from": f"{first.isoformat()}T00:00:00Z",
+                "to": f"{last.isoformat()}T23:59:59Z",
+            },
+        }).encode("utf-8")
+        req = urllib.request.Request(
+            GITHUB_GRAPHQL,
+            data=payload,
+            headers={
+                "Authorization": f"bearer {token}",
+                "Content-Type": "application/json",
+                "User-Agent": "conorshields.ie site sync",
+            },
+        )
+        with urllib.request.urlopen(req) as resp:
+            body = json.loads(resp.read().decode("utf-8"))
+        if "errors" in body:
+            raise SystemExit(f"GitHub GraphQL error for {first}: {body['errors']}")
+        counts[(first.year, first.month)] = (
+            body["data"]["user"]["contributionsCollection"]["totalCommitContributions"]
+        )
+    return counts
+
+
+def commit_items(counts, buckets):
+    items = []
+    for first, last in buckets:
+        total = counts.get((first.year, first.month))
+        if total is None:
+            continue
+        items.append({
+            "kind": "code",
+            "date": last.isoformat(),
+            "target": "",
+            "title": "",
+            "sub": "",
+            "detail": str(total),
+            "path_d": "",
+            "viewbox": "",
+        })
+    return items
