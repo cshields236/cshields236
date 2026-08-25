@@ -19,17 +19,48 @@ KIND_ORDER = {"film": 0, "book": 1, "route": 2, "code": 3}
 # read individually so their order in the tag does not matter.
 TAG_RE = re.compile(r'<[a-zA-Z][^>]*\sdata-reel-date="[^"]*"[^>]*>')
 ATTR_RE = re.compile(r'([a-zA-Z][a-zA-Z0-9-]*)="([^"]*)"')
+IMG_SRC_RE = re.compile(r'<img[^>]*\ssrc="([^"]+)"')
+STRIP_MARKER = '<div class="photos-strip"'
+STRIP_ROUTE_RE = re.compile(r'\s*data-route="(\d+)"')
+STRIP_IMG_RE = re.compile(r'<img class="photo-thumb-img" src="([^"]+)"')
+
+
+def route_photos(html):
+    """Run photos live in .photos-strip blocks keyed by data-route, not inside
+    the route buttons themselves, so they are collected separately."""
+    photos = {}
+    for chunk in html.split(STRIP_MARKER)[1:]:
+        match = STRIP_ROUTE_RE.match(chunk)
+        if not match:
+            continue
+        photos[match.group(1)] = STRIP_IMG_RE.findall(chunk)
+    return photos
+
+
+def first_image(html, start):
+    """First <img> inside the card that begins at `start`, bounded by the next
+    card so a card without artwork can't borrow its neighbour's."""
+    nxt = html.find('data-reel-date="', start)
+    end = len(html) if nxt == -1 else nxt
+    match = IMG_SRC_RE.search(html, start, end)
+    return match.group(1) if match else ""
 
 
 def parse_items(html):
+    photos = route_photos(html)
     items = []
-    for tag in TAG_RE.findall(html):
-        attrs = dict(ATTR_RE.findall(tag))
+    for tag in TAG_RE.finditer(html):
+        attrs = dict(ATTR_RE.findall(tag.group(0)))
         kind = attrs.get("data-reel-kind", "").strip()
         item_date = attrs.get("data-reel-date", "").strip()
         target = attrs.get("id", "").strip()
         if not item_date or not target or kind not in KIND_ORDER:
             continue
+        if kind == "route":
+            shots = photos.get(attrs.get("data-route", ""), [])
+            image = shots[0] if shots else ""
+        else:
+            image = first_image(html, tag.end())
         items.append({
             "kind": kind,
             "date": item_date,
@@ -39,6 +70,7 @@ def parse_items(html):
             "detail": attrs.get("data-reel-detail", ""),
             "path_d": attrs.get("data-reel-path", ""),
             "viewbox": attrs.get("data-reel-viewbox", ""),
+            "image": image,
         })
     return items
 
@@ -131,6 +163,7 @@ def commit_items(counts, buckets):
             "detail": str(total),
             "path_d": "",
             "viewbox": "",
+            "image": "",
         })
     return items
 
@@ -168,6 +201,16 @@ def _commit_bars(total):
     return "".join(bars)
 
 
+def _art(item):
+    """Poster, cover, or run photo as the frame's backing plate."""
+    if not item["image"]:
+        return ""
+    return (
+        f'<span class="reel-art" aria-hidden="true">'
+        f'<img src="{item["image"]}" alt="" loading="lazy"></span>'
+    )
+
+
 def render_frame(item, lang):
     kind = item["kind"]
     label = KIND_LABELS[lang][kind]
@@ -176,6 +219,7 @@ def render_frame(item, lang):
     href = GITHUB_PROFILE if kind == "code" else f'#{item["target"]}'
     external = ' target="_blank" rel="noopener"' if kind == "code" else ""
 
+    art = _art(item)
     if kind == "code":
         title, sub, detail = item["detail"], COMMITS_LABEL[lang], item["detail"]
         body = (
@@ -191,7 +235,7 @@ def render_frame(item, lang):
             f'<span class="reel-body"><span class="reel-num">{item["detail"]}'
             f'<small>{item["title"]}</small></span></span>'
         )
-    elif kind == "book":
+    elif kind == "book" and not art:
         title, sub, detail = item["title"], item["sub"], item["detail"]
         body = (
             f'<span class="reel-inset"><span class="reel-title">{item["title"]}</span>'
@@ -206,11 +250,12 @@ def render_frame(item, lang):
             f'<span class="reel-stars">{item["detail"]}</span></span>'
         )
 
+    art_class = " has-art" if art else ""
     return (
-        f'<a class="reel-frame k-{kind}" href="{href}"{external}'
+        f'<a class="reel-frame k-{kind}{art_class}" href="{href}"{external}'
         f' data-month="{month}" data-r-date="{date_label}" data-r-kind="{label}"'
         f' data-r-title="{title}" data-r-sub="{sub}" data-r-detail="{detail}">'
-        f'<span class="reel-kind"><i></i>{label}<em>{date_label}</em></span>'
+        f'{art}<span class="reel-kind"><i></i>{label}<em>{date_label}</em></span>'
         f'{body}</a>'
     )
 
