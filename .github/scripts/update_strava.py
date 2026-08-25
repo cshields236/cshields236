@@ -217,6 +217,8 @@ def get_activities(access_token):
         dt = datetime.fromisoformat(act["start_date_local"].replace("Z", ""))
 
         routes.append({
+            "id": act["id"],
+            "date": dt.date().isoformat(),
             "name": act.get("name", "Activity"),
             "type": act.get("sport_type", act.get("type", "Run")),
             "distance_km": round(act["distance"] / 1000, 1),
@@ -236,6 +238,22 @@ def get_activities(access_token):
 
 def esc(s):
     return (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+
+
+def reel_attrs(item_id, kind, date, title, sub, detail, extra=""):
+    """Mirrors the contract in update_site.py; update_reel.py reads these.
+
+    Unlike update_site.py's reel_attrs, this does not escape title/sub
+    itself; the caller pre-escapes them via esc() before calling this.
+    """
+    attrs = f' id="{item_id}"'
+    if not date:
+        return attrs
+    return (
+        f'{attrs} data-reel-date="{date}" data-reel-kind="{kind}"'
+        f' data-reel-title="{title}" data-reel-sub="{sub}"'
+        f' data-reel-detail="{detail}"{extra}'
+    )
 
 
 def render_routes_html(routes, lang):
@@ -264,8 +282,13 @@ def render_routes_html(routes, lang):
             '<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>'
             if r["photos"] else ""
         )
+        reel = reel_attrs(
+            f"route-{r['id']}", "route", r.get("date"), esc(r["name"]), loc,
+            f"{r['distance_km']} km",
+            extra=f' data-reel-path="{r["path_d"]}" data-reel-viewbox="0 0 {VIEWBOX_W} {VIEWBOX_H}"',
+        )
         list_items.append(
-            f'<button class="route-item{active}" data-route="{i}" data-dist="{r["distance_km"]} km" '
+            f'<button class="route-item{active}"{reel} data-route="{i}" data-dist="{r["distance_km"]} km" '
             f'data-meta="{esc(r["meta"])}" data-loc="{loc}" data-photos="{len(r["photos"])}">'
             f'<span class="route-dot"></span>'
             f'<span class="route-body">'
