@@ -1898,6 +1898,52 @@ textarea:focus-visible {
     transform: scale(1);
 }
 
+.reel-art {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.reel-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.82) contrast(1.04);
+}
+
+/* keeps the label, title and rating legible over the artwork */
+.reel-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+        rgba(8, 19, 16, 0.78) 0%,
+        rgba(8, 19, 16, 0.24) 32%,
+        rgba(8, 19, 16, 0.82) 76%,
+        rgba(8, 19, 16, 0.96) 100%);
+}
+
+.has-art .reel-kind,
+.has-art .reel-body,
+.has-art .reel-bars,
+.has-art .reel-route,
+.has-art .reel-inset {
+    position: relative;
+    z-index: 1;
+}
+
+.has-art .reel-title,
+.has-art .reel-num {
+    text-shadow: 0 1px 10px rgba(8, 19, 16, 0.8);
+}
+
+.k-route.has-art .reel-route path {
+    stroke: var(--paper);
+    filter: drop-shadow(0 0 4px rgba(8, 19, 16, 0.85));
+}
+
 .reel-kind {
     display: flex;
     align-items: center;
