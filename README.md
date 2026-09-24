@@ -55,6 +55,7 @@
 
 # 📚 Last 10 Books I've Read 
 <!-- GOODREADS-LIST:START -->
+- [The Brothers Karamazov](https://www.goodreads.com/review/show/7182763640?utm_medium=api&utm_source=rss) by Fyodor Dostoevsky (1879) ⭐⭐⭐⭐⭐ <br />
 - [I Want You to Be Happy](https://www.goodreads.com/review/show/8873849625?utm_medium=api&utm_source=rss) by Jem  Calder (2026) ⭐⭐⭐⭐ <br />
 - [Fundamentally](https://www.goodreads.com/review/show/8780284559?utm_medium=api&utm_source=rss) by Nussaibah Younis (2025) ⭐⭐ <br />
 - [The Metamorphosis](https://www.goodreads.com/review/show/8698908509?utm_medium=api&utm_source=rss) by Franz Kafka (1915) ⭐⭐⭐⭐ <br />
@@ -64,5 +65,4 @@
 - [Heart of Darkness](https://www.goodreads.com/review/show/8506204846?utm_medium=api&utm_source=rss) by Joseph Conrad (1899) ⭐⭐⭐ <br />
 - [Elevator in Sài Gòn](https://www.goodreads.com/review/show/8450360087?utm_medium=api&utm_source=rss) by Thuận (2013) ⭐⭐⭐ <br />
 - [The First Man](https://www.goodreads.com/review/show/8258964825?utm_medium=api&utm_source=rss) by Albert Camus (1994) ⭐⭐⭐ <br />
-- [Intermezzo](https://www.goodreads.com/review/show/6884864200?utm_medium=api&utm_source=rss) by Sally Rooney (2024) ⭐⭐⭐⭐⭐ <br />
 <!-- GOODREADS-LIST:END -->
