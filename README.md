@@ -50,7 +50,7 @@
 
 # 📖 Currently Reading
 <!-- GOODREADS-CURRENTLY-READING:START -->
-- [Minor Detail](https://www.goodreads.com/review/show/8981896136?utm_medium=api&utm_source=rss) by Adania Shibli <br />
+- [How Much Land Does a Man Need?](https://www.goodreads.com/review/show/8994072503?utm_medium=api&utm_source=rss) by Leo Tolstoy <br />
 <!-- GOODREADS-CURRENTLY-READING:END -->
 
 # 📚 Last 10 Books I've Read 
