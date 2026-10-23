@@ -50,6 +50,7 @@
 
 # 📖 Currently Reading
 <!-- GOODREADS-CURRENTLY-READING:START -->
+- [Giovanni’s Room](https://www.goodreads.com/review/show/9046297339?utm_medium=api&utm_source=rss) by James Baldwin <br />
 - [How Much Land Does a Man Need?](https://www.goodreads.com/review/show/8994072503?utm_medium=api&utm_source=rss) by Leo Tolstoy <br />
 <!-- GOODREADS-CURRENTLY-READING:END -->
 
