@@ -24,16 +24,16 @@ STRINGS = {
         "eyebrow": "Monthly Box Office",
         "months": ["January", "February", "March", "April", "May", "June", "July",
                    "August", "September", "October", "November", "December"],
-        "films": "films watched", "books": "books finished", "km": "km run",
-        "commits": "commits", "avg": "avg", "runs": lambda n: f"{n} run" + ("" if n == 1 else "s"),
+        "films": ("film watched", "films watched"), "books": ("book finished", "books finished"),
+        "km": "km run", "commits": ("commit", "commits"), "avg": "avg", "runs": lambda n: f"{n} run" + ("" if n == 1 else "s"),
         "pick": "Pick of the month", "longest": "Longest run",
     },
     "es": {
         "eyebrow": "Taquilla del mes",
         "months": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
                    "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-        "films": "películas vistas", "books": "libros terminados", "km": "km corridos",
-        "commits": "commits", "avg": "media", "runs": lambda n: f"{n} carrera" + ("" if n == 1 else "s"),
+        "films": ("película vista", "películas vistas"), "books": ("libro terminado", "libros terminados"),
+        "km": "km corridos", "commits": ("commit", "commits"), "avg": "media", "runs": lambda n: f"{n} carrera" + ("" if n == 1 else "s"),
         "pick": "Lo mejor del mes", "longest": "Carrera más larga",
     },
 }
@@ -171,6 +171,10 @@ def stat(value, label, note=""):
     )
 
 
+def plural(forms, n):
+    return forms[0] if n == 1 else forms[1]
+
+
 def render(stats, first, lang):
     s = STRINGS[lang]
     films, books, runs, commits = stats["films"], stats["books"], stats["runs"], stats["commits"]
@@ -181,10 +185,10 @@ def render(stats, first, lang):
         film_note = f'{s["avg"]} {STAR_MAP.get("%.1f" % avg, "")}'
     # A zero reads as "nothing happened"; leave quiet categories off the card.
     stat_html = "\n".join(html_ for count, html_ in [
-        (films["count"], stat(film_value, s["films"], film_note)),
-        (books["count"], stat(books["count"], s["books"])),
+        (films["count"], stat(film_value, plural(s["films"], films["count"]), film_note)),
+        (books["count"], stat(books["count"], plural(s["books"], books["count"]))),
         (runs["count"], stat(fmt_km(runs["km"], lang), s["km"], s["runs"](runs["count"]))),
-        (commits["count"], stat(commits["count"], s["commits"])),
+        (commits["count"], stat(commits["count"], plural(s["commits"], commits["count"]))),
     ] if count)
     highlights = []
     if films["pick"]:
