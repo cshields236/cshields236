@@ -76,6 +76,10 @@ def film_stats(first, last):
             "rating": float(rating) if rating else None,
             "date": when,
         })
+    if not oldest or oldest > last.isoformat():
+        # The feed has rolled past this month entirely; an empty result here
+        # means missing history, not a month without films.
+        raise SourceUnavailable("Letterboxd feed no longer reaches this month")
     rated = [f for f in watched if f["rating"] is not None]
     pick = max(rated, key=lambda f: (f["rating"], f["date"])) if rated else None
     return {
@@ -92,7 +96,7 @@ def book_stats(first, last):
     read, _ = get_hardcover_shelves()
     if read is None:
         raise SourceUnavailable("Hardcover")
-    return {"count": sum(1 for b in read if in_month(b["date"], first, last))}
+    return {"count": sum(1 for b in read if in_month(b["finished"], first, last))}
 
 
 def strava_token():
