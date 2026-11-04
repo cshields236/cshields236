@@ -1,6 +1,7 @@
 import html
 import xml.etree.ElementTree as ET
 import re
+import urllib.error
 import urllib.request
 from email.utils import parsedate_to_datetime
 
@@ -171,8 +172,21 @@ def get_favourites():
     return films
 
 
+def fetch_goodreads(url):
+    """Goodreads withdrew its public RSS feeds in Oct 2026 (404 for every user).
+    Returning None lets the caller keep the books already on the page instead of
+    aborting the whole run, which would also block the Letterboxd updates."""
+    try:
+        return fetch_url(url)
+    except urllib.error.URLError as e:
+        print(f"::warning::Goodreads feed unavailable, keeping existing books ({url}): {e}")
+        return None
+
+
 def get_books():
-    data = fetch_url(GOODREADS_RSS)
+    data = fetch_goodreads(GOODREADS_RSS)
+    if data is None:
+        return None
     root = ET.fromstring(data)
     books = []
     for item in root.findall(".//item"):
@@ -203,7 +217,9 @@ def get_books():
 
 
 def get_currently_reading(limit=3):
-    data = fetch_url(GOODREADS_CURRENTLY_READING_RSS)
+    data = fetch_goodreads(GOODREADS_CURRENTLY_READING_RSS)
+    if data is None:
+        return None
     root = ET.fromstring(data)
     books = []
     for item in root.findall(".//item"):
@@ -365,20 +381,25 @@ def main():
                 html, flags=re.DOTALL,
             )
 
-        currently_reading_html = render_currently_reading_block(currently_reading, STRINGS[lang]["currently_reading"])
-        html, n = re.subn(
-            r"<!-- SITE-CURRENTLY-READING:START -->.*?<!-- SITE-CURRENTLY-READING:END -->",
-            f"<!-- SITE-CURRENTLY-READING:START -->{currently_reading_html}<!-- SITE-CURRENTLY-READING:END -->",
-            html, flags=re.DOTALL,
-        )
-        if n == 0:
-            raise SystemExit(f"SITE-CURRENTLY-READING marker not found in {site_path}")
+        # An empty list means the shelf is genuinely empty and the block should
+        # clear; None means the feed was unreachable, so leave it as it is.
+        if currently_reading is not None:
+            currently_reading_html = render_currently_reading_block(currently_reading, STRINGS[lang]["currently_reading"])
+            html, n = re.subn(
+                r"<!-- SITE-CURRENTLY-READING:START -->.*?<!-- SITE-CURRENTLY-READING:END -->",
+                f"<!-- SITE-CURRENTLY-READING:START -->{currently_reading_html}<!-- SITE-CURRENTLY-READING:END -->",
+                html, flags=re.DOTALL,
+            )
+            if n == 0:
+                raise SystemExit(f"SITE-CURRENTLY-READING marker not found in {site_path}")
 
         with open(site_path, "w") as f:
             f.write(html)
 
     fav_count = len(favourites) if favourites is not None else "unchanged"
-    print(f"Updated {len(SITE_PATHS)} site file(s): {fav_count} favourites, {len(watched)} watched, {len(books)} books, {len(currently_reading)} currently reading.")
+    book_count = len(books) if books is not None else "unchanged"
+    reading_count = len(currently_reading) if currently_reading is not None else "unchanged"
+    print(f"Updated {len(SITE_PATHS)} site file(s): {fav_count} favourites, {len(watched)} watched, {book_count} books, {reading_count} currently reading.")
 
 
 if __name__ == "__main__":
