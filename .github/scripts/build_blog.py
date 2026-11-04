@@ -370,7 +370,7 @@ def render_index(posts):
 
 
 START_TAG = re.compile(r"<[a-zA-Z][^<>]*>")
-RELATIVE_ATTR = re.compile(r'\b(src|href)="(?![a-z][a-z0-9+.-]*:)([^"]*)"')
+RELATIVE_ATTR = re.compile(r"""\b(src|href)=(?:"(?![a-z][a-z0-9+.-]*:)([^"]*)"|'(?![a-z][a-z0-9+.-]*:)([^']*)')""")
 
 
 def absolutise_links(content, base):
@@ -378,7 +378,8 @@ def absolutise_links(content, base):
     links and images are made absolute. Only real start tags are touched:
     code samples are entity-escaped (&lt;a ...), so they never match."""
     def fix_attr(m):
-        absolute = urljoin(base, html.unescape(m.group(2)))
+        value = m.group(2) if m.group(2) is not None else m.group(3)
+        absolute = urljoin(base, html.unescape(value))
         return f'{m.group(1)}="{html.escape(absolute, quote=True)}"'
     return START_TAG.sub(lambda tag: RELATIVE_ATTR.sub(fix_attr, tag.group(0)), content)
 
