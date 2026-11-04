@@ -16,7 +16,11 @@ jobs:
     permissions:
       contents: write
     steps:
+      # A queued run must build on the previous run's output, not on the
+      # commit that triggered it, or both add the same pages and the rebase conflicts.
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

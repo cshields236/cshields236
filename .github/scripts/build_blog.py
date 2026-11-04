@@ -54,7 +54,11 @@ def parse_front_matter(text, path):
     for line in match.group(1).splitlines():
         if ":" in line:
             key, value = line.split(":", 1)
-            meta[key.strip().lower()] = value.strip().strip('"').strip("'")
+            value = value.strip()
+            # Only a wrapping pair is YAML-style quoting; "On 'La Haine'" keeps its quotes.
+            if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+                value = value[1:-1]
+            meta[key.strip().lower()] = value
     for key in ("title", "date"):
         if not meta.get(key):
             sys.exit(f"{path}: front matter needs '{key}'")
@@ -345,16 +349,26 @@ def render_index(posts):
 """ + FOOT.format(year=date.today().year))
 
 
+START_TAG = re.compile(r"<[a-zA-Z][^<>]*>")
+RELATIVE_ATTR = re.compile(r'\b(src|href)="(?![a-z][a-z0-9+.-]*:)([^"]*)"')
+
+
+def absolutise_links(content, base):
+    """Feed readers resolve against the feed URL, not the post's, so relative
+    links and images are made absolute. Only real start tags are touched:
+    code samples are entity-escaped (&lt;a ...), so they never match."""
+    def fix_attr(m):
+        absolute = urljoin(base, html.unescape(m.group(2)))
+        return f'{m.group(1)}="{html.escape(absolute, quote=True)}"'
+    return START_TAG.sub(lambda tag: RELATIVE_ATTR.sub(fix_attr, tag.group(0)), content)
+
+
 def render_feed(posts, contents):
     items = []
     for p in posts:
         url = f"{SITE_URL}/blog/{p['slug']}/"
         published = datetime(p["date"].year, p["date"].month, p["date"].day, 12, tzinfo=timezone.utc)
-        # Feed readers resolve against the feed URL, not the post's; make every
-        # relative link and image absolute against the post page instead.
-        body = re.sub(r'\b(src|href)="(?![a-z][a-z0-9+.-]*:)([^"]*)"',
-                      lambda m: f'{m.group(1)}="{urljoin(url, html.unescape(m.group(2)))}"',
-                      contents[p["slug"]])
+        body = absolutise_links(contents[p["slug"]], url)
         items.append(f"""  <item>
     <title>{html.escape(p['title'])}</title>
     <link>{url}</link>
