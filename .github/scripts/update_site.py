@@ -27,7 +27,7 @@ STRINGS = {
 }
 
 STAR_MAP = {
-    "0.5": "&#9733;&#189;", "1.0": "&#9733;", "1.5": "&#9733;&#189;",
+    "0.5": "&#189;", "1.0": "&#9733;", "1.5": "&#9733;&#189;",
     "2.0": "&#9733;&#9733;", "2.5": "&#9733;&#9733;&#189;",
     "3.0": "&#9733;&#9733;&#9733;", "3.5": "&#9733;&#9733;&#9733;&#189;",
     "4.0": "&#9733;&#9733;&#9733;&#9733;", "4.5": "&#9733;&#9733;&#9733;&#9733;&#189;",
@@ -225,6 +225,8 @@ def to_book(user_book):
         "cover": ((b.get("image") or {}).get("url") or "").strip(),
         # update_reel.py parses this with date.fromisoformat, so drop any time part.
         "date": (user_book.get("last_read_date") or user_book.get("date_added") or "")[:10] or None,
+        # Only a real finish date; "date" above falls back to when it was shelved.
+        "finished": (user_book.get("last_read_date") or "")[:10] or None,
         "url": f"https://hardcover.app/books/{b['slug']}" if b.get("slug") else "",
         "year": b.get("release_year"),
     }

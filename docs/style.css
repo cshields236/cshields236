@@ -2169,6 +2169,114 @@ textarea:focus-visible {
     .reel-track { padding: 0 calc(50vw - 80px); }
 }
 
+/* ─── Monthly Recap ─── */
+.recap {
+    margin-top: 3rem;
+    padding: 1.8rem 2rem 1.6rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--bg-alt);
+}
+
+.recap-eyebrow {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--crimson);
+}
+
+.recap-title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 2rem;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: var(--text);
+    margin: 0.4rem 0 1.4rem;
+}
+
+.recap-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    border-top: 1px dashed var(--line-strong);
+    border-bottom: 1px dashed var(--line-strong);
+}
+
+.recap-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 1.1rem 1rem 1.1rem 0;
+}
+
+.recap-stat + .recap-stat {
+    padding-left: 1rem;
+    border-left: 1px dashed var(--line-strong);
+}
+
+.recap-value {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--paper);
+}
+
+.recap-label,
+.recap-note,
+.recap-hl-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+
+.recap-note {
+    color: var(--gold);
+}
+
+.recap-highlight {
+    margin-top: 0.9rem;
+    color: var(--text-muted);
+}
+
+.recap-hl-label {
+    margin-right: 0.5rem;
+}
+
+.recap-hl-value {
+    font-style: italic;
+    color: var(--text);
+}
+
+.recap-stars {
+    font-style: normal;
+    color: var(--gold);
+    margin-left: 0.25rem;
+}
+
+@media (max-width: 640px) {
+    .recap {
+        padding: 1.4rem 1.2rem 1.2rem;
+    }
+
+    .recap-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .recap-stat:nth-child(odd) {
+        padding-left: 0;
+        border-left: none;
+    }
+
+    .recap-stat:nth-child(n + 3) {
+        border-top: 1px dashed var(--line-strong);
+    }
+}
+
 /* ─── Film Themes ───
    Chosen from the nav switcher (theme.js). Each palette is contrast-checked
    against the house roles: --crimson must read on --bg and under --paper text. */
