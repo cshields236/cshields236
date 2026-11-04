@@ -13,7 +13,7 @@
 Spotify, Apple Music, YouTube, Letterboxd films (poster and your rating when
 the film is in your recent Letterboxd activity) and Bandcamp (a link card).
 
-**Photos** are resized to 1600px wide and stripped of metadata, including
+**Photos** (JPEG, PNG or WebP) are resized to 1600px wide and stripped of metadata, including
 the GPS location phones record, so originals can go in as they are.
 
 **Preview locally** (optional):

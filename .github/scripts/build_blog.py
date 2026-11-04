@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 from datetime import date, datetime, timezone
 from email.utils import format_datetime
 from pathlib import Path
-from urllib.parse import parse_qs, quote, unquote, urlparse
+from urllib.parse import parse_qs, quote, unquote, urljoin, urlparse
 
 import markdown
 from PIL import Image, ImageOps
@@ -24,7 +24,7 @@ SITE_URL = "https://conorshields.ie"
 HOME_POST_COUNT = 3
 MAX_IMAGE_WIDTH = 1600
 JPEG_QUALITY = 82
-IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp"}
 LB_NS = {"letterboxd": "https://letterboxd.com"}
 
 HOME_STRINGS = {
@@ -166,16 +166,22 @@ def embed_for(url, films):
     return None
 
 
-BARE_URL_LINE = re.compile(r"^(https?://\S+)\s*$", re.MULTILINE)
+BARE_URL_LINE = re.compile(r"^(https?://\S+)\s*$")
+FENCE = re.compile(r"^\s*(```|~~~)")
 
 
 def expand_embeds(body, films):
     """A URL alone on its own line becomes an embed; Markdown passes the
-    resulting HTML block through untouched because it's separated by blank lines."""
-    def repl(match):
-        embed = embed_for(match.group(1), films)
-        return f"\n{embed}\n" if embed else match.group(0)
-    return BARE_URL_LINE.sub(repl, body)
+    resulting HTML block through untouched because it's separated by blank
+    lines. URLs inside fenced code stay as written."""
+    lines, in_fence = [], False
+    for line in body.split("\n"):
+        if FENCE.match(line):
+            in_fence = not in_fence
+        match = None if in_fence else BARE_URL_LINE.match(line)
+        embed = embed_for(match.group(1), films) if match else None
+        lines.append(f"\n{embed}\n" if embed else line)
+    return "\n".join(lines)
 
 
 # ─── Images ───
@@ -183,12 +189,10 @@ def expand_embeds(body, films):
 def publish_image(src, dest):
     """Resize and strip metadata: phone photos carry GPS in EXIF."""
     dest.parent.mkdir(parents=True, exist_ok=True)
-    if src.suffix.lower() == ".gif":
-        shutil.copyfile(src, dest)
-        with Image.open(src) as im:
-            return im.size
     with Image.open(src) as im:
         im = ImageOps.exif_transpose(im)
+        # Writers fall back to im.info for EXIF/XMP; keep only what affects rendering.
+        im.info = {k: v for k, v in im.info.items() if k in ("icc_profile", "transparency")}
         if im.width > MAX_IMAGE_WIDTH:
             im = im.resize((MAX_IMAGE_WIDTH, round(im.height * MAX_IMAGE_WIDTH / im.width)), Image.LANCZOS)
         if src.suffix.lower() in (".jpg", ".jpeg"):
@@ -210,11 +214,12 @@ def process_images(content, post, out_dir):
         if re.match(r"^(https?:)?//", src):
             tag = f'<img alt="{alt}" src="{src}" loading="lazy">'
         else:
-            source = (post["folder"] / unquote(src)).resolve()
+            source = (post["folder"] / unquote(html.unescape(src))).resolve()
             if post["folder"].resolve() not in source.parents or not source.is_file():
                 sys.exit(f"{post['folder']}/index.md: image not found: {src}")
             if source.suffix.lower() not in IMAGE_EXTS:
-                sys.exit(f"{post['folder']}/index.md: unsupported image type: {src}")
+                sys.exit(f"{post['folder']}/index.md: unsupported image type: {src} "
+                         f"(use {', '.join(sorted(IMAGE_EXTS))})")
             rel = source.relative_to(post["folder"].resolve()).as_posix()
             width, height = publish_image(source, out_dir / rel)
             first_image = first_image or rel
@@ -295,7 +300,7 @@ def render_post(post, content, og_image):
     summary = post.get("summary", "")
     lede = f'<p class="post-summary">{html.escape(summary)}</p>' if summary else ""
     return (head(f"{post['title']} — Conor Shields", summary or post["title"], url,
-                 f"{url}{og_image}" if og_image else None)
+                 f"{url}{quote(og_image)}" if og_image else None)
             + f"""<main class="post">
 <article class="container post-container">
 <header class="post-header">
@@ -345,8 +350,11 @@ def render_feed(posts, contents):
     for p in posts:
         url = f"{SITE_URL}/blog/{p['slug']}/"
         published = datetime(p["date"].year, p["date"].month, p["date"].day, 12, tzinfo=timezone.utc)
-        # Make relative image paths absolute so feed readers can load them.
-        body = re.sub(r'src="(?!https?:|/)([^"]+)"', rf'src="{url}\1"', contents[p["slug"]])
+        # Feed readers resolve against the feed URL, not the post's; make every
+        # relative link and image absolute against the post page instead.
+        body = re.sub(r'\b(src|href)="(?![a-z][a-z0-9+.-]*:)([^"]*)"',
+                      lambda m: f'{m.group(1)}="{urljoin(url, html.unescape(m.group(2)))}"',
+                      contents[p["slug"]])
         items.append(f"""  <item>
     <title>{html.escape(p['title'])}</title>
     <link>{url}</link>
