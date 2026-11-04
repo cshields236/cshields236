@@ -2931,7 +2931,7 @@ body::after {
     }
 
     .nav, .mobile-menu, .resume-btn, .hero-avatar, .hero-scroll, .hero-welcome,
-    .section.films, .section.routes, .section.books, .section.reel,
+    .section.films, .section.routes, .section.books, .section.reel, .section.writing,
     .contact-form, .footer,
     .credits-roll, .quiz-backdrop, .ticket-backdrop, .casting-backdrop,
     .theme-panel, body::before, body::after {

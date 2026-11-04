@@ -171,18 +171,25 @@ def embed_for(url, films):
 
 
 BARE_URL_LINE = re.compile(r"^(https?://\S+)\s*$")
-FENCE = re.compile(r"^\s*(```|~~~)")
+FENCE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
 
 
 def expand_embeds(body, films):
     """A URL alone on its own line becomes an embed; Markdown passes the
     resulting HTML block through untouched because it's separated by blank
     lines. URLs inside fenced code stay as written."""
-    lines, in_fence = [], False
+    lines, fence = [], None
     for line in body.split("\n"):
-        if FENCE.match(line):
-            in_fence = not in_fence
-        match = None if in_fence else BARE_URL_LINE.match(line)
+        f = FENCE.match(line)
+        if f and fence is None:
+            fence = f.group(1)
+        elif f and f.group(1) == fence and not f.group(2).strip():
+            # Only the identical delimiter closes a block, as in Python-Markdown,
+            # so a ``` example inside a ```` block doesn't end it early.
+            fence = None
+            lines.append(line)
+            continue
+        match = None if fence else BARE_URL_LINE.match(line)
         embed = embed_for(match.group(1), films) if match else None
         lines.append(f"\n{embed}\n" if embed else line)
     return "\n".join(lines)
@@ -206,7 +213,8 @@ def publish_image(src, dest):
         return im.size
 
 
-IMG_TAG = re.compile(r'<img alt="([^"]*)" src="([^"]+)"(?: title="([^"]*)")?\s*/?>')
+IMG_TAG = re.compile(r"<img\b[^>]*>")
+TAG_ATTR = re.compile(r'([a-zA-Z_:][-a-zA-Z0-9_:.]*)="([^"]*)"')
 
 
 def process_images(content, post, out_dir):
@@ -214,10 +222,12 @@ def process_images(content, post, out_dir):
 
     def repl(match):
         nonlocal first_image
-        alt, src, title = match.group(1), match.group(2), match.group(3)
-        if re.match(r"^(https?:)?//", src):
-            tag = f'<img alt="{alt}" src="{src}" loading="lazy">'
-        else:
+        # attr_list ({: .wide}) can add attributes in any order, so parse them
+        # rather than matching a fixed alt/src/title layout.
+        attrs = dict(TAG_ATTR.findall(match.group(0)))
+        src = attrs.get("src", "")
+        title = attrs.pop("title", None)
+        if src and not re.match(r"^(https?:)?//", src):
             source = (post["folder"] / unquote(html.unescape(src))).resolve()
             if post["folder"].resolve() not in source.parents or not source.is_file():
                 sys.exit(f"{post['folder']}/index.md: image not found: {src}")
@@ -227,7 +237,10 @@ def process_images(content, post, out_dir):
             rel = source.relative_to(post["folder"].resolve()).as_posix()
             width, height = publish_image(source, out_dir / rel)
             first_image = first_image or rel
-            tag = f'<img alt="{alt}" src="{quote(rel)}" width="{width}" height="{height}" loading="lazy">'
+            attrs.update(src=quote(rel), width=str(width), height=str(height))
+        attrs.setdefault("alt", "")
+        attrs["loading"] = "lazy"
+        tag = "<img " + " ".join(f'{k}="{v}"' for k, v in attrs.items()) + ">"
         if title:
             return f'<figure>{tag}<figcaption>{title}</figcaption></figure>'
         return tag
