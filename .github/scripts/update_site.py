@@ -223,7 +223,8 @@ def to_book(user_book):
         "rating": rating,
         "stars_html": book_stars(rating),
         "cover": ((b.get("image") or {}).get("url") or "").strip(),
-        "date": user_book.get("last_read_date") or user_book.get("date_added"),
+        # update_reel.py parses this with date.fromisoformat, so drop any time part.
+        "date": (user_book.get("last_read_date") or user_book.get("date_added") or "")[:10] or None,
         "url": f"https://hardcover.app/books/{b['slug']}" if b.get("slug") else "",
         "year": b.get("release_year"),
     }
@@ -258,7 +259,7 @@ def get_hardcover_shelves():
         if payload.get("errors"):
             raise ValueError(payload["errors"])
         me = payload["data"]["me"][0]
-    except (urllib.error.URLError, ValueError, KeyError, IndexError) as e:
+    except (OSError, ValueError, KeyError, IndexError) as e:
         print(f"::warning::Hardcover unavailable, keeping existing books: {e}")
         return None, None
 
