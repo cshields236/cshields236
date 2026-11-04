@@ -131,8 +131,11 @@ def run_stats(first, last):
         raise
     except Exception as e:
         raise SourceUnavailable(f"Strava: {e}")
+    # Zero-distance runs (no GPS, or auto-logged by a wearable) would inflate
+    # the run count without adding any kilometres.
     runs = [a for a in activities
             if a.get("sport_type", a.get("type")) in RUN_TYPES
+            and a.get("distance", 0) > 0
             and in_month(a.get("start_date_local"), first, last)]
     distances = [a.get("distance", 0) / 1000 for a in runs]
     return {"count": len(runs), "km": sum(distances), "longest": max(distances, default=0)}
