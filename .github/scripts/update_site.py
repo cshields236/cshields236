@@ -1,4 +1,6 @@
 import html
+import json
+import os
 import xml.etree.ElementTree as ET
 import re
 import urllib.error
@@ -6,12 +8,18 @@ import urllib.request
 from email.utils import parsedate_to_datetime
 
 LETTERBOXD_USERNAME = "cshields_"
-GOODREADS_USER_ID = "106016596"
 LETTERBOXD_RSS = f"https://letterboxd.com/{LETTERBOXD_USERNAME}/rss/"
 LETTERBOXD_PROFILE = f"https://letterboxd.com/{LETTERBOXD_USERNAME}/"
-GOODREADS_RSS = f"https://www.goodreads.com/review/list_rss/{GOODREADS_USER_ID}?shelf=read"
-GOODREADS_CURRENTLY_READING_RSS = f"https://www.goodreads.com/review/list_rss/{GOODREADS_USER_ID}?shelf=currently-reading"
+HARDCOVER_API = "https://api.hardcover.app/v1/graphql"
+HARDCOVER_STATUS_READING = 2
+HARDCOVER_STATUS_READ = 3
+# Goodreads imports often lack a finish date, which Hardcover sorts last, so
+# fetch the whole read shelf and sort on the date_added fallback locally.
+HARDCOVER_READ_FETCH = 1000
+SITE_BOOK_COUNT = 6
+README_BOOK_COUNT = 10
 SITE_PATHS = {"en": "docs/index.html", "es": "docs/es/index.html"}
+README_PATH = "README.md"
 
 STRINGS = {
     "en": {"currently_reading": "Currently Reading", "view_on_letterboxd": "View on Letterboxd →"},
@@ -25,12 +33,6 @@ STAR_MAP = {
     "4.0": "&#9733;&#9733;&#9733;&#9733;", "4.5": "&#9733;&#9733;&#9733;&#9733;&#189;",
     "5.0": "&#9733;&#9733;&#9733;&#9733;&#9733;",
 }
-
-BOOK_STARS = {
-    1: "&#9733;", 2: "&#9733;&#9733;", 3: "&#9733;&#9733;&#9733;",
-    4: "&#9733;&#9733;&#9733;&#9733;", 5: "&#9733;&#9733;&#9733;&#9733;&#9733;",
-}
-
 
 def rfc822_to_iso(value):
     """Goodreads dates arrive RFC-822 ('Tue, 28 Jul 2026 00:00:00 +0000')."""
@@ -172,74 +174,132 @@ def get_favourites():
     return films
 
 
-def fetch_goodreads(url):
-    """Goodreads withdrew its public RSS feeds in Oct 2026 (404 for every user).
-    Returning None lets the caller keep the books already on the page instead of
-    aborting the whole run, which would also block the Letterboxd updates."""
+HARDCOVER_QUERY = """
+query Shelves($read: Int!, $reading: Int!, $limit: Int!) {
+  me {
+    read: user_books(where: {status_id: {_eq: $read}},
+                     order_by: {last_read_date: desc_nulls_last}, limit: $limit) {
+      ...shelfBook
+    }
+    reading: user_books(where: {status_id: {_eq: $reading}},
+                        order_by: {date_added: desc}) {
+      ...shelfBook
+    }
+  }
+}
+fragment shelfBook on user_books {
+  rating
+  last_read_date
+  date_added
+  book {
+    title
+    slug
+    release_year
+    image { url }
+    contributions { contribution author { name } }
+  }
+}
+"""
+
+
+def book_stars(rating):
+    if not rating:
+        return ""
+    value = float(rating)
+    return "&#189;" if value == 0.5 else STAR_MAP.get(f"{value:.1f}", "")
+
+
+def to_book(user_book):
+    b = user_book["book"]
+    contributions = b.get("contributions") or []
+    # Translators, editors and introducers are listed too; Hardcover leaves
+    # the role null or "Author" for the actual author.
+    authors = [c for c in contributions if c.get("contribution") in (None, "Author")]
+    author = (authors or contributions or [{"author": {"name": ""}}])[0]["author"]["name"]
+    rating = user_book.get("rating") or 0
+    return {
+        "title": (b.get("title") or "").strip(),
+        "author": author.strip(),
+        "rating": rating,
+        "stars_html": book_stars(rating),
+        "cover": ((b.get("image") or {}).get("url") or "").strip(),
+        # update_reel.py parses this with date.fromisoformat, so drop any time part.
+        "date": (user_book.get("last_read_date") or user_book.get("date_added") or "")[:10] or None,
+        "url": f"https://hardcover.app/books/{b['slug']}" if b.get("slug") else "",
+        "year": b.get("release_year"),
+    }
+
+
+def get_hardcover_shelves():
+    """Returns (read, currently_reading), or (None, None) when Hardcover is
+    unreachable so the caller keeps the books already on the page rather than
+    blanking them or aborting the Letterboxd updates."""
+    token = os.environ.get("HARDCOVER_TOKEN", "").strip()
+    if not token:
+        print("::warning::HARDCOVER_TOKEN not set, keeping existing books")
+        return None, None
+    if not token.lower().startswith("bearer "):
+        token = f"Bearer {token}"
+    body = json.dumps({
+        "query": HARDCOVER_QUERY,
+        "variables": {
+            "read": HARDCOVER_STATUS_READ,
+            "reading": HARDCOVER_STATUS_READING,
+            "limit": HARDCOVER_READ_FETCH,
+        },
+    }).encode()
+    req = urllib.request.Request(HARDCOVER_API, data=body, headers={
+        "Content-Type": "application/json",
+        "Authorization": token,
+        "User-Agent": "cshields236-site-updater",
+    })
     try:
-        return fetch_url(url)
-    except urllib.error.URLError as e:
-        print(f"::warning::Goodreads feed unavailable, keeping existing books ({url}): {e}")
-        return None
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            payload = json.load(resp)
+        if payload.get("errors"):
+            raise ValueError(payload["errors"])
+        me = payload["data"]["me"][0]
+    except (OSError, ValueError, KeyError, IndexError) as e:
+        print(f"::warning::Hardcover unavailable, keeping existing books: {e}")
+        return None, None
+
+    read = sorted((to_book(ub) for ub in me["read"]),
+                  key=lambda b: b["date"] or "", reverse=True)
+    reading = [to_book(ub) for ub in me["reading"]]
+    for b in reading:
+        # Unfinished books have no read date; keep them off the Reel.
+        b["date"] = None
+    return read, reading
 
 
-def get_books():
-    data = fetch_goodreads(GOODREADS_RSS)
-    if data is None:
-        return None
-    root = ET.fromstring(data)
-    books = []
-    for item in root.findall(".//item"):
-        title = item.find("title").text.strip() if item.find("title") is not None else ""
-        author = item.find("author_name").text.strip() if item.find("author_name") is not None else ""
-        rating_el = item.find("user_rating")
-        rating = int(rating_el.text) if rating_el is not None and rating_el.text else 0
-        cover_el = item.find("book_large_image_url")
-        cover = cover_el.text.strip() if cover_el is not None and cover_el.text else ""
-        if "nophoto" in cover:
-            cover = ""
-        read_at = item.findtext("user_read_at")
-        added_at = item.findtext("user_date_added")
-        # user_read_at is empty on ~5% of shelf entries; user_date_added is
-        # always present and matches it wherever both exist.
-        book_date = rfc822_to_iso(read_at) or rfc822_to_iso(added_at)
-        books.append({
-            "title": title,
-            "author": author,
-            "rating": rating,
-            "stars_html": BOOK_STARS.get(rating, ""),
-            "cover": cover,
-            "date": book_date,
-        })
-        if len(books) == 6:
-            break
-    return books
+def render_readme_books(read, reading):
+    reading_md = "\n".join(
+        f'- [{b["title"]}]({b["url"]}) by {b["author"]} <br />' for b in reading
+    )
+    read_md = "\n".join(
+        f'- [{b["title"]}]({b["url"]}) by {b["author"]}'
+        + (f' ({b["year"]})' if b["year"] else "")
+        + (f' {"⭐" * int(b["rating"])}' if b["rating"] else "")
+        + " <br />"
+        for b in read[:README_BOOK_COUNT]
+    )
+    return reading_md, read_md
 
 
-def get_currently_reading(limit=3):
-    data = fetch_goodreads(GOODREADS_CURRENTLY_READING_RSS)
-    if data is None:
-        return None
-    root = ET.fromstring(data)
-    books = []
-    for item in root.findall(".//item"):
-        title = item.find("title").text.strip() if item.find("title") is not None else ""
-        author = item.find("author_name").text.strip() if item.find("author_name") is not None else ""
-        cover_el = item.find("book_large_image_url")
-        cover = cover_el.text.strip() if cover_el is not None and cover_el.text else ""
-        if "nophoto" in cover:
-            cover = ""
-        books.append({
-            "title": title,
-            "author": author,
-            "rating": 0,
-            "stars_html": "",
-            "cover": cover,
-            "date": None,
-        })
-        if len(books) == limit:
-            break
-    return books
+def update_readme(read, reading):
+    with open(README_PATH, "r") as f:
+        readme = f.read()
+    reading_md, read_md = render_readme_books(read, reading)
+    for marker, content in (("CURRENTLY-READING", reading_md), ("BOOK-LIST", read_md)):
+        readme, n = re.subn(
+            rf"<!-- {marker}:START -->.*?<!-- {marker}:END -->",
+            f"<!-- {marker}:START -->\n{content}\n<!-- {marker}:END -->",
+            readme, flags=re.DOTALL,
+        )
+        if n == 0:
+            raise SystemExit(f"{marker} marker not found in {README_PATH}")
+    with open(README_PATH, "w") as f:
+        f.write(readme)
 
 
 def render_favourites(films):
@@ -350,8 +410,8 @@ def render_currently_reading_block(books, heading):
 def main():
     favourites = get_favourites()
     watched = get_recent_watched()
-    books = get_books()
-    currently_reading = get_currently_reading()
+    read, currently_reading = get_hardcover_shelves()
+    books = read[:SITE_BOOK_COUNT] if read is not None else None
 
     for lang, site_path in SITE_PATHS.items():
         with open(site_path, "r") as f:
@@ -395,6 +455,9 @@ def main():
 
         with open(site_path, "w") as f:
             f.write(html)
+
+    if read is not None:
+        update_readme(read, currently_reading)
 
     fav_count = len(favourites) if favourites is not None else "unchanged"
     book_count = len(books) if books is not None else "unchanged"

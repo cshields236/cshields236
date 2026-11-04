@@ -49,21 +49,20 @@
 <!-- LETTERBOXD-WATCHED:END -->
 
 # 📖 Currently Reading
-<!-- GOODREADS-CURRENTLY-READING:START -->
-- [Giovanni’s Room](https://www.goodreads.com/review/show/9046297339?utm_medium=api&utm_source=rss) by James Baldwin <br />
-- [How Much Land Does a Man Need?](https://www.goodreads.com/review/show/8994072503?utm_medium=api&utm_source=rss) by Leo Tolstoy <br />
-<!-- GOODREADS-CURRENTLY-READING:END -->
+<!-- CURRENTLY-READING:START -->
+- [Giovanni's Room](https://hardcover.app/books/giovannis-room) by James Baldwin <br />
+<!-- CURRENTLY-READING:END -->
 
 # 📚 Last 10 Books I've Read 
-<!-- GOODREADS-LIST:START -->
-- [Perfection](https://www.goodreads.com/review/show/9040002299?utm_medium=api&utm_source=rss) by Vincenzo Latronico (2022) ⭐⭐⭐ <br />
-- [Minor Detail](https://www.goodreads.com/review/show/8981896136?utm_medium=api&utm_source=rss) by Adania Shibli (2017) ⭐⭐⭐⭐ <br />
-- [The Brothers Karamazov](https://www.goodreads.com/review/show/7182763640?utm_medium=api&utm_source=rss) by Fyodor Dostoevsky (1879) ⭐⭐⭐⭐⭐ <br />
-- [I Want You to Be Happy](https://www.goodreads.com/review/show/8873849625?utm_medium=api&utm_source=rss) by Jem  Calder (2026) ⭐⭐⭐⭐ <br />
-- [Fundamentally](https://www.goodreads.com/review/show/8780284559?utm_medium=api&utm_source=rss) by Nussaibah Younis (2025) ⭐⭐ <br />
-- [The Metamorphosis](https://www.goodreads.com/review/show/8698908509?utm_medium=api&utm_source=rss) by Franz Kafka (1915) ⭐⭐⭐⭐ <br />
-- [Transcription](https://www.goodreads.com/review/show/8667508335?utm_medium=api&utm_source=rss) by Ben Lerner (2026) ⭐⭐⭐⭐ <br />
-- [Capitalist Realism: Is There No Alternative?](https://www.goodreads.com/review/show/8667506565?utm_medium=api&utm_source=rss) by Mark Fisher (2009) ⭐⭐⭐⭐ <br />
-- [Post-Capitalist Desire](https://www.goodreads.com/review/show/8608336341?utm_medium=api&utm_source=rss) by Mark Fisher (2020) ⭐⭐⭐⭐ <br />
-- [Heart of Darkness](https://www.goodreads.com/review/show/8506204846?utm_medium=api&utm_source=rss) by Joseph Conrad (1899) ⭐⭐⭐ <br />
-<!-- GOODREADS-LIST:END -->
+<!-- BOOK-LIST:START -->
+- [How Much Land Does a Man Need? and Other Stories](https://hardcover.app/books/how-much-land-does-a-man-need-and-other-stories-1886) by Leo Tolstoy (1886) <br />
+- [Perfection](https://hardcover.app/books/perfection-2022) by Vincenzo Latronico (2022) ⭐⭐⭐ <br />
+- [Minor Detail](https://hardcover.app/books/minor-detail) by Adania Shibli (2017) ⭐⭐⭐⭐ <br />
+- [The Brothers Karamazov](https://hardcover.app/books/the-brothers-karamazov) by Fyodor Dostoevsky (1879) ⭐⭐⭐⭐⭐ <br />
+- [I Want You to Be Happy: A Novel](https://hardcover.app/books/i-want-you-to-be-happy) by Jem  Calder (2026) ⭐⭐⭐⭐ <br />
+- [Fundamentally](https://hardcover.app/books/fundamentally) by Nussaibah Younis (2025) ⭐⭐ <br />
+- [The Metamorphosis](https://hardcover.app/books/the-metamorphosis) by Franz Kafka (1915) ⭐⭐⭐⭐ <br />
+- [Transcription](https://hardcover.app/books/transcription-2026) by Ben Lerner (2026) ⭐⭐⭐⭐ <br />
+- [Capitalist Realism: Is There No Alternative?](https://hardcover.app/books/capitalist-realism) by Mark Fisher (2002) ⭐⭐⭐⭐ <br />
+- [Postcapitalist Desire: The Final Lectures](https://hardcover.app/books/postcapitalist-desire-the-final-lectures) by Mark Fisher (2020) ⭐⭐⭐⭐ <br />
+<!-- BOOK-LIST:END -->
