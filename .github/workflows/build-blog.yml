@@ -1,0 +1,37 @@
+name: Build blog
+on:
+  push:
+    branches: [main]
+    paths:
+      - "posts/**"
+      - ".github/scripts/build_blog.py"
+  workflow_dispatch:
+concurrency:
+  group: build-blog
+  cancel-in-progress: false
+jobs:
+  build-blog:
+    name: Build blog pages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      # A queued run must build on the previous run's output, not on the
+      # commit that triggered it, or both add the same pages and the rebase conflicts.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r .github/scripts/requirements-blog.txt
+      - name: Build blog
+        run: python .github/scripts/build_blog.py
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/blog docs/index.html docs/es/index.html
+          # A scheduled sync may have pushed while this built; rebase onto it.
+          git diff --cached --quiet || (git commit -m "Build blog" && git pull --rebase origin main && git push)
