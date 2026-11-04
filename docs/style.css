@@ -1,4 +1,5 @@
-:root {
+:root,
+[data-theme="house"] {
     --bg: #122420;
     --bg-alt: #0d1c18;
     --emulsion: #081310;
@@ -7,11 +8,17 @@
     --text: #efe6d0;
     --text-muted: #c7bd9e;
     --text-dim: #8fa89a;
-    --line: rgba(239, 230, 208, 0.14);
-    --line-strong: rgba(239, 230, 208, 0.28);
+    --line: color-mix(in srgb, var(--text) 14%, transparent);
+    --line-strong: color-mix(in srgb, var(--text) 28%, transparent);
     --crimson: #b4483a;
-    --crimson-soft: rgba(180, 72, 58, 0.18);
+    --crimson-soft: color-mix(in srgb, var(--crimson) 18%, transparent);
     --ink: #221f18;
+    --ink-muted: #5c5647;
+    --route: #6f9b7f;
+    --gold: #c9a227;
+    --image-filter: brightness(1);
+    --grain-opacity: 0;
+    --vignette: none;
     --display: 'Big Shoulders Display', sans-serif;
     --serif: 'Newsreader', Georgia, serif;
     --mono: 'Space Mono', monospace;
@@ -73,7 +80,7 @@ textarea:focus-visible {
 }
 
 .nav.scrolled {
-    background: rgba(18, 36, 32, 0.92);
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
     backdrop-filter: blur(16px);
     border-bottom-color: var(--line);
 }
@@ -224,7 +231,7 @@ textarea:focus-visible {
     position: relative;
     padding: 6rem 2rem;
     text-align: center;
-    background-image: radial-gradient(circle at 50% 0%, rgba(239, 230, 208, 0.05), transparent 60%);
+    background-image: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--text) 5%, transparent), transparent 60%);
 }
 
 .hero-content {
@@ -694,12 +701,12 @@ textarea:focus-visible {
 }
 
 @keyframes reel-flicker {
-    0% { filter: brightness(1); }
-    15% { filter: brightness(1.06); }
-    30% { filter: brightness(0.97); }
-    50% { filter: brightness(1.03); }
-    70% { filter: brightness(0.98); }
-    100% { filter: brightness(1); }
+    0% { filter: var(--image-filter) brightness(1); }
+    15% { filter: var(--image-filter) brightness(1.06); }
+    30% { filter: var(--image-filter) brightness(0.97); }
+    50% { filter: var(--image-filter) brightness(1.03); }
+    70% { filter: var(--image-filter) brightness(0.98); }
+    100% { filter: var(--image-filter) brightness(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -795,7 +802,7 @@ textarea:focus-visible {
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: rgba(6, 12, 10, 0.72);
+    background: color-mix(in srgb, var(--emulsion) 72%, transparent);
     border: none;
     display: flex;
     align-items: center;
@@ -855,7 +862,7 @@ textarea:focus-visible {
 .route-path.active {
     stroke: var(--crimson);
     stroke-width: 2.5;
-    filter: drop-shadow(0 0 4px rgba(180, 72, 58, 0.5));
+    filter: drop-shadow(0 0 4px color-mix(in srgb, var(--crimson) 50%, transparent));
 }
 
 .route-marker {
@@ -1237,7 +1244,7 @@ textarea:focus-visible {
     position: fixed;
     inset: 0;
     z-index: 200;
-    background: rgba(6, 12, 10, 0.72);
+    background: color-mix(in srgb, var(--emulsion) 72%, transparent);
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -1476,7 +1483,7 @@ textarea:focus-visible {
     position: fixed;
     inset: 0;
     z-index: 200;
-    background: rgba(6, 12, 10, 0.72);
+    background: color-mix(in srgb, var(--emulsion) 72%, transparent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1565,7 +1572,7 @@ textarea:focus-visible {
 .casting-perf {
     position: relative;
     height: 0;
-    border-top: 2px dashed rgba(34, 31, 24, 0.35);
+    border-top: 2px dashed color-mix(in srgb, var(--ink) 35%, transparent);
 }
 
 .ticket-perf::before,
@@ -1578,7 +1585,7 @@ textarea:focus-visible {
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: rgba(6, 12, 10, 0.72);
+    background: color-mix(in srgb, var(--emulsion) 72%, transparent);
 }
 
 .ticket-perf::before,
@@ -1821,7 +1828,7 @@ textarea:focus-visible {
     height: 22px;
     background-image: repeating-linear-gradient(90deg,
         transparent 0 12px,
-        rgba(242, 233, 214, 0.82) 12px 26px,
+        color-mix(in srgb, var(--paper) 82%, transparent) 12px 26px,
         transparent 26px 38px);
     background-size: auto 9px;
     background-position: center;
@@ -1829,8 +1836,8 @@ textarea:focus-visible {
     opacity: 0.5;
 }
 
-.reel-rail-top { border-bottom: 1px solid rgba(239, 230, 208, 0.08); }
-.reel-rail-bot { border-top: 1px solid rgba(239, 230, 208, 0.08); }
+.reel-rail-top { border-bottom: 1px solid color-mix(in srgb, var(--text) 8%, transparent); }
+.reel-rail-bot { border-top: 1px solid color-mix(in srgb, var(--text) 8%, transparent); }
 
 .reel-gate {
     position: absolute;
@@ -1860,7 +1867,7 @@ textarea:focus-visible {
 .reel-gate-glow {
     position: absolute;
     inset: 0;
-    box-shadow: 0 0 0 100vmax rgba(8, 19, 16, 0.62);
+    box-shadow: 0 0 0 100vmax color-mix(in srgb, var(--emulsion) 62%, transparent);
 }
 
 .reel-track {
@@ -1884,7 +1891,7 @@ textarea:focus-visible {
     display: flex;
     flex-direction: column;
     padding: 14px 12px;
-    border-right: 1px solid rgba(239, 230, 208, 0.1);
+    border-right: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
     background: var(--emulsion);
     text-decoration: none;
     color: var(--text);
@@ -1910,7 +1917,7 @@ textarea:focus-visible {
     height: 100%;
     object-fit: cover;
     display: block;
-    filter: saturate(0.82) contrast(1.04);
+    filter: var(--image-filter) saturate(0.82) contrast(1.04);
 }
 
 /* keeps the label, title and rating legible over the artwork */
@@ -1919,10 +1926,10 @@ textarea:focus-visible {
     position: absolute;
     inset: 0;
     background: linear-gradient(to bottom,
-        rgba(8, 19, 16, 0.78) 0%,
-        rgba(8, 19, 16, 0.24) 32%,
-        rgba(8, 19, 16, 0.82) 76%,
-        rgba(8, 19, 16, 0.96) 100%);
+        color-mix(in srgb, var(--emulsion) 78%, transparent) 0%,
+        color-mix(in srgb, var(--emulsion) 24%, transparent) 32%,
+        color-mix(in srgb, var(--emulsion) 82%, transparent) 76%,
+        color-mix(in srgb, var(--emulsion) 96%, transparent) 100%);
 }
 
 .has-art .reel-kind,
@@ -1936,12 +1943,12 @@ textarea:focus-visible {
 
 .has-art .reel-title,
 .has-art .reel-num {
-    text-shadow: 0 1px 10px rgba(8, 19, 16, 0.8);
+    text-shadow: 0 1px 10px color-mix(in srgb, var(--emulsion) 80%, transparent);
 }
 
 .k-route.has-art .reel-route path {
     stroke: var(--paper);
-    filter: drop-shadow(0 0 4px rgba(8, 19, 16, 0.85));
+    filter: drop-shadow(0 0 4px color-mix(in srgb, var(--emulsion) 85%, transparent));
 }
 
 .reel-kind {
@@ -1970,8 +1977,8 @@ textarea:focus-visible {
 
 .k-film .reel-kind i { background: var(--crimson); }
 .k-book .reel-kind i { background: var(--paper-dim); }
-.k-route .reel-kind i { background: #6f9b7f; }
-.k-code .reel-kind i { background: #c9a227; }
+.k-route .reel-kind i { background: var(--route); }
+.k-code .reel-kind i { background: var(--gold); }
 
 .reel-body {
     display: flex;
@@ -2032,7 +2039,7 @@ textarea:focus-visible {
 }
 
 .reel-inset .reel-title { font-size: 1.1rem; }
-.reel-inset .reel-sub { color: #5c5647; }
+.reel-inset .reel-sub { color: var(--ink-muted); }
 
 .reel-route {
     width: 100%;
@@ -2042,7 +2049,7 @@ textarea:focus-visible {
 
 .reel-route path {
     fill: none;
-    stroke: #6f9b7f;
+    stroke: var(--route);
     stroke-width: 4;
     stroke-linecap: round;
 }
@@ -2057,7 +2064,7 @@ textarea:focus-visible {
 
 .reel-bar {
     flex: 1;
-    background: rgba(201, 162, 39, 0.55);
+    background: color-mix(in srgb, var(--gold) 55%, transparent);
 }
 
 .reel-readout {
@@ -2162,12 +2169,338 @@ textarea:focus-visible {
     .reel-track { padding: 0 calc(50vw - 80px); }
 }
 
+/* ─── Film Themes ───
+   Chosen from the nav switcher (theme.js). Each palette is contrast-checked
+   against the house roles: --crimson must read on --bg and under --paper text. */
+[data-theme="la-haine"] {
+    --bg: #121212;
+    --bg-alt: #0b0b0b;
+    --emulsion: #050505;
+    --paper: #efefef;
+    --paper-dim: #d8d8d8;
+    --text: #ececec;
+    --text-muted: #bdbdbd;
+    --text-dim: #8e8e8e;
+    --crimson: #707070;
+    --route: #a3a3a3;
+    --gold: #d4d4d4;
+    --ink: #151515;
+    --display: 'Anton', 'Big Shoulders Display', sans-serif;
+    --grain-opacity: 0.22;
+    --image-filter: grayscale(1) contrast(1.08);
+}
+[data-theme="barry-lyndon"] {
+    --bg: #1d150c;
+    --bg-alt: #160f08;
+    --emulsion: #0c0804;
+    --paper: #f4e8cf;
+    --paper-dim: #e7d5ae;
+    --text: #f2e4c4;
+    --text-muted: #cdb98e;
+    --text-dim: #a08e6a;
+    --crimson: #a65c26;
+    --route: #86a3a6;
+    --gold: #d9a441;
+    --ink: #2a1e10;
+    --display: 'Cormorant Garamond', 'Big Shoulders Display', sans-serif;
+    --grain-opacity: 0.08;
+    --vignette: radial-gradient(ellipse at 50% 25%, rgba(255, 186, 104, 0.09), transparent 60%), radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.6) 100%);
+}
+[data-theme="autumn-sonata"] {
+    --bg: #26140f;
+    --bg-alt: #1d0e0a;
+    --emulsion: #100705;
+    --paper: #f3e4d4;
+    --paper-dim: #e4ccb3;
+    --text: #f1dfcf;
+    --text-muted: #cfb09a;
+    --text-dim: #a78873;
+    --crimson: #b84a2a;
+    --route: #9a8f4c;
+    --gold: #d79a3c;
+    --ink: #2a1810;
+    --display: 'Libre Caslon Display', 'Big Shoulders Display', sans-serif;
+    --grain-opacity: 0.12;
+    --vignette: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.45) 100%);
+}
+[data-theme="handmaiden"] {
+    --bg: #1a1319;
+    --bg-alt: #140e13;
+    --emulsion: #0b080b;
+    --paper: #f5ece0;
+    --paper-dim: #e6d9c6;
+    --text: #f0e8da;
+    --text-muted: #c9bfb6;
+    --text-dim: #9d8f99;
+    --crimson: #c04a72;
+    --route: #5fae90;
+    --gold: #cfa95c;
+    --ink: #1d1a16;
+    --display: 'Shippori Mincho', 'Big Shoulders Display', sans-serif;
+    --vignette: radial-gradient(ellipse at 85% 0%, rgba(232, 160, 184, 0.08), transparent 45%);
+}
+[data-theme="goodfellas"] {
+    --bg: #140f0d;
+    --bg-alt: #0e0a09;
+    --emulsion: #070505;
+    --paper: #f3ead8;
+    --paper-dim: #e3d4b8;
+    --text: #efe5d2;
+    --text-muted: #c9bca4;
+    --text-dim: #9a8d78;
+    --crimson: #c62a33;
+    --route: #6f8a5f;
+    --gold: #c9a24a;
+    --ink: #1e1712;
+    --display: 'Abril Fatface', 'Big Shoulders Display', sans-serif;
+    --grain-opacity: 0.10;
+    --vignette: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.5) 100%);
+}
+[data-theme="taxi-driver"] {
+    --bg: #0b0c16;
+    --bg-alt: #080913;
+    --emulsion: #04050b;
+    --paper: #f6efd9;
+    --paper-dim: #e6dcbf;
+    --text: #ecebf2;
+    --text-muted: #b9bacb;
+    --text-dim: #8789a3;
+    --crimson: #c2307a;
+    --route: #43b0a8;
+    --gold: #f2c230;
+    --ink: #161624;
+    --display: 'Bebas Neue', 'Big Shoulders Display', sans-serif;
+    --vignette: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.16) 0 1px, transparent 1px 3px), radial-gradient(ellipse at 50% 110%, rgba(194, 48, 122, 0.12), transparent 55%);
+}
+[data-theme="apocalypse-now"] {
+    --bg: #1b0e06;
+    --bg-alt: #140a04;
+    --emulsion: #0a0502;
+    --paper: #f5e6d0;
+    --paper-dim: #e7d0ae;
+    --text: #f3e2c8;
+    --text-muted: #d3b48a;
+    --text-dim: #a3825c;
+    --crimson: #c4501a;
+    --route: #7d8c3e;
+    --gold: #e89a2c;
+    --ink: #24150a;
+    --display: 'Oswald', 'Big Shoulders Display', sans-serif;
+    --grain-opacity: 0.10;
+    --vignette: linear-gradient(to bottom, rgba(232, 120, 40, 0.10), transparent 45%), radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.5) 100%);
+}
+[data-theme="koyaanisqatsi"] {
+    --bg: #0a0f1f;
+    --bg-alt: #070b17;
+    --emulsion: #03060e;
+    --paper: #eef2f8;
+    --paper-dim: #d7deea;
+    --text: #e6ebf3;
+    --text-muted: #b3bccd;
+    --text-dim: #7f8aa3;
+    --crimson: #cc4128;
+    --route: #4f8fbf;
+    --gold: #e0a63a;
+    --ink: #121827;
+    --display: 'Syne', 'Big Shoulders Display', sans-serif;
+}
+[data-theme="in-bruges"] {
+    --bg: #171a1f;
+    --bg-alt: #111419;
+    --emulsion: #0a0c0f;
+    --paper: #f0ece2;
+    --paper-dim: #ddd6c6;
+    --text: #e9e6de;
+    --text-muted: #bdb8ab;
+    --text-dim: #8b8c8e;
+    --crimson: #8a6a2c;
+    --route: #6f8fa6;
+    --gold: #c8b56a;
+    --ink: #1a1c20;
+    --display: 'Cinzel', 'Big Shoulders Display', sans-serif;
+    --grain-opacity: 0.06;
+    --vignette: radial-gradient(ellipse at 50% 0%, rgba(200, 210, 220, 0.06), transparent 50%), radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.45) 100%);
+}
+[data-theme="in-the-mood-for-love"] {
+    --bg: #2a070d;
+    --bg-alt: #20050a;
+    --emulsion: #130305;
+    --paper: #f6e7d6;
+    --paper-dim: #e8cfb6;
+    --text: #f3e2d2;
+    --text-muted: #d8b4a4;
+    --text-dim: #ad8577;
+    --crimson: #a8661b;
+    --route: #3f9a69;
+    --gold: #e6b34a;
+    --ink: #2a0e12;
+    --display: 'Bodoni Moda', 'Big Shoulders Display', sans-serif;
+    --grain-opacity: 0.08;
+    --vignette: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* Display fonts here ship one weight; stop browsers faking 800 from it. */
+:root[data-theme] {
+    font-synthesis-weight: none;
+}
+
+img {
+    filter: var(--image-filter);
+}
+
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 300;
+}
+
+body::before {
+    background: var(--vignette);
+}
+
+body::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: var(--grain-opacity);
+    mix-blend-mode: overlay;
+}
+
+/* ─── Theme Switcher ─── */
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.theme-toggle-dots {
+    display: inline-flex;
+}
+
+.theme-toggle-dots i,
+.theme-swatch i {
+    display: block;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+}
+
+.theme-toggle-dots i {
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-left: -0.2rem;
+}
+
+.theme-toggle-dots i:first-child,
+.theme-swatch i:first-child {
+    margin-left: 0;
+}
+
+.theme-toggle-dots i:nth-child(1),
+.theme-swatch i:nth-child(1) { background: var(--bg); }
+.theme-toggle-dots i:nth-child(2),
+.theme-swatch i:nth-child(2) { background: var(--crimson); }
+.theme-toggle-dots i:nth-child(3),
+.theme-swatch i:nth-child(3) { background: var(--gold); }
+
+.theme-panel {
+    position: fixed;
+    top: 4.25rem;
+    right: max(1rem, calc((100vw - var(--container)) / 2));
+    width: 18rem;
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    z-index: 150;
+    background: var(--bg-alt);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    padding: 0.9rem 0.6rem 0.6rem;
+}
+
+.theme-panel[hidden] {
+    display: none;
+}
+
+.theme-panel-title {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 0 0.5rem 0.6rem;
+}
+
+.theme-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.5rem;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.theme-option:hover,
+.theme-option:focus-visible {
+    background: var(--crimson-soft);
+    color: var(--text);
+}
+
+.theme-option[aria-pressed="true"] {
+    color: var(--text);
+    border-color: var(--line-strong);
+}
+
+.theme-swatch {
+    display: inline-flex;
+    flex-shrink: 0;
+    padding: 0.2rem;
+    border-radius: 100px;
+    background: var(--bg);
+}
+
+.theme-swatch i {
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-left: -0.25rem;
+}
+
+.theme-option-name {
+    flex: 1;
+}
+
+.theme-option-year {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--text-dim);
+}
+
+@media (max-width: 768px) {
+    .theme-panel {
+        top: auto;
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        width: auto;
+        max-height: 70vh;
+    }
+}
+
 /* ─── Print (Résumé Export) ───
    Reuses the site's own components, just repoints the CSS custom
    properties at a light, ink-conscious palette and hides everything
    that isn't part of a CV (films, books, quiz, contact form, etc). */
 @media print {
-    :root {
+    :root,
+    :root[data-theme] {
         --bg: #ffffff;
         --bg-alt: #f5f3ee;
         --paper: #ffffff;
@@ -2192,7 +2525,8 @@ textarea:focus-visible {
     .nav, .mobile-menu, .resume-btn, .hero-avatar, .hero-scroll, .hero-welcome,
     .section.films, .section.routes, .section.books, .section.reel,
     .contact-form, .footer,
-    .credits-roll, .quiz-backdrop, .ticket-backdrop, .casting-backdrop {
+    .credits-roll, .quiz-backdrop, .ticket-backdrop, .casting-backdrop,
+    .theme-panel, body::before, body::after {
         display: none !important;
     }
 
