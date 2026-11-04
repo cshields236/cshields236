@@ -205,7 +205,8 @@ fragment shelfBook on user_books {
 def book_stars(rating):
     if not rating:
         return ""
-    return STAR_MAP.get(f"{float(rating):.1f}", "")
+    value = float(rating)
+    return "&#189;" if value == 0.5 else STAR_MAP.get(f"{value:.1f}", "")
 
 
 def to_book(user_book):
