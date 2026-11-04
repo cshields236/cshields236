@@ -214,7 +214,14 @@ def publish_image(src, dest):
 
 
 IMG_TAG = re.compile(r"<img\b[^>]*>")
-TAG_ATTR = re.compile(r'([a-zA-Z_:][-a-zA-Z0-9_:.]*)="([^"]*)"')
+# Raw HTML in a post can single-quote attributes; Markdown's own output never does.
+TAG_ATTR = re.compile(r"""([a-zA-Z_:][-a-zA-Z0-9_:.]*)=(?:"([^"]*)"|'([^']*)')""")
+
+
+def tag_attrs(tag):
+    """Attribute values ready to re-serialise inside double quotes."""
+    return {name: dq if dq or not sq else sq.replace('"', "&quot;")
+            for name, dq, sq in TAG_ATTR.findall(tag)}
 
 
 def process_images(content, post, out_dir):
@@ -224,7 +231,7 @@ def process_images(content, post, out_dir):
         nonlocal first_image
         # attr_list ({: .wide}) can add attributes in any order, so parse them
         # rather than matching a fixed alt/src/title layout.
-        attrs = dict(TAG_ATTR.findall(match.group(0)))
+        attrs = tag_attrs(match.group(0))
         src = attrs.get("src", "")
         title = attrs.pop("title", None)
         if src and not re.match(r"^(https?:)?//", src):
