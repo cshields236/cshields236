@@ -821,7 +821,7 @@ function initThemeSwitcher() {
             close(true);
             return;
         }
-        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && panel.contains(document.activeElement)) {
             e.preventDefault();
             const i = options.indexOf(document.activeElement);
             const step = e.key === 'ArrowDown' ? 1 : -1;

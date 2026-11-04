@@ -16,7 +16,7 @@
     --ink-muted: #5c5647;
     --route: #6f9b7f;
     --gold: #c9a227;
-    --image-filter: none;
+    --image-filter: brightness(1);
     --grain-opacity: 0;
     --vignette: none;
     --display: 'Big Shoulders Display', sans-serif;
@@ -701,12 +701,12 @@ textarea:focus-visible {
 }
 
 @keyframes reel-flicker {
-    0% { filter: brightness(1); }
-    15% { filter: brightness(1.06); }
-    30% { filter: brightness(0.97); }
-    50% { filter: brightness(1.03); }
-    70% { filter: brightness(0.98); }
-    100% { filter: brightness(1); }
+    0% { filter: var(--image-filter) brightness(1); }
+    15% { filter: var(--image-filter) brightness(1.06); }
+    30% { filter: var(--image-filter) brightness(0.97); }
+    50% { filter: var(--image-filter) brightness(1.03); }
+    70% { filter: var(--image-filter) brightness(0.98); }
+    100% { filter: var(--image-filter) brightness(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1917,7 +1917,7 @@ textarea:focus-visible {
     height: 100%;
     object-fit: cover;
     display: block;
-    filter: saturate(0.82) contrast(1.04);
+    filter: var(--image-filter) saturate(0.82) contrast(1.04);
 }
 
 /* keeps the label, title and rating legible over the artwork */
