@@ -55,7 +55,7 @@
 
 # 📚 Last 10 Books I've Read 
 <!-- BOOK-LIST:START -->
-- [How Much Land Does a Man Need? and Other Stories](https://hardcover.app/books/how-much-land-does-a-man-need-and-other-stories-1886) by Leo Tolstoy (1886) <br />
+- [How Much Land Does a Man Need? and Other Stories](https://hardcover.app/books/how-much-land-does-a-man-need-and-other-stories) by Leo Tolstoy (1886) <br />
 - [Perfection](https://hardcover.app/books/perfection-2022) by Vincenzo Latronico (2022) ⭐⭐⭐ <br />
 - [Minor Detail](https://hardcover.app/books/minor-detail) by Adania Shibli (2017) ⭐⭐⭐⭐ <br />
 - [The Brothers Karamazov](https://hardcover.app/books/the-brothers-karamazov) by Fyodor Dostoevsky (1879) ⭐⭐⭐⭐⭐ <br />
