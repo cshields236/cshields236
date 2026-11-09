@@ -34,16 +34,16 @@
 <!-- LETTERBOXD-WATCHED:START -->
 <table>
   <tr>
+    <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/primetime-2026/"><img src="https://a.ltrbxd.com/resized/film-poster/1/2/6/2/0/1/9/1262019-primetime-2026-0-600-0-900-crop.jpg?v=41640d6988" width="150" alt="Primetime"/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/sense-and-sensibility-2026/"><img src="https://a.ltrbxd.com/resized/film-poster/1/3/7/9/9/0/1/1379901-sense-and-sensibility-2026-0-600-0-900-crop.jpg?v=b5907f1c8c" width="150" alt="Sense and Sensibility"/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/naza/"><img src="https://a.ltrbxd.com/resized/film-poster/1/6/2/0/2/0/6/1620206-naza-0-600-0-900-crop.jpg?v=c34667d5c5" width="150" alt="NAZA"/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/past-lives/"><img src="https://a.ltrbxd.com/resized/film-poster/5/9/1/0/5/3/591053-past-lives-0-600-0-900-crop.jpg?v=c600b7854e" width="150" alt="Past Lives"/></a></td>
-    <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/the-worst-person-in-the-world/1/"><img src="https://a.ltrbxd.com/resized/film-poster/5/8/5/2/5/8/585258-the-worst-person-in-the-world-0-600-0-900-crop.jpg?v=92bc344c27" width="150" alt="The Worst Person in the World"/></a></td>
   </tr>
   <tr>
+    <td align="center"><b>Primetime</b><br/>★★½</td>
     <td align="center"><b>Sense and Sensibility</b><br/>★★★½</td>
     <td align="center"><b>NAZA</b><br/>★★★★★</td>
     <td align="center"><b>Past Lives</b><br/>★★★★★</td>
-    <td align="center"><b>The Worst Person in the World</b><br/>★★★★★</td>
   </tr>
 </table>
 <!-- LETTERBOXD-WATCHED:END -->
