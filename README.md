@@ -50,12 +50,13 @@
 
 # 📖 Currently Reading
 <!-- CURRENTLY-READING:START -->
-- [Giovanni's Room](https://hardcover.app/books/giovannis-room) by James Baldwin <br />
+
 <!-- CURRENTLY-READING:END -->
 
 # 📚 Last 10 Books I've Read 
 <!-- BOOK-LIST:START -->
 - [How Much Land Does a Man Need? and Other Stories](https://hardcover.app/books/how-much-land-does-a-man-need-and-other-stories) by Leo Tolstoy (1886) <br />
+- [Giovanni's Room](https://hardcover.app/books/giovannis-room) by James Baldwin (1956) ⭐⭐⭐⭐ <br />
 - [Perfection](https://hardcover.app/books/perfection-2022) by Vincenzo Latronico (2022) ⭐⭐⭐ <br />
 - [Minor Detail](https://hardcover.app/books/minor-detail) by Adania Shibli (2017) ⭐⭐⭐⭐ <br />
 - [The Brothers Karamazov](https://hardcover.app/books/the-brothers-karamazov) by Fyodor Dostoevsky (1879) ⭐⭐⭐⭐⭐ <br />
@@ -64,5 +65,4 @@
 - [The Metamorphosis](https://hardcover.app/books/the-metamorphosis) by Franz Kafka (1915) ⭐⭐⭐⭐ <br />
 - [Transcription](https://hardcover.app/books/transcription-2026) by Ben Lerner (2026) ⭐⭐⭐⭐ <br />
 - [Capitalist Realism: Is There No Alternative?](https://hardcover.app/books/capitalist-realism) by Mark Fisher (2002) ⭐⭐⭐⭐ <br />
-- [Postcapitalist Desire: The Final Lectures](https://hardcover.app/books/postcapitalist-desire-the-final-lectures) by Mark Fisher (2020) ⭐⭐⭐⭐ <br />
 <!-- BOOK-LIST:END -->
