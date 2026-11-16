@@ -50,7 +50,7 @@
 
 # 📖 Currently Reading
 <!-- CURRENTLY-READING:START -->
-
+- [Black Bag](https://hardcover.app/books/black-bag) by Luke Kennard <br />
 <!-- CURRENTLY-READING:END -->
 
 # 📚 Last 10 Books I've Read 
