@@ -64,5 +64,5 @@
 - [Fundamentally](https://hardcover.app/books/fundamentally) by Nussaibah Younis (2025) ⭐⭐ <br />
 - [The Metamorphosis](https://hardcover.app/books/the-metamorphosis) by Franz Kafka (1915) ⭐⭐⭐⭐ <br />
 - [Transcription](https://hardcover.app/books/transcription-2026) by Ben Lerner (2026) ⭐⭐⭐⭐ <br />
-- [Capitalist Realism: Is There No Alternative?](https://hardcover.app/books/capitalist-realism) by Mark Fisher (2002) ⭐⭐⭐⭐ <br />
+- [Capitalist Realism: Is There No Alternative?](https://hardcover.app/books/capitalist-realism) by Mark Fisher (2009) ⭐⭐⭐⭐ <br />
 <!-- BOOK-LIST:END -->
