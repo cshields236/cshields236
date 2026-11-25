@@ -34,16 +34,16 @@
 <!-- LETTERBOXD-WATCHED:START -->
 <table>
   <tr>
+    <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/you-can-see-everything/"><img src="https://a.ltrbxd.com/resized/film-poster/1/6/2/9/4/4/3/1629443-you-can-see-everything-0-600-0-900-crop.jpg?v=84f6724d74" width="150" alt="You Can See Everything"/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/the-history-of-concrete/"><img src="https://a.ltrbxd.com/resized/film-poster/1/4/6/4/8/3/5/1464835-the-history-of-concrete-0-600-0-900-crop.jpg?v=a9805b24e4" width="150" alt="The History of Concrete"/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/primetime-2026/"><img src="https://a.ltrbxd.com/resized/film-poster/1/2/6/2/0/1/9/1262019-primetime-2026-0-600-0-900-crop.jpg?v=41640d6988" width="150" alt="Primetime"/></a></td>
     <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/sense-and-sensibility-2026/"><img src="https://a.ltrbxd.com/resized/film-poster/1/3/7/9/9/0/1/1379901-sense-and-sensibility-2026-0-600-0-900-crop.jpg?v=b5907f1c8c" width="150" alt="Sense and Sensibility"/></a></td>
-    <td align="center" width="150"><a href="https://letterboxd.com/cshields_/film/naza/"><img src="https://a.ltrbxd.com/resized/film-poster/1/6/2/0/2/0/6/1620206-naza-0-600-0-900-crop.jpg?v=c34667d5c5" width="150" alt="NAZA"/></a></td>
   </tr>
   <tr>
+    <td align="center"><b>You Can See Everything</b><br/>★★★★★</td>
     <td align="center"><b>The History of Concrete</b><br/>★★★½</td>
     <td align="center"><b>Primetime</b><br/>★★½</td>
     <td align="center"><b>Sense and Sensibility</b><br/>★★★½</td>
-    <td align="center"><b>NAZA</b><br/>★★★★★</td>
   </tr>
 </table>
 <!-- LETTERBOXD-WATCHED:END -->
