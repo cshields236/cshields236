@@ -50,11 +50,12 @@
 
 # 📖 Currently Reading
 <!-- CURRENTLY-READING:START -->
-- [Black Bag](https://hardcover.app/books/black-bag) by Luke Kennard <br />
+
 <!-- CURRENTLY-READING:END -->
 
 # 📚 Last 10 Books I've Read 
 <!-- BOOK-LIST:START -->
+- [Black Bag](https://hardcover.app/books/black-bag) by Luke Kennard (2026) ⭐⭐⭐⭐⭐ <br />
 - [How Much Land Does a Man Need? and Other Stories](https://hardcover.app/books/how-much-land-does-a-man-need-and-other-stories) by Leo Tolstoy (1886) <br />
 - [Giovanni's Room](https://hardcover.app/books/giovannis-room) by James Baldwin (1956) ⭐⭐⭐⭐ <br />
 - [Perfection](https://hardcover.app/books/perfection-2022) by Vincenzo Latronico (2022) ⭐⭐⭐ <br />
@@ -64,5 +65,4 @@
 - [Fundamentally](https://hardcover.app/books/fundamentally) by Nussaibah Younis (2025) ⭐⭐ <br />
 - [The Metamorphosis](https://hardcover.app/books/the-metamorphosis) by Franz Kafka (1915) ⭐⭐⭐⭐ <br />
 - [Transcription](https://hardcover.app/books/transcription-2026) by Ben Lerner (2026) ⭐⭐⭐⭐ <br />
-- [Capitalist Realism: Is There No Alternative?](https://hardcover.app/books/capitalist-realism) by Mark Fisher (2009) ⭐⭐⭐⭐ <br />
 <!-- BOOK-LIST:END -->
